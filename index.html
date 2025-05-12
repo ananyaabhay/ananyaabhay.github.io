@@ -1,0 +1,29 @@
+<style>
+  /* …other styles unchanged… */
+
+  body {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    background: linear-gradient(135deg, #001f3f, #002b6e);
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    position: relative;
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+  }
+  /* glowing spotlight */
+  body::before {
+    content: '';
+    pointer-events: none;
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(255,255,255,0.12),
+      transparent 60%
+    );
+    mix-blend-mode: overlay;
+  }
+
+  /* …rest of your CSS… */
+</style>
