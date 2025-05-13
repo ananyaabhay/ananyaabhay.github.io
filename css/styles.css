@@ -230,45 +230,31 @@
       font-size:.9rem; color:rgba(255,255,255,0.7);
     }
     /* ROTATION KEYFRAMES */
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+/*────────────── Spotlight glow ──────────────*/
+body {
+  /* … keep your existing vars … */
+  /* spotlight size var already defined: --spotlight-size */
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle var(--spotlight-size) at var(--mouse-x) var(--mouse-y),
+    rgba(255,255,255,0.25),
+    transparent 60%
+  );
+  pointer-events: none;
+  mix-blend-mode: overlay;
 }
 
-/* LOGO WRAPPER + OUTLINE */
-.logo-wrapper {
-  position: relative;
-  width: 3rem;
-  height: 3rem;
-}
-.logo-hex-outline {
-  position: absolute; top:0; left:0;
-  width:100%; height:100%;
-  border:3px solid rgba(234,107,244,0.86);
-  clip-path: polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0% 50%);
-  transform-origin: center center;
-  animation: rotate 1.5s linear infinite paused;
-}
-.logo-wrapper:hover .logo-hex-outline {
-  animation-play-state: running;
-}
-
-/* FULL-PAGE LOADER */
-#loader {
-  position: fixed; top:0; left:0; right:0; bottom:0;
-  background: #001f3f;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 9999;
-}
-.loader-logo .logo-hex-outline {
-  animation-play-state: running !important;
-}
-
-/* PURE-CSS HEXAGON SPINNER */
-@keyframes spin {
+/*────────────── Loader & Logo Spin ──────────────*/
+/* 1) keyframes for slow spin */
+@keyframes slow-spin {
   to { transform: rotate(360deg); }
 }
 
+/* 2) full-page loader overlay */
 #loader {
   position: fixed;
   inset: 0;
@@ -279,6 +265,51 @@
   z-index: 9999;
 }
 
-.loader-spinner {
-  animation: spin 1.5s linear infinite;
+/* 3) re-use logo-wrapper + outline */
+#loader .logo-wrapper {
+  width: 5rem;
+  height: 5rem;
+  position: relative;
+}
+#loader .logo-hex-outline {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(234,107,244,0.86);
+  clip-path: polygon(
+    25% 6.7%, 75% 6.7%,
+    100% 50%, 75% 93.3%,
+    25% 93.3%, 0% 50%
+  );
+  transform-origin: center center;
+  animation: slow-spin 3s linear infinite;
+}
+/* keep the “a²” text above the outline */
+#loader .logo {
+  position: relative;
+  z-index: 1;
+  font-size: 2rem;
+  color: #fff;
+}
+
+/* 4) nav-bar hover spin */
+.logo-wrapper:hover .logo-hex-outline {
+  animation-play-state: running !important;
+}
+
+/*────────────── Contact Icons ──────────────*/
+/* use text-stroke to get outlined icons */
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.7cm;
+  margin: 1.5cm 0;
+}
+.contact-icons a i {
+  font-size: 1.2rem;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(218,218,218,0.7);
+  transition: -webkit-text-stroke-color .2s;
+}
+.contact-icons a:hover i {
+  -webkit-text-stroke-color: #ea6bf4;
 }
