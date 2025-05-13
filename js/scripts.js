@@ -32,3 +32,13 @@ window.addEventListener('load', () => {
   if (loader) loader.style.display = 'none';
 });
 
+// Fade out loader once the page is fully loaded
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  if (!loader) return;
+  loader.style.transition = 'opacity 0.5s';
+  loader.style.opacity = '0';
+  setTimeout(() => loader.remove(), 500);
+});
+
+
