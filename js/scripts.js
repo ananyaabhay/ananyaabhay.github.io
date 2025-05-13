@@ -26,11 +26,14 @@
         document.getElementById(tab.dataset.job).classList.add('active');
       });
     });
-    // hide the loader once everything’s loaded
+    // ensure loader shows at least 1.5s
+const start = performance.now();
 window.addEventListener('load', () => {
-  const loader = document.getElementById('loader');
-  if (loader) loader.style.display = 'none';
+  const elapsed = performance.now() - start;
+  const wait    = Math.max(0, 1500 - elapsed);
+  setTimeout(() => document.getElementById('loader').remove(), wait);
 });
+
 
 // Fade out loader once the page is fully loaded
 window.addEventListener('load', () => {
@@ -40,5 +43,3 @@ window.addEventListener('load', () => {
   loader.style.opacity = '0';
   setTimeout(() => loader.remove(), 500);
 });
-
-
