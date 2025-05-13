@@ -28,7 +28,7 @@
     }
     /* DECORATIVE LINES */
     .decor-line { position:fixed; width:2px; background:rgba(218,218,218,0.7); z-index:5; }
-    .decor-line.left { left:2rem; bottom:0; height:4.7cm; }
+    .decor-line.left { left:2rem; bottom:0; height:4.3cm; }
     .decor-line.left::after {
       content:''; position:absolute; top:0.5cm; left:-3px;
       width:8px; height:8px; background:rgba(234,107,244,0.86); border-radius:50%;
@@ -209,12 +209,7 @@
     }
   </style>
 </head>
-<body onpointermove="e=>{
-  const x=(e.clientX/window.innerWidth)*100+'%',
-        y=(e.clientY/window.innerHeight)*100+'%';
-  document.body.style.setProperty('--mouse-x',x);
-  document.body.style.setProperty('--mouse-y',y);
-}">
+<body>
 
   <!-- Decorative lines -->
   <div class="decor-line left"></div>
@@ -316,7 +311,7 @@
         <div id="job3" class="job-pane">
           <h3>Sr. Executive CX &amp; Product @ InfoEdge</h3>
           <p>Nov 2021 – Mar 2023</p>
-          <ul>
+          <ul>  
             <li>Automated recruitment flows for 10+ clients.</li>
             <li>Reduced bug TAT by 20%.</li>
             <li>Ran UAT cycles, cutting post-go-live issues by 9%.</li>
@@ -351,22 +346,34 @@
   <!-- FOOTER -->
   <footer>© 2025 Ananya Abhay</footer>
 
+  <!-- Glow‐cursor script -->
   <script>
-    // one-shot typewriter
-    const nameEl = document.getElementById('typed-name'), base = 'Ananya A';
+    document.addEventListener('pointermove', function(e) {
+      const x = (e.clientX / window.innerWidth) * 100 + '%';
+      const y = (e.clientY / window.innerHeight) * 100 + '%';
+      document.body.style.setProperty('--mouse-x', x);
+      document.body.style.setProperty('--mouse-y', y);
+    });
+  </script>
+
+  <!-- Typewriter & Tab‐switch script -->
+  <script>
+    // one‐shot typewriter
+    const nameEl = document.getElementById('typed-name'),
+          base   = 'Ananya A';
     nameEl.textContent = base;
-    setTimeout(()=>{
+    setTimeout(() => {
       nameEl.textContent = base + 'b';
-      setTimeout(()=> nameEl.textContent = base, 800);
+      setTimeout(() => nameEl.textContent = base, 800);
     }, 1000);
 
     // jobs tab switching
-    document.querySelectorAll('#jobs .experience-nav li').forEach(tab=>{
-      tab.addEventListener('click',()=>{
+    document.querySelectorAll('#jobs .experience-nav li').forEach(tab => {
+      tab.addEventListener('click', () => {
         document.querySelectorAll('#jobs .experience-nav li')
-                .forEach(t=>t.classList.remove('active'));
+                .forEach(t => t.classList.remove('active'));
         document.querySelectorAll('#jobs .job-pane')
-                .forEach(p=>p.classList.remove('active'));
+                .forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
         document.getElementById(tab.dataset.job).classList.add('active');
       });
