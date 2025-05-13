@@ -26,3 +26,9 @@
         document.getElementById(tab.dataset.job).classList.add('active');
       });
     });
+    // hide the loader once everything’s loaded
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  if (loader) loader.style.display = 'none';
+});
+
