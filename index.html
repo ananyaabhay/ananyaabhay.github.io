@@ -45,15 +45,31 @@
 
 <body>
 
-<!-- LOADER: SVG hexagon spinner -->
-<!-- FULL-PAGE LOADER -->
+<!-- DRAW-&-REVEAL LOADER -->
 <div id="loader">
-  <div class="loader-inner">
-    <div class="logo-wrapper">
-      <div class="logo-hex-outline"></div>
-      <div class="logo">a<sup>2</sup></div>
-    </div>
-  </div>
+  <svg class="loader-svg" viewBox="0 0 100 100" width="100" height="100">
+    <!-- hexagon path -->
+    <polygon
+      id="hex-path"
+      points="50,5 90,30 90,70 50,95 10,70 10,30"
+      fill="none"
+      stroke="rgba(234,107,244,0.86)"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+    <!-- a² text hidden until stroke complete -->
+    <text
+      id="hex-text"
+      x="50%" y="55%"
+      text-anchor="middle"
+      fill="#fff"
+      font-family="Poppins, sans-serif"
+      font-size="30"
+      opacity="0"
+    >
+      a<sup>2</sup>
+    </text>
+  </svg>
 </div>
 
 
