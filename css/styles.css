@@ -248,54 +248,6 @@ body::before {
   mix-blend-mode: overlay;
 }
 
-/*────────────── Loader & Logo Spin ──────────────*/
-/* 1) keyframes for slow spin */
-@keyframes slow-spin {
-  to { transform: rotate(360deg); }
-}
-
-/* 2) full-page loader overlay */
-#loader {
-  position: fixed;
-  inset: 0;
-  background: #001f3f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-/* 3) re-use logo-wrapper + outline */
-#loader .logo-wrapper {
-  width: 5rem;
-  height: 5rem;
-  position: relative;
-}
-#loader .logo-hex-outline {
-  position: absolute;
-  inset: 0;
-  border: 3px solid rgba(234,107,244,0.86);
-  clip-path: polygon(
-    25% 6.7%, 75% 6.7%,
-    100% 50%, 75% 93.3%,
-    25% 93.3%, 0% 50%
-  );
-  transform-origin: center center;
-  animation: slow-spin 3s linear infinite;
-}
-/* keep the “a²” text above the outline */
-#loader .logo {
-  position: relative;
-  z-index: 1;
-  font-size: 2rem;
-  color: #fff;
-}
-
-/* 4) nav-bar hover spin */
-.logo-wrapper:hover .logo-hex-outline {
-  animation-play-state: running !important;
-}
-
 /*────────────── Contact Icons ──────────────*/
 /* use text-stroke to get outlined icons */
 .contact-icons {
@@ -312,4 +264,46 @@ body::before {
 }
 .contact-icons a:hover i {
   -webkit-text-stroke-color: #ea6bf4;
+}
+
+/* ─── Loader overlay ─── */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #001f3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ─── Hexagon draw & reveal ─── */
+.loader-svg { overflow: visible; }
+
+#hex-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation:
+    draw-hex 1.2s ease-out forwards,
+    fade-loader 0.5s ease-out 2s forwards;
+}
+
+#hex-text {
+  animation: reveal-text 0.5s ease-out 1.3s forwards;
+}
+
+/* ─── Keyframes ─── */
+@keyframes draw-hex {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes reveal-text {
+  to { opacity: 1; }
+}
+
+@keyframes fade-loader {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
