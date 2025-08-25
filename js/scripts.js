@@ -7,7 +7,7 @@
     });
 
     // tagline animation: fun → cool → interesting
-    const words = ['fun','cool','interesting'];
+    const words = ['impactful', 'valuable', 'scalable', 'frictionless', 'fun'];
     let idx = 0;
     setInterval(() => {
       idx = (idx + 1) % words.length;
