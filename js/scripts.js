@@ -45,3 +45,21 @@ window.addEventListener('load', () => {
   setTimeout(() => loader.remove(), 500);
 });
 
+// timeline fade-in on scroll
+window.addEventListener('DOMContentLoaded', () => {
+  const items = document.querySelectorAll('.tl-content');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+  } else {
+    // fallback: show all if no IO support
+    items.forEach(el => el.classList.add('is-in'));
+  }
+});
