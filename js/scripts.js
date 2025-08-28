@@ -27,23 +27,26 @@ document.querySelectorAll('#jobs .experience-nav li').forEach(tab => {
     document.getElementById(tab.dataset.job).classList.add('active');
   });
 });
-// ensure loader shows at least 1.5s
+
+// ensure loader is visible at least 1.2s, then fade out and remove safely
 const start = performance.now();
-window.addEventListener('load', () => {
-  const elapsed = performance.now() - start;
-  const wait = Math.max(0, 1500 - elapsed);
-  setTimeout(() => document.getElementById('loader').remove(), wait);
-});
 
-
-// Fade out loader once the page is fully loaded
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   if (!loader) return;
-  loader.style.transition = 'opacity 0.5s';
-  loader.style.opacity = '0';
-  setTimeout(() => loader.remove(), 500);
+
+  const elapsed = performance.now() - start;
+  const wait = Math.max(0, 1200 - elapsed);
+
+  setTimeout(() => {
+    loader.style.transition = 'opacity 0.5s';
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      if (loader && loader.parentNode) loader.remove();
+    }, 500);
+  }, wait);
 });
+
 
 // timeline fade-in on scroll
 window.addEventListener('DOMContentLoaded', () => {
