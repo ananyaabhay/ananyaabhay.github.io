@@ -508,3 +508,10 @@ footer {
     visibility: hidden;
   }
 }
+
+/* favicon as logo - sizing */
+.nav-logo img {
+  width: 3rem;   /* same size as old logo */
+  height: 3rem;
+  display: block;
+}
