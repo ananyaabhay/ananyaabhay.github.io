@@ -59,29 +59,6 @@ nav.main-nav {
   font-family: 'Poppins', sans-serif;
 }
 
-/* pink hexagon outline around logo */
-.logo-hex {
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 3px solid rgba(234, 107, 244, 0.86);
-  background: transparent;
-  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
-}
-
-.logo-hex .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  transition: text-shadow .3s;
-}
-
-.logo-hex .logo:hover {
-  text-shadow: -2px 2px 12px rgba(234, 107, 244, 0.86);
-}
-
 .main-nav .nav-links {
   display: flex;
   gap: 1rem;
