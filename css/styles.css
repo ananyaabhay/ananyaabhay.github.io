@@ -488,23 +488,49 @@ footer {
 
 /* favicon as logo - sizing & ✨glow✨ */
 
-.nav-logo img {
+/* container for positioning the hex glow */
+.nav-logo{
+  position: relative;
   width: 3rem;
   height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* remove the square box-shadow on the image */
+.nav-logo img{
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: contain;
-
-  /* subtle default glow */
-  box-shadow: 0 0 6px rgba(234, 107, 244, 0.35),
-              0 0 12px rgba(234, 107, 244, 0.25);
-
-  border-radius: 6px; 
-  transition: transform 0.25s ease, box-shadow 0.35s ease; /* smooth return */
+  box-shadow: none;        /* important: no square glow */
+  border-radius: 0;        /* keep corners sharp so hex reads clean */
+  position: relative;
+  z-index: 1;              /* sits above the glow */
 }
 
-.nav-logo img:hover {
-  /* gentle lift + stronger glow */
+/* subtle hex-shaped glow behind the logo */
+.nav-logo::before{
+  content: "";
+  position: absolute;
+  inset: -4px;                               /* slightly larger than the logo */
+  background: rgba(234,107,244,0.85);        /* pink accent */
+  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+  filter: blur(10px);                         /* soft edges */
+  opacity: 0.35;                              /* subtle by default */
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity .35s ease, transform .25s ease;
+}
+
+/* tiny, elegant hover effect */
+.nav-logo:hover::before{
+  opacity: 0.55;
   transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(234, 107, 244, 0.55),
-              0 0 18px rgba(234, 107, 244, 0.35);
 }
+.nav-logo:hover img{
+  transform: translateZ(0) scale(1.02);
+  transition: transform .25s ease;
+}
+
