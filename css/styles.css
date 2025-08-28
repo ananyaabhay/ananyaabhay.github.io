@@ -486,10 +486,25 @@ footer {
   }
 }
 
-/* favicon as logo - sizing */
+/* favicon as logo - sizing & ✨glow✨ */
+
 .nav-logo img {
-  width: 3rem;   /* same size as old logo */
+  width: 3rem;
   height: 3rem;
   display: block;
   object-fit: contain;
+
+  /* subtle default glow */
+  box-shadow: 0 0 6px rgba(234, 107, 244, 0.35),
+              0 0 12px rgba(234, 107, 244, 0.25);
+
+  border-radius: 6px; 
+  transition: transform 0.25s ease, box-shadow 0.35s ease; /* smooth return */
+}
+
+.nav-logo img:hover {
+  /* gentle lift + stronger glow */
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(234, 107, 244, 0.55),
+              0 0 18px rgba(234, 107, 244, 0.35);
 }
