@@ -461,44 +461,6 @@ footer {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* ROTATION KEYFRAMES */
-/*────────────── Spotlight glow ──────────────*/
-body {
-  /* … keep your existing vars … */
-  /* spotlight size var already defined: --spotlight-size */
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle var(--spotlight-size) at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.25),
-      transparent 60%);
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-
-/*────────────── Contact Icons ──────────────*/
-/* use text-stroke to get outlined icons */
-.contact-icons {
-  display: flex;
-  justify-content: center;
-  gap: 0.7cm;
-  margin: 1.5cm 0;
-}
-
-.contact-icons a i {
-  font-size: 1.2rem;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(218, 218, 218, 0.7);
-  transition: -webkit-text-stroke-color .2s;
-}
-
-.contact-icons a:hover i {
-  -webkit-text-stroke-color: #ea6bf4;
-}
-
 /* ─── Loader overlay ─── */
 #loader {
   position: fixed;
