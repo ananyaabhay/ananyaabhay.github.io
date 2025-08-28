@@ -491,4 +491,5 @@ footer {
   width: 3rem;   /* same size as old logo */
   height: 3rem;
   display: block;
+  object-fit: contain;
 }
