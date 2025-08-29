@@ -88,3 +88,31 @@ window.addEventListener('DOMContentLoaded', () => {
     items.forEach(el => el.classList.add('is-in'));
   }
 });
+
+// ----- XP "swipe" hint -----
+const xpNav = document.querySelector('.experience-nav');
+const xpHint = document.querySelector('.xp-hint');
+if (xpNav && xpHint) {
+  const hideHint = () => xpHint.style.display = 'none';
+  xpNav.addEventListener('scroll', hideHint, { once: true });
+  xpNav.addEventListener('pointerdown', hideHint, { once: true });
+}
+
+// ----- auto-advance tabs  -----
+// cycles through .xp-tab every 5s, stops on any interaction
+/*
+let xpAuto = setInterval(nextXpTab, 5000);
+['pointerdown','scroll','keydown'].forEach(ev =>
+  window.addEventListener(ev, () => { clearInterval(xpAuto); xpAuto=null; }, { once:true })
+);
+
+function nextXpTab(){
+  const tabs = [...document.querySelectorAll('.xp-tab')];
+  const active = tabs.findIndex(t => t.classList.contains('active'));
+  const next = tabs[(active + 1) % tabs.length];
+  if (!next) return;
+  next.click();
+  // ensure the active tab is visible in the strip
+  next.scrollIntoView({ inline:'center', behavior:'smooth', block:'nearest' });
+}
+*/
