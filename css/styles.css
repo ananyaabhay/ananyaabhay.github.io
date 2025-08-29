@@ -892,3 +892,41 @@ footer {
   }
   .nav-logo:hover::after{ opacity:.6; transform:scale(1.04); }
 }
+
+/* --- FINAL mobile fixes (place at bottom) --- */
+@media (max-width:720px){
+
+  /* 1) Let hero stack from the top (no vertical centering gap) */
+  #landing{
+    justify-content: flex-start;      /* was center via `section` base rule */
+    padding-top: calc(5.2rem + env(safe-area-inset-top));
+    gap: .6rem;                        /* a touch tighter between lines */
+  }
+
+  /* 2) Photo directly below text, centered, tidy size */
+  .landing-image{
+    order: 2;
+    margin: 10px auto 8px;            /* center + small bottom gap */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .landing-image img{
+    width: 44vw;                      /* a bit larger to fill that space */
+    max-width: 200px;
+  }
+
+  /* 3) Keep sections sizing to content (no forced viewport height) */
+  section{
+    height: auto !important;
+    min-height: auto !important;
+    scroll-snap-align: none;
+  }
+
+  /* 4) CTA narrower & centered text */
+  .contact-box{ width: min(320px, 70vw); }
+  .contact-box a{ text-align: center; padding: .8rem 0; font-size: 1rem; }
+
+  /* 5) Remove the tab strip fade so no weird shading */
+  .experience-nav::after{ display:none; }
+}
