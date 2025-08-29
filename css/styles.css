@@ -608,114 +608,220 @@ footer {
   transition: transform .25s ease;
 }
 
-/* ========= Mobile polish (≤720px) ========= */
-@media (max-width: 720px){
+/* ========= MOBILE VIEW REFINEMENT (≤720px) ========= */
+@media (max-width: 720px) {
 
-  /* 0) global rhythm */
-  html { font-size: 17px; }                 /* amplify overall type a bit */
-  body { scroll-snap-type: none; }          /* turn off snap on phones */
+  /* ---- spacing tokens (light touch) ---- */
+  :root {
+    --m-gap-xs: 10px;
+    --m-gap-sm: 14px;
+    --m-gap-md: 18px;
+    --m-gap-lg: 26px;
+    --m-gap-xl: 34px;
+    --m-max-text: 46ch;
+    /* comfortable line length */
+  }
+
+  /* ---- global rhythm ---- */
+  html {
+    font-size: 17px;
+  }
+
+  body {
+    scroll-snap-type: none;
+  }
+
   section {
     scroll-snap-align: none;
-    height: auto !important;                /* stop the 100vh stretching */
-    padding: 0 1.1rem;                      /* tighter gutters */
+    height: auto !important;
+    padding: 0 1.1rem;
   }
 
-  /* 1) header — declutter + keep Resume reachable */
-  nav.main-nav{
-    padding: .55rem .85rem;
-    gap: .5rem;
+  .section-title {
+    margin-bottom: var(--m-gap-sm);
   }
-  .nav-logo{ width: 2.25rem; height: 2.25rem; }  /* smaller logo */
-  .main-nav .nav-links{
-    gap: .65rem;
+
+  .section-title h2 {
+    font-size: 1.6rem;
+  }
+
+  /* keep text widths consistent across sections */
+  #landing .landing-content,
+  #about,
+  #jobs .experience-content {
+    max-width: var(--m-max-text);
+  }
+
+  /* ---- header: calmer, readable, not bulky ---- */
+  nav.main-nav {
+    padding: calc(.45rem + env(safe-area-inset-top)/2) .85rem .45rem;
+    gap: .5rem;
+    background: rgba(0, 0, 0, .45);
+    /* a hair more opaque for contrast */
+  }
+
+  .nav-logo {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .main-nav .nav-links {
+    gap: .6rem;
     overflow-x: auto;
+    white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    white-space: nowrap;                     /* keep one row */
   }
-  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
-  .main-nav .nav-links a:not(.resume-btn){
+
+  .main-nav .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main-nav .nav-links a:not(.resume-btn) {
     font-size: .95rem;
-    letter-spacing: .2px;
+    font-weight: 600;
+    letter-spacing: .15px;
     opacity: .92;
   }
-  .resume-btn{
+
+  .resume-btn {
     margin-left: auto;
     flex: 0 0 auto;
     padding: .22rem .55rem;
     font-size: .95rem;
   }
 
-  /* 2) hero — space from header, stronger type, less image dead space */
-  #landing{
-    padding-top: 5.25rem;                    /* more space below fixed header */
+  /* ---- hero: real breathing room + sized image ---- */
+  #landing {
+    padding-top: calc(5.6rem + env(safe-area-inset-top));
+    /* space under fixed header */
     flex-direction: column;
     align-items: flex-start;
-    gap: .9rem;
+    gap: var(--m-gap-md);
   }
-  #landing h2.intro{ font-size: 1.05rem; opacity: .9; }
-  #landing h1.name{ font-size: clamp(2.1rem, 6.2vw, 2.6rem); line-height: 1.1; }
-  #landing h2.tagline{ font-size: 1.12rem; line-height: 1.35; }
 
-  .landing-image{
-    order: 2;
-    align-self: center;
-    margin-left: 0;                           /* cancel desktop offset */
-    margin-block: .5rem;                      /* cut extra blank space */
+  #landing h2.intro {
+    font-size: 1.06rem;
+    opacity: .9;
+    margin-bottom: 2px;
   }
-  .landing-image img{
-    width: 48vw;                              /* smaller circle */
-    max-width: 220px;
+
+  #landing h1.name {
+    font-size: clamp(2.1rem, 6.2vw, 2.6rem);
+    line-height: 1.1;
+  }
+
+  #landing h2.tagline {
+    font-size: 1.14rem;
+    line-height: 1.35;
+  }
+
+  #landing p.summary {
+    margin-top: 4px;
+    margin-bottom: var(--m-gap-md);
+  }
+
+  .landing-image {
+    order: 2;
+    /* photo below text */
+    align-self: center;
+    margin: var(--m-gap-sm) 0 var(--m-gap-lg);
+  }
+
+  .landing-image img {
+    width: 44vw;
+    /* smaller circle to kill the dead space */
+    max-width: 210px;
     height: auto;
     border-radius: 50%;
-    border: 3px solid rgba(234,107,244,.86);
-    box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    border: 3px solid rgba(234, 107, 244, .86);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
   }
 
-  /* 3) experience — cleaner tabs + content spacing */
-  #jobs .experience-section{
-    flex-direction: column;
-    gap: .85rem;
+  /* ---- timeline: keep tidy ---- */
+  #timeline {
+    position: relative;
+    overflow: hidden;
   }
-  .experience-nav{
-    display: flex; flex-direction: row;
+
+  .tl-item+.tl-item {
+    margin-top: var(--m-gap-sm);
+  }
+
+  /* ---- experience: clean strip + better content density ---- */
+  #jobs .experience-section {
+    flex-direction: column;
+    gap: var(--m-gap-sm);
+  }
+
+  .experience-nav {
+    display: flex;
+    flex-direction: row;
     gap: 10px;
     overflow-x: auto;
     padding: 2px 0 8px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255, 255, 255, .10);
   }
-  .experience-nav::-webkit-scrollbar{ display:none; }
 
-  .xp-tab{
+  .experience-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .xp-tab {
     padding: .45rem .65rem;
     font-weight: 600;
     white-space: nowrap;
     border-left: 0;
-    border-bottom: 2px solid rgba(218,218,218,.6);
+    border-bottom: 2px solid rgba(218, 218, 218, .55);
     opacity: .95;
   }
-  .xp-tab.active{
-    border-bottom-color: rgba(234,107,244,.9);
-    color: rgba(234,107,244,.95);
-  }
-  #jobs .experience-content{
-    padding-left: 0;                          /* full width */
-    max-width: 46ch;                          /* nicer line length */
-  }
-  #jobs h3{ font-size: 1.15rem; margin-top: .25rem; }
-  #jobs .job-pane p{ margin-bottom: .5rem; }
-  #jobs .job-pane ul li{
-    margin-bottom: .45rem;
-    font-size: 1rem;
+
+  .xp-tab.active {
+    border-bottom-color: rgba(234, 107, 244, .95);
+    color: rgba(234, 107, 244, .95);
   }
 
-  /* 4) timeline containment (keeps dots/line tidy on phones too) */
-  #timeline{ position: relative; overflow: hidden; }
+  #jobs .experience-content {
+    padding-left: 0;
+    max-width: var(--m-max-text);
+  }
+
+  #jobs h3 {
+    font-size: 1.18rem;
+    margin-top: 2px;
+    margin-bottom: 6px;
+  }
+
+  #jobs .job-pane p {
+    margin-bottom: 8px;
+  }
+
+  #jobs .job-pane ul {
+    margin-top: 4px;
+  }
+
+  #jobs .job-pane ul li {
+    margin-bottom: 8px;
+    font-size: 1.02rem;
+    line-height: 1.45;
+  }
+
+  /* ---- footer spacing ---- */
+  footer {
+    padding-top: var(--m-gap-xl);
+  }
 }
+
 
 
 /* TIMELINE containment (prevents stray dots on mobile & load) */
 #timeline {
   position: relative;
   overflow: hidden;
+}
+
+/* extra space between hero and header */
+
+#landing {
+  padding-top: calc(6rem + env(safe-area-inset-top));
 }
