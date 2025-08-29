@@ -55,48 +55,21 @@
 
 <body>
 
-<!-- LOADER: hex draws, logo sits inside (clipped) -->
-<div id="loader">
-  <div class="loader-wrap" aria-label="Loading">
-    <!-- Hex outline that draws -->
-    <svg class="loader-hex" viewBox="0 0 100 100" aria-hidden="true">
-      <defs>
-        <!-- subtle glow on the stroke -->
-        <filter id="hexGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-
-        <!-- gradient stroke (very subtle) -->
-        <linearGradient id="hexStroke" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="rgba(234,107,244,0.95)"/>
-          <stop offset="100%" stop-color="rgba(234,107,244,0.75)"/>
-        </linearGradient>
-
-        <!-- hex clip for the logo -->
-        <clipPath id="hexClip">
-          <polygon points="50,5 90,30 90,70 50,95 10,70 10,30"/>
-        </clipPath>
-      </defs>
-
-      <polygon
-        class="hex-outline"
-        points="50,5 90,30 90,70 50,95 10,70 10,30"
-        fill="none"
-        stroke="url(#hexStroke)"
-        stroke-width="4"
-        stroke-linejoin="round"
-        filter="url(#hexGlow)"
-      />
+  <!-- DRAW-&-REVEAL LOADER -->
+  <div id="loader">
+    <svg class="loader-svg" viewBox="0 0 100 100" width="100" height="100">
+      <!-- hexagon path -->
+      <polygon id="hex-path" points="50,5 90,30 90,70 50,95 10,70 10,30" fill="none" stroke="rgba(234,107,244,0.86)"
+        stroke-width="4" stroke-linejoin="round" />
+      <!-- a² text hidden until stroke complete -->
+      <text id="hex-text" x="50%" y="55%" text-anchor="middle" fill="#fff" font-family="Poppins, sans-serif"
+        font-size="30" opacity="0">
+        a<sup>2</sup>
+      </text>
     </svg>
-
-    <!-- Your favicon, clipped to the hex and faded in -->
-    <img class="loader-logo" src="assets/favicon.png" alt="">
   </div>
-</div>
+
+
   
 
   <!-- decorative lines -->
