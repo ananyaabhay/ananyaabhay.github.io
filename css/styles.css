@@ -302,16 +302,21 @@ section {
   }
 }
 
-.tl-content {
-  opacity: 0;
-  transform: translateY(8px);
+#timeline {
+  position: relative;
+  overflow: hidden;
 }
 
-.tl-content.is-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity .35s ease, transform .35s ease;
+/* prevents any dot/line bleed */
+.tl {
+  position: relative;
 }
+
+.tl-dot {
+  background: #0f1115;
+}
+
+/* keep, matches your dark card bg */
 
 
 /* Respect reduced motion (in case you add reveal later) */
@@ -327,6 +332,17 @@ section {
   display: flex;
   width: 100%;
   margin-top: 1rem;
+}
+
+#jobs .job-pane {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+#jobs .job-pane.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .experience-nav {
@@ -364,34 +380,45 @@ section {
 
 /* Mobile: make tabs horizontal */
 @media (max-width: 720px) {
+  #jobs .experience-section {
+    flex-direction: column;
+    /* stack tabs above content */
+  }
+
   .experience-nav {
     flex-direction: row;
+    gap: 8px;
     overflow-x: auto;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+  }
+
+  .experience-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .xp-tab {
     white-space: nowrap;
     border-left: 0;
     border-bottom: 2px solid rgba(218, 218, 218, .7);
+    padding: .5rem .75rem;
   }
 
   .xp-tab.active {
     border-bottom-color: rgba(234, 107, 244, 0.86);
   }
+
+  #jobs .experience-content {
+    padding-left: 0;
+    /* full width on mobile */
+  }
 }
+
 
 
 #jobs .experience-content {
   flex: 1;
   padding-left: 2rem;
-}
-
-#jobs .job-pane {
-  display: none;
-}
-
-#jobs .job-pane.active {
-  display: block;
 }
 
 #jobs h3 {
