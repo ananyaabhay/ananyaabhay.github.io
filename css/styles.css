@@ -608,209 +608,66 @@ footer {
   transition: transform .25s ease;
 }
 
-/* ========= MOBILE VIEW REFINEMENT (≤720px) ========= */
-@media (max-width: 720px) {
+/* ========= MOBILE TUNE (v3, ≤720px) ========= */
+@media (max-width: 720px){
 
-  /* ---- spacing tokens (light touch) ---- */
-  :root {
-    --m-gap-xs: 10px;
-    --m-gap-sm: 14px;
-    --m-gap-md: 18px;
-    --m-gap-lg: 26px;
-    --m-gap-xl: 34px;
-    --m-max-text: 46ch;
-    /* comfortable line length */
+  /* anchor offset so titles don't hide under the fixed header */
+  section{ scroll-margin-top: 84px; padding-bottom: 28px; }
+
+  /* header — just a hair smaller */
+  nav.main-nav{ padding: .5rem .8rem; }
+  .main-nav .nav-links a:not(.resume-btn){ font-size: .92rem; }
+
+  /* hero — a touch more room + smaller image */
+  #landing{ padding-top: calc(5.9rem + env(safe-area-inset-top)); }
+  .landing-image img{
+    width: 40vw;            /* was 44vw */
+    max-width: 190px;       /* was 210px */
   }
 
-  /* ---- global rhythm ---- */
-  html {
-    font-size: 17px;
-  }
+  /* section headings */
+  .section-title{ margin-bottom: 12px; }
+  .section-title .num{ font-size: .95rem; margin-right: .4rem; }
+  .section-title h2{ font-size: 1.35rem; }
+  .section-title h2::after{ width: 28px; opacity: .6; }
 
-  body {
-    scroll-snap-type: none;
-  }
+  /* body copy rhythm */
+  #about p, #about li,
+  #jobs .job-pane p, #jobs .job-pane li,
+  #contact p{ font-size: 1rem; line-height: 1.55; }
+  #about ul{ margin-top: .6rem; }
+  #about li{ margin-bottom: .4rem; }
 
-  section {
-    scroll-snap-align: none;
-    height: auto !important;
-    padding: 0 1.1rem;
-  }
-
-  .section-title {
-    margin-bottom: var(--m-gap-sm);
-  }
-
-  .section-title h2 {
-    font-size: 1.6rem;
-  }
-
-  /* keep text widths consistent across sections */
+  /* keep max line-length consistent */
   #landing .landing-content,
   #about,
-  #jobs .experience-content {
-    max-width: var(--m-max-text);
-  }
+  #jobs .experience-content{ max-width: 46ch; }
 
-  /* ---- header: calmer, readable, not bulky ---- */
-  nav.main-nav {
-    padding: calc(.45rem + env(safe-area-inset-top)/2) .85rem .45rem;
-    gap: .5rem;
-    background: rgba(0, 0, 0, .45);
-    /* a hair more opaque for contrast */
-  }
+  /* timeline — lighter density */
+  .tl{ padding-left: 22px; margin-top: 6px; }
+  .tl-dot{ top: 8px; width: 14px; height: 14px; border-width: 2px; }
+  .tl-content{ padding: 10px 12px; border-radius: 12px; }
+  .tl-title{ font-size: 1rem; margin-bottom: 2px; }
+  .tl-desc{ font-size: .96rem; }
+  .tl-item + .tl-item{ margin-top: 12px; }
 
-  .nav-logo {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
+  /* experience — cleaner tabs + tighter content */
+  #jobs .experience-section{ flex-direction: column; gap: 12px; }
+  .experience-nav{ gap: 8px; padding: 2px 0 8px; }
+  .xp-tab{ padding: .4rem .6rem; font-size: .96rem; border-bottom-width: 2px; }
+  .xp-tab.active{ border-bottom-color: rgba(234,107,244,.95); }
+  #jobs .experience-content{ padding-left: 0; max-width: 46ch; }
+  #jobs h3{ font-size: 1.08rem; margin: 4px 0 6px; }
+  #jobs .job-pane p{ font-size: .95rem; margin-bottom: 6px; }
+  #jobs .job-pane ul{ margin-top: 2px; }
+  #jobs .job-pane ul li{ margin-bottom: 8px; }
 
-  .main-nav .nav-links {
-    gap: .6rem;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .main-nav .nav-links::-webkit-scrollbar {
-    display: none;
-  }
-
-  .main-nav .nav-links a:not(.resume-btn) {
-    font-size: .95rem;
-    font-weight: 600;
-    letter-spacing: .15px;
-    opacity: .92;
-  }
-
-  .resume-btn {
-    margin-left: auto;
-    flex: 0 0 auto;
-    padding: .22rem .55rem;
-    font-size: .95rem;
-  }
-
-  /* ---- hero: real breathing room + sized image ---- */
-  #landing {
-    padding-top: calc(5.6rem + env(safe-area-inset-top));
-    /* space under fixed header */
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--m-gap-md);
-  }
-
-  #landing h2.intro {
-    font-size: 1.06rem;
-    opacity: .9;
-    margin-bottom: 2px;
-  }
-
-  #landing h1.name {
-    font-size: clamp(2.1rem, 6.2vw, 2.6rem);
-    line-height: 1.1;
-  }
-
-  #landing h2.tagline {
-    font-size: 1.14rem;
-    line-height: 1.35;
-  }
-
-  #landing p.summary {
-    margin-top: 4px;
-    margin-bottom: var(--m-gap-md);
-  }
-
-  .landing-image {
-    order: 2;
-    /* photo below text */
-    align-self: center;
-    margin: var(--m-gap-sm) 0 var(--m-gap-lg);
-  }
-
-  .landing-image img {
-    width: 44vw;
-    /* smaller circle to kill the dead space */
-    max-width: 210px;
-    height: auto;
-    border-radius: 50%;
-    border: 3px solid rgba(234, 107, 244, .86);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
-  }
-
-  /* ---- timeline: keep tidy ---- */
-  #timeline {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tl-item+.tl-item {
-    margin-top: var(--m-gap-sm);
-  }
-
-  /* ---- experience: clean strip + better content density ---- */
-  #jobs .experience-section {
-    flex-direction: column;
-    gap: var(--m-gap-sm);
-  }
-
-  .experience-nav {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 2px 0 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, .10);
-  }
-
-  .experience-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .xp-tab {
-    padding: .45rem .65rem;
-    font-weight: 600;
-    white-space: nowrap;
-    border-left: 0;
-    border-bottom: 2px solid rgba(218, 218, 218, .55);
-    opacity: .95;
-  }
-
-  .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, .95);
-    color: rgba(234, 107, 244, .95);
-  }
-
-  #jobs .experience-content {
-    padding-left: 0;
-    max-width: var(--m-max-text);
-  }
-
-  #jobs h3 {
-    font-size: 1.18rem;
-    margin-top: 2px;
-    margin-bottom: 6px;
-  }
-
-  #jobs .job-pane p {
-    margin-bottom: 8px;
-  }
-
-  #jobs .job-pane ul {
-    margin-top: 4px;
-  }
-
-  #jobs .job-pane ul li {
-    margin-bottom: 8px;
-    font-size: 1.02rem;
-    line-height: 1.45;
-  }
-
-  /* ---- footer spacing ---- */
-  footer {
-    padding-top: var(--m-gap-xl);
-  }
+  /* contact */
+  #contact .section-title{ margin-top: 8px; }
+  #contact .contact-text{ margin: .35rem 0; }
+  .contact-box{ width: min(420px, 80%); margin: .9rem auto 0; }
 }
+
 
 
 
