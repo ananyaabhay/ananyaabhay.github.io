@@ -274,16 +274,6 @@ section {
   .tl {
     padding-left: 30px;
   }
-
-  #timeline {
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* prevents any dot/line bleed */
-  .tl {
-    position: relative;
-  }
 }
 
 
@@ -509,9 +499,6 @@ footer {
 }
 
 /* ─── Hexagon draw & reveal ─── */
-.loader-svg {
-  overflow: visible;
-}
 
 .loader-wrap {
   position: relative;
@@ -621,123 +608,111 @@ footer {
   transition: transform .25s ease;
 }
 
-/* ===== Mobile polish (≤720px) ===== */
-@media (max-width: 720px) {
+/* ========= Mobile polish (≤720px) ========= */
+@media (max-width: 720px){
 
-  /* reduce header padding; make links scrollable so "Resume" is reachable */
-  nav.main-nav {
-    padding: .6rem .9rem;
+  /* 0) global rhythm */
+  html { font-size: 17px; }                 /* amplify overall type a bit */
+  body { scroll-snap-type: none; }          /* turn off snap on phones */
+  section {
+    scroll-snap-align: none;
+    height: auto !important;                /* stop the 100vh stretching */
+    padding: 0 1.1rem;                      /* tighter gutters */
   }
 
-  .main-nav .nav-links {
-    gap: .75rem;
+  /* 1) header — declutter + keep Resume reachable */
+  nav.main-nav{
+    padding: .55rem .85rem;
+    gap: .5rem;
+  }
+  .nav-logo{ width: 2.25rem; height: 2.25rem; }  /* smaller logo */
+  .main-nav .nav-links{
+    gap: .65rem;
     overflow-x: auto;
-    /* horizontal scroll for the menu */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    white-space: nowrap;                     /* keep one row */
   }
-
-  .main-nav .nav-links::-webkit-scrollbar {
-    display: none;
+  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
+  .main-nav .nav-links a:not(.resume-btn){
+    font-size: .95rem;
+    letter-spacing: .2px;
+    opacity: .92;
   }
-
-  .resume-btn {
+  .resume-btn{
     margin-left: auto;
-    /* push Resume to the right edge */
     flex: 0 0 auto;
-    padding: .25rem .6rem;
+    padding: .22rem .55rem;
     font-size: .95rem;
   }
 
-  /* turn off snap on phones (feels janky + causes partial sections) */
-  body {
-    scroll-snap-type: none;
-  }
-
-  section {
-    scroll-snap-align: none;
-  }
-
-  /* section padding tighter */
-  section {
-    padding: 0 1.25rem;
-  }
-
-  /* HERO: stack text above image, stop the overlap */
-  #landing {
+  /* 2) hero — space from header, stronger type, less image dead space */
+  #landing{
+    padding-top: 5.25rem;                    /* more space below fixed header */
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
-    padding-top: 4.5rem;
-    /* room for fixed nav */
+    gap: .9rem;
   }
+  #landing h2.intro{ font-size: 1.05rem; opacity: .9; }
+  #landing h1.name{ font-size: clamp(2.1rem, 6.2vw, 2.6rem); line-height: 1.1; }
+  #landing h2.tagline{ font-size: 1.12rem; line-height: 1.35; }
 
-  .landing-image {
-    margin-left: 0;
-    /* cancel desktop offset */
-    align-self: center;
+  .landing-image{
     order: 2;
-    /* image below text */
+    align-self: center;
+    margin-left: 0;                           /* cancel desktop offset */
+    margin-block: .5rem;                      /* cut extra blank space */
   }
-
-  .landing-image img {
-    width: 56vw;
-    /* responsive image size */
-    max-width: 260px;
+  .landing-image img{
+    width: 48vw;                              /* smaller circle */
+    max-width: 220px;
     height: auto;
     border-radius: 50%;
-    border: 3px solid rgba(234, 107, 244, 0.86);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, .35);
+    border: 3px solid rgba(234,107,244,.86);
+    box-shadow: 0 10px 28px rgba(0,0,0,.35);
   }
 
-  /* hero type scales down a touch for better rhythm */
-  #landing h1.name {
-    font-size: 2.25rem;
-  }
-
-  #landing h2.tagline {
-    font-size: 1.1rem;
-  }
-
-  #landing h2.intro {
-    font-size: 1.05rem;
-  }
-
-  /* EXPERIENCE: stack tabs above content; horizontal tab strip */
-  #jobs .experience-section {
+  /* 3) experience — cleaner tabs + content spacing */
+  #jobs .experience-section{
     flex-direction: column;
+    gap: .85rem;
+  }
+  .experience-nav{
+    display: flex; flex-direction: row;
     gap: 10px;
-  }
-
-  .experience-nav {
-    flex-direction: row;
-    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    padding: 2px 0 8px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
   }
+  .experience-nav::-webkit-scrollbar{ display:none; }
 
-  .experience-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .xp-tab {
+  .xp-tab{
+    padding: .45rem .65rem;
+    font-weight: 600;
     white-space: nowrap;
     border-left: 0;
-    border-bottom: 2px solid rgba(218, 218, 218, .7);
-    padding: .5rem .75rem;
+    border-bottom: 2px solid rgba(218,218,218,.6);
+    opacity: .95;
+  }
+  .xp-tab.active{
+    border-bottom-color: rgba(234,107,244,.9);
+    color: rgba(234,107,244,.95);
+  }
+  #jobs .experience-content{
+    padding-left: 0;                          /* full width */
+    max-width: 46ch;                          /* nicer line length */
+  }
+  #jobs h3{ font-size: 1.15rem; margin-top: .25rem; }
+  #jobs .job-pane p{ margin-bottom: .5rem; }
+  #jobs .job-pane ul li{
+    margin-bottom: .45rem;
+    font-size: 1rem;
   }
 
-  .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, 0.86);
-  }
-
-  #jobs .experience-content {
-    padding-left: 0;
-  }
-
-  /* full width content */
+  /* 4) timeline containment (keeps dots/line tidy on phones too) */
+  #timeline{ position: relative; overflow: hidden; }
 }
+
 
 /* TIMELINE containment (prevents stray dots on mobile & load) */
 #timeline {
