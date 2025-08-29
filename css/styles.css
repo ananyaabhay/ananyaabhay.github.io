@@ -640,58 +640,6 @@ footer {
 
 
 
-/* ---------- mobile polish v5 (fix spacing, tab shade, CTA size) ---------- */
-@media (max-width: 720px) {
-
-  /* let sections size to their content; keep full-height *possible* */
-  section {
-    height: auto;
-    /* was 100vh globally */
-    min-height: 100vh;
-    /* still can fill the screen if tall */
-    scroll-snap-align: none;
-    padding: 0 1.25rem 20px;
-  }
-
-  /* hero: reduce empty space around the photo */
-  #landing {
-    padding-top: calc(5.6rem + env(safe-area-inset-top));
-    gap: 0.75rem;
-  }
-
-  .landing-image {
-    margin: 10px auto 0;
-  }
-
-  .landing-image img {
-    width: 36vw;
-    /* smaller = less empty ring around it */
-    max-width: 160px;
-  }
-
-  /* experience tabs: remove right-edge fade that was covering the tab */
-  .experience-nav::after {
-    display: none;
-  }
-
-  /* contact CTA: a bit narrower & shorter */
-  .contact-box {
-    width: 72vw;
-    /* was ~78–80vw */
-    margin: 0.9rem auto 0;
-    border-radius: 10px;
-  }
-
-  .contact-box a {
-    padding: 0.8rem 0;
-    /* was 0.9rem */
-    font-size: 1rem;
-    /* slightly smaller */
-  }
-}
-
-
-
 /* TIMELINE containment (prevents stray dots on mobile & load) */
 #timeline {
   position: relative;
@@ -720,213 +668,66 @@ footer {
   }
 }
 
-/* ——— 1) HERO: put photo *below* text and center it on mobile ——— */
-@media (max-width:720px) {
-  #landing {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-top: calc(5.6rem + env(safe-area-inset-top));
-    gap: .8rem;
-    min-height: 100vh;
-  }
-
-  .landing-content {
-    order: 1;
-    max-width: 46ch;
-  }
-
-  .landing-image {
-    order: 2;
-    margin: 18px auto 0 !important;
-    /* centered below text */
-    align-self: center;
-    margin-left: 0 !important;
-    /* kills desktop offset */
-  }
-
-  .landing-image img {
-    width: 34vw;
-    /* smaller = less empty ring */
-    max-width: 150px;
-  }
-}
-
-/* ——— 2) CONTACT: shrink CTA width + keep text centered ——— */
-@media (max-width:720px) {
-  #contact .contact-box {
-    width: min(320px, 82vw);
-    /* narrower than before */
-    margin: 1rem auto 0;
-    border-radius: 10px;
-  }
-
-  #contact .contact-box a {
-    display: block;
-    padding: .8rem 1rem;
-    font-size: 1rem;
-    text-align: center;
-    /* keeps text perfectly centered */
-  }
-}
-
-/* ——— 3) HEADER: tidy spacing + allow horizontal scroll if needed ——— */
-@media (max-width:720px) {
-  nav.main-nav {
-    padding: .5rem .85rem;
-  }
-
-  .main-nav .nav-links {
-    gap: .85rem;
-    white-space: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .main-nav .nav-links::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-/* ——— 4) LOGO: remove hex outline; show subtle circular glow on hover ——— */
-/* Replace the old polygon glow */
-.nav-logo::before {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(234, 107, 244, .55), transparent 65%);
-  filter: blur(10px);
-  opacity: 0;
-  /* hidden by default = no odd static shape */
-  transform: scale(1);
-  transition: opacity .25s ease, transform .25s ease;
-}
-
-.nav-logo:hover::before {
-  opacity: .6;
-  transform: scale(1.05);
-}
-
-/* ——— Bonus: fix the weird tab shading edge on mobile ——— */
-@media (max-width:720px) {
-  .experience-nav::after {
-    display: none;
-  }
-
-  /* removes the right fade overlay */
-}
-
-/* --- Mobile cleanups (≤720px) --- */
+/* ---- Mobile View V8 (≤720px) — final tidy block ---- */
 @media (max-width:720px){
 
-  /* 1) Kill the extra blank space between sections */
+  /* sections size to content; no forced viewport centering */
   section{
-    height:auto !important;      /* stop forcing full viewport height */
-    min-height:auto !important;  /* remove the min-height you added earlier */
-    padding-bottom:20px;
+    height:auto !important;
+    min-height:auto !important;
     scroll-snap-align:none;
+    padding:0 1.25rem 20px;
+    scroll-margin-top:84px;
   }
 
-  /* 2) Put the photo BELOW the hero text, centered, and use the empty area you showed */
+  /* header */
+  nav.main-nav{ padding:.5rem .8rem; }
+  .main-nav .nav-links{ overflow-x:auto; white-space:nowrap; scrollbar-width:none; gap:.85rem; }
+  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
+
+  /* HERO: text first, image centered below, no offset */
   #landing{
-    padding-top: calc(5.6rem + env(safe-area-inset-top));
-    display:flex;
     flex-direction:column;
     align-items:flex-start;
-    gap:.75rem;
+    justify-content:flex-start;                /* <<< stops huge blank gap */
+    padding-top:calc(5.2rem + env(safe-area-inset-top));
+    gap:.6rem;
   }
-  .landing-content{ order:1; max-width:46ch; }
-  .landing-image{
-    order:2;
-    margin:12px auto 0;          /* center horizontally */
-    align-self:center;           /* belt-and-suspenders centering */
-    width:100%;
-    display:flex;
-    justify-content:center;
-  }
+  .landing-image{ order:2; width:100%; margin:10px auto 8px; text-align:center; }
   .landing-image img{
-    width:42vw;                  /* adjust if you want a tad bigger/smaller */
-    max-width:190px;
+    width:44vw; max-width:200px;
     border-radius:50%;
     border:3px solid rgba(234,107,244,.86);
     box-shadow:0 10px 26px rgba(0,0,0,.35);
   }
+  .landing-content{ order:1; max-width:46ch; }
 
-  /* 3) Make the “Hit me up” CTA narrower & text centered */
-  .contact-box{
-    width:min(360px, 72vw);      /* was very wide; this feels balanced */
-    margin:.9rem auto 0;
-    border-radius:10px;
-  }
-  .contact-box a{
-    display:block;
-    text-align:center;
-    padding:.8rem 0;             /* a touch shorter */
-    font-size:1rem;
-  }
+  /* headings + copy rhythm */
+  .section-title{ margin-bottom:12px; }
+  .section-title .num{ font-size:.95rem; margin-right:.4rem; }
+  .section-title h2{ font-size:1.35rem; }
+  #about p, #about li, #jobs .job-pane p, #jobs .job-pane li, #contact p{ font-size:1rem; line-height:1.55; }
 
-  /* 4) Remove the right-edge fade that was shading the XP tabs */
-  .experience-nav::after{ display:none; }
+  /* Timeline spacing */
+  .tl{ padding-left:22px; margin-top:6px; }
+  .tl-content{ padding:10px 12px; border-radius:12px; }
+  .tl-item + .tl-item{ margin-top:12px; }
+
+  /* Experience tabs — no weird shading; show it can scroll */
+  .experience-nav{ overflow-x:auto; gap:8px; padding:2px 0 8px; }
+  .experience-nav::after{ display:none; }      /* <<< removes the right fade */
+  .xp-tab{
+    white-space:nowrap; padding:.4rem .6rem; font-size:.96rem;
+    border-left:0; border-bottom:2px solid rgba(218,218,218,.7);
+  }
+  .xp-tab.active{ border-bottom-color:rgba(234,107,244,.95); }
+  #jobs .experience-content{ padding-left:0; max-width:46ch; }
+
+  /* CTA smaller */
+  .contact-box{ width:min(300px,64vw); margin:1rem auto 0; border-radius:10px; }
+  .contact-box a{ padding:.8rem 0; font-size:1rem; text-align:center; }
 }
 
-/* 5) Header polish + logo: no hex on mobile, subtle glow on hover (desktop) */
-@media (max-width:720px){
-  .main-nav{ padding:.5rem .8rem; }
-  .main-nav .nav-links{ gap:.85rem; overflow-x:auto; white-space:nowrap; }
-  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
-  .nav-logo::before{ display:none; }  /* hide the hex background on phones */
-}
-
-/* Desktop-only gentle glow on hover (keeps the PC vibe clean) */
-@media (hover:hover){
-  .nav-logo{ position:relative; }
-  .nav-logo::after{
-    content:"";
-    position:absolute; inset:-6px;
-    background:radial-gradient(closest-side, rgba(234,107,244,.35), transparent 70%);
-    filter:blur(10px);
-    opacity:0; transition:opacity .25s ease, transform .25s ease;
-    border-radius:50%;
-    z-index:0; pointer-events:none;
-  }
-  .nav-logo:hover::after{ opacity:.6; transform:scale(1.04); }
-}
-
-/* --- FINAL mobile fixes (place at bottom) --- */
-@media (max-width:720px){
-
-  /* 1) Let hero stack from the top (no vertical centering gap) */
-  #landing{
-    justify-content: flex-start;      /* was center via `section` base rule */
-    padding-top: calc(5.2rem + env(safe-area-inset-top));
-    gap: .6rem;                        /* a touch tighter between lines */
-  }
-
-  /* 2) Photo directly below text, centered, tidy size */
-  .landing-image{
-    order: 2;
-    margin: 10px auto 8px;            /* center + small bottom gap */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .landing-image img{
-    width: 44vw;                      /* a bit larger to fill that space */
-    max-width: 200px;
-  }
-
-  /* 3) Keep sections sizing to content (no forced viewport height) */
-  section{
-    height: auto !important;
-    min-height: auto !important;
-    scroll-snap-align: none;
-  }
-
-  /* 4) CTA narrower & centered text */
-  .contact-box{ width: min(320px, 70vw); }
-  .contact-box a{ text-align: center; padding: .8rem 0; font-size: 1rem; }
-
-  /* 5) Remove the tab strip fade so no weird shading */
-  .experience-nav::after{ display:none; }
-}
+/* desktop image offset */
+.landing-image{ margin-left: var(--img-offset); }
+/* cancel it on mobile is already handled above by re-centering */
