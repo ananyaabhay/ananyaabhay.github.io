@@ -329,31 +329,57 @@ section {
   margin-top: 1rem;
 }
 
-#jobs .experience-nav {
-  flex: 0 0 25%;
+.experience-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-#jobs .experience-nav ul {
-  list-style: none;
-  border-left: 2px solid rgba(218, 218, 218, 0.7);
-}
-
-#jobs .experience-nav li {
+.xp-tab {
+  text-align: left;
   padding: .5rem 1rem;
-  cursor: pointer;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  transition: color .2s;
+  color: rgba(255, 255, 255, .85);
+  background: transparent;
+  border: 0;
+  border-left: 2px solid rgba(218, 218, 218, .7);
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
 }
 
-#jobs .experience-nav li.active {
+.xp-tab:hover {
+  color: #fff;
+}
+
+.xp-tab.active {
   color: rgba(234, 107, 244, 0.86);
   border-left: 4px solid rgba(234, 107, 244, 0.86);
 }
 
-#jobs .experience-nav li:hover {
-  color: #fff;
+.xp-tab:focus-visible {
+  outline: 2px solid rgba(234, 107, 244, .6);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
+
+/* Mobile: make tabs horizontal */
+@media (max-width: 720px) {
+  .experience-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .xp-tab {
+    white-space: nowrap;
+    border-left: 0;
+    border-bottom: 2px solid rgba(218, 218, 218, .7);
+  }
+
+  .xp-tab.active {
+    border-bottom-color: rgba(234, 107, 244, 0.86);
+  }
+}
+
 
 #jobs .experience-content {
   flex: 1;
