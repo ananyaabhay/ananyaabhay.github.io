@@ -511,11 +511,12 @@ footer {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
-  width: 78px;
-  height: 78px;
+  transform: translate(-50%, -50%) scale(0.90);
+  /* scaled down a bit more */
+  width: 74px;
+  /* slightly smaller */
+  height: 74px;
   object-fit: contain;
-  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
   opacity: 0;
   animation: logo-in 420ms ease-out 420ms forwards;
 }
