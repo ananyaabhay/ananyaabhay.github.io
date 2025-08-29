@@ -816,3 +816,79 @@ footer {
 
   /* removes the right fade overlay */
 }
+
+/* --- Mobile cleanups (≤720px) --- */
+@media (max-width:720px){
+
+  /* 1) Kill the extra blank space between sections */
+  section{
+    height:auto !important;      /* stop forcing full viewport height */
+    min-height:auto !important;  /* remove the min-height you added earlier */
+    padding-bottom:20px;
+    scroll-snap-align:none;
+  }
+
+  /* 2) Put the photo BELOW the hero text, centered, and use the empty area you showed */
+  #landing{
+    padding-top: calc(5.6rem + env(safe-area-inset-top));
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.75rem;
+  }
+  .landing-content{ order:1; max-width:46ch; }
+  .landing-image{
+    order:2;
+    margin:12px auto 0;          /* center horizontally */
+    align-self:center;           /* belt-and-suspenders centering */
+    width:100%;
+    display:flex;
+    justify-content:center;
+  }
+  .landing-image img{
+    width:42vw;                  /* adjust if you want a tad bigger/smaller */
+    max-width:190px;
+    border-radius:50%;
+    border:3px solid rgba(234,107,244,.86);
+    box-shadow:0 10px 26px rgba(0,0,0,.35);
+  }
+
+  /* 3) Make the “Hit me up” CTA narrower & text centered */
+  .contact-box{
+    width:min(360px, 72vw);      /* was very wide; this feels balanced */
+    margin:.9rem auto 0;
+    border-radius:10px;
+  }
+  .contact-box a{
+    display:block;
+    text-align:center;
+    padding:.8rem 0;             /* a touch shorter */
+    font-size:1rem;
+  }
+
+  /* 4) Remove the right-edge fade that was shading the XP tabs */
+  .experience-nav::after{ display:none; }
+}
+
+/* 5) Header polish + logo: no hex on mobile, subtle glow on hover (desktop) */
+@media (max-width:720px){
+  .main-nav{ padding:.5rem .8rem; }
+  .main-nav .nav-links{ gap:.85rem; overflow-x:auto; white-space:nowrap; }
+  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
+  .nav-logo::before{ display:none; }  /* hide the hex background on phones */
+}
+
+/* Desktop-only gentle glow on hover (keeps the PC vibe clean) */
+@media (hover:hover){
+  .nav-logo{ position:relative; }
+  .nav-logo::after{
+    content:"";
+    position:absolute; inset:-6px;
+    background:radial-gradient(closest-side, rgba(234,107,244,.35), transparent 70%);
+    filter:blur(10px);
+    opacity:0; transition:opacity .25s ease, transform .25s ease;
+    border-radius:50%;
+    z-index:0; pointer-events:none;
+  }
+  .nav-logo:hover::after{ opacity:.6; transform:scale(1.04); }
+}
