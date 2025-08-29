@@ -719,3 +719,100 @@ footer {
     display: none;
   }
 }
+
+/* ——— 1) HERO: put photo *below* text and center it on mobile ——— */
+@media (max-width:720px) {
+  #landing {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: calc(5.6rem + env(safe-area-inset-top));
+    gap: .8rem;
+    min-height: 100vh;
+  }
+
+  .landing-content {
+    order: 1;
+    max-width: 46ch;
+  }
+
+  .landing-image {
+    order: 2;
+    margin: 18px auto 0 !important;
+    /* centered below text */
+    align-self: center;
+    margin-left: 0 !important;
+    /* kills desktop offset */
+  }
+
+  .landing-image img {
+    width: 34vw;
+    /* smaller = less empty ring */
+    max-width: 150px;
+  }
+}
+
+/* ——— 2) CONTACT: shrink CTA width + keep text centered ——— */
+@media (max-width:720px) {
+  #contact .contact-box {
+    width: min(320px, 82vw);
+    /* narrower than before */
+    margin: 1rem auto 0;
+    border-radius: 10px;
+  }
+
+  #contact .contact-box a {
+    display: block;
+    padding: .8rem 1rem;
+    font-size: 1rem;
+    text-align: center;
+    /* keeps text perfectly centered */
+  }
+}
+
+/* ——— 3) HEADER: tidy spacing + allow horizontal scroll if needed ——— */
+@media (max-width:720px) {
+  nav.main-nav {
+    padding: .5rem .85rem;
+  }
+
+  .main-nav .nav-links {
+    gap: .85rem;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .main-nav .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ——— 4) LOGO: remove hex outline; show subtle circular glow on hover ——— */
+/* Replace the old polygon glow */
+.nav-logo::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(234, 107, 244, .55), transparent 65%);
+  filter: blur(10px);
+  opacity: 0;
+  /* hidden by default = no odd static shape */
+  transform: scale(1);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.nav-logo:hover::before {
+  opacity: .6;
+  transform: scale(1.05);
+}
+
+/* ——— Bonus: fix the weird tab shading edge on mobile ——— */
+@media (max-width:720px) {
+  .experience-nav::after {
+    display: none;
+  }
+
+  /* removes the right fade overlay */
+}
