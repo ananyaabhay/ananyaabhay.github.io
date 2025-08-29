@@ -16,17 +16,39 @@ setInterval(() => {
     .textContent = words[idx];
 }, 2000);
 
-// jobs tab switching
-document.querySelectorAll('#jobs .experience-nav li').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('#jobs .experience-nav li')
-      .forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('#jobs .job-pane')
-      .forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.job).classList.add('active');
+// Accessible Experience tabs (click + arrow keys)
+(() => {
+  const tabs = Array.from(document.querySelectorAll('.xp-tab'));
+  const panes = Array.from(document.querySelectorAll('#jobs .job-pane'));
+
+  function activate(idx) {
+    tabs.forEach((t, i) => {
+      const selected = i === idx;
+      t.classList.toggle('active', selected);
+      t.setAttribute('aria-selected', selected);
+      t.tabIndex = selected ? 0 : -1;
+      panes[i].classList.toggle('active', selected);
+      panes[i].hidden = !selected;
+    });
+    tabs[idx].focus();
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activate(i));
+    tab.addEventListener('keydown', (e) => {
+      const key = e.key;
+      if (key === 'ArrowDown' || key === 'ArrowRight') { e.preventDefault(); activate((i + 1) % tabs.length); }
+      if (key === 'ArrowUp' || key === 'ArrowLeft') { e.preventDefault(); activate((i - 1 + tabs.length) % tabs.length); }
+      if (key === 'Home') { e.preventDefault(); activate(0); }
+      if (key === 'End') { e.preventDefault(); activate(tabs.length - 1); }
+    });
   });
-});
+
+  // init state
+  panes.forEach((p, i) => { p.hidden = !p.classList.contains('active'); });
+  tabs.forEach((t, i) => { t.tabIndex = t.classList.contains('active') ? 0 : -1; });
+})();
+
 
 // ensure loader is visible at least 1.2s, then fade out and remove safely
 const start = performance.now();
