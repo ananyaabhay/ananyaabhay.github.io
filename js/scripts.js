@@ -16,40 +16,6 @@ setInterval(() => {
     .textContent = words[idx];
 }, 2000);
 
-// Accessible Experience tabs (click + arrow keys)
-(() => {
-  const tabs = Array.from(document.querySelectorAll('.xp-tab'));
-  const panes = Array.from(document.querySelectorAll('#jobs .job-pane'));
-
-  function activate(idx) {
-    tabs.forEach((t, i) => {
-      const selected = i === idx;
-      t.classList.toggle('active', selected);
-      t.setAttribute('aria-selected', selected);
-      t.tabIndex = selected ? 0 : -1;
-      panes[i].classList.toggle('active', selected);
-      panes[i].hidden = !selected;
-    });
-    tabs[idx].focus({ preventScroll: true });
-    tabs[idx].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-  }
-
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activate(i));
-    tab.addEventListener('keydown', (e) => {
-      const key = e.key;
-      if (key === 'ArrowDown' || key === 'ArrowRight') { e.preventDefault(); activate((i + 1) % tabs.length); }
-      if (key === 'ArrowUp' || key === 'ArrowLeft') { e.preventDefault(); activate((i - 1 + tabs.length) % tabs.length); }
-      if (key === 'Home') { e.preventDefault(); activate(0); }
-      if (key === 'End') { e.preventDefault(); activate(tabs.length - 1); }
-    });
-  });
-
-  // init state
-  panes.forEach((p, i) => { p.hidden = !p.classList.contains('active'); });
-  tabs.forEach((t, i) => { t.tabIndex = t.classList.contains('active') ? 0 : -1; });
-})();
 
 
 // ensure loader is visible at least 1.2s, then fade out and remove safely
@@ -105,20 +71,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// ----- auto-advance tabs  -----
-// cycles through .xp-tab every 5s, stops on any interaction/*
+// Accessible Experience tabs + gentle auto-advance (no page jump)
+(() => {
+  const tabs  = [...document.querySelectorAll('.xp-tab')];
+  const panes = [...document.querySelectorAll('#jobs .job-pane')];
+  const nav   = document.querySelector('.experience-nav');
+  if (!tabs.length || !panes.length || !nav) return;
 
-let xpAuto = setInterval(nextXpTab, 5000);
-['pointerdown', 'scroll', 'keydown'].forEach(ev =>
-  window.addEventListener(ev, () => { clearInterval(xpAuto); xpAuto = null; }, { once: true })
-);
+  // init visibility
+  panes.forEach(p => p.hidden = !p.classList.contains('active'));
+  tabs.forEach(t => t.tabIndex = t.classList.contains('active') ? 0 : -1);
 
-function nextXpTab() {
-  const tabs = [...document.querySelectorAll('.xp-tab')];
-  const active = tabs.findIndex(t => t.classList.contains('active'));
-  const next = tabs[(active + 1) % tabs.length];
-  if (!next) return;
-  next.click();
-  // ensure the active tab is visible in the strip
-  next.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
-}
+  function centerTabHorizontally(idx) {
+    // Only adjust the horizontal scroll of the tab strip
+    const t = tabs[idx];
+    const targetLeft = t.offsetLeft - (nav.clientWidth - t.clientWidth) / 2;
+    nav.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+  }
+
+  function activate(idx, { fromAuto = false } = {}) {
+    tabs.forEach((t, i) => {
+      const on = i === idx;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      panes[i].classList.toggle('active', on);
+      panes[i].hidden = !on;
+    });
+
+    // Keep keyboard focus where it was unless user clicked/pressed
+    if (!fromAuto) {
+      tabs[idx].focus({ preventScroll: true }); // no vertical jump
+    }
+    centerTabHorizontally(idx); // safe: only horizontal scroll within nav
+    activeIndex = idx;
+  }
+
+  // Click + keyboard controls
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activate(i));
+    tab.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); activate((i + 1) % tabs.length); }
+      if (k === 'ArrowLeft'  || k === 'ArrowUp')   { e.preventDefault(); activate((i - 1 + tabs.length) % tabs.length); }
+      if (k === 'Home') { e.preventDefault(); activate(0); }
+      if (k === 'End')  { e.preventDefault(); activate(tabs.length - 1); }
+    });
+  });
+
+  // ---------- Auto-advance ----------
+  let activeIndex = tabs.findIndex(t => t.classList.contains('active'));
+  if (activeIndex < 0) activeIndex = 0;
+
+  const AUTOPLAY_MS = 5000;
+  let timer = null;
+
+  function nextAuto() {
+    const next = (activeIndex + 1) % tabs.length;
+    activate(next, { fromAuto: true }); // no focus, no jump
+  }
+
+  function startAuto() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // respect user setting
+    if (!timer) timer = setInterval(nextAuto, AUTOPLAY_MS);
+  }
+  function stopAuto() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  // Stop on any real interaction; don’t restart (feels respectful)
+  ['pointerdown','keydown','wheel','touchstart'].forEach(ev => {
+    window.addEventListener(ev, stopAuto, { once: true, passive: true });
+  });
+  nav.addEventListener('scroll', stopAuto, { once: true, passive: true });
+
+  // Start after load so first paint never moves:
+  window.addEventListener('load', startAuto);
+})();
