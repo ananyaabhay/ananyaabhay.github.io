@@ -608,67 +608,145 @@ footer {
   transition: transform .25s ease;
 }
 
-/* ========= MOBILE TUNE (v3, ≤720px) ========= */
-@media (max-width: 720px){
+/* ========= MOBILE TUNE (v4, ≤720px) ========= */
+@media (max-width: 720px) {
 
-  /* anchor offset so titles don't hide under the fixed header */
-  section{ scroll-margin-top: 84px; padding-bottom: 28px; }
-
-  /* header — just a hair smaller */
-  nav.main-nav{ padding: .5rem .8rem; }
-  .main-nav .nav-links a:not(.resume-btn){ font-size: .92rem; }
-
-  /* hero — a touch more room + smaller image */
-  #landing{ padding-top: calc(5.9rem + env(safe-area-inset-top)); }
-  .landing-image img{
-    width: 40vw;            /* was 44vw */
-    max-width: 190px;       /* was 210px */
+  /* turn off snap on phones (prevents janky partial sections) */
+  body { scroll-snap-type: none; }
+  section {
+    scroll-margin-top: 84px;     /* anchors not hidden by fixed header */
+    padding-bottom: 28px;
+    scroll-snap-align: none;
   }
 
-  /* section headings */
-  .section-title{ margin-bottom: 12px; }
-  .section-title .num{ font-size: .95rem; margin-right: .4rem; }
-  .section-title h2{ font-size: 1.35rem; }
-  .section-title h2::after{ width: 28px; opacity: .6; }
+  /* header—slightly tighter */
+  nav.main-nav { padding: .5rem .8rem; }
+  .main-nav .nav-links a:not(.resume-btn) { font-size: .92rem; }
+
+  /* HERO: text first, image below, clean spacing */
+  #landing { 
+    padding-top: calc(5.9rem + env(safe-area-inset-top));
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .landing-content { order: 1; max-width: 46ch; }
+  .landing-image { order: 2; margin: 14px auto 0; }
+  .landing-image img {
+    width: 42vw;                /* pick one size */
+    max-width: 190px;
+    border-radius: 50%;
+    border: 3px solid rgba(234,107,244,.86);
+    box-shadow: 0 10px 26px rgba(0,0,0,.35);
+  }
+
+  /* headings */
+  .section-title { margin-bottom: 12px; }
+  .section-title .num { font-size: .95rem; margin-right: .4rem; }
+  .section-title h2 { font-size: 1.35rem; }
+  .section-title h2::after { width: 28px; opacity: .6; }
 
   /* body copy rhythm */
-  #about p, #about li,
-  #jobs .job-pane p, #jobs .job-pane li,
-  #contact p{ font-size: 1rem; line-height: 1.55; }
-  #about ul{ margin-top: .6rem; }
-  #about li{ margin-bottom: .4rem; }
+  #about p, #about li, #jobs .job-pane p, #jobs .job-pane li, #contact p {
+    font-size: 1rem; line-height: 1.55;
+  }
+  #about ul { margin-top: .6rem; }
+  #about li { margin-bottom: .4rem; }
 
-  /* keep max line-length consistent */
-  #landing .landing-content,
-  #about,
-  #jobs .experience-content{ max-width: 46ch; }
+  /* keep readable line length */
+  #landing .landing-content, #about, #jobs .experience-content { max-width: 46ch; }
 
-  /* timeline — lighter density */
-  .tl{ padding-left: 22px; margin-top: 6px; }
-  .tl-dot{ top: 8px; width: 14px; height: 14px; border-width: 2px; }
-  .tl-content{ padding: 10px 12px; border-radius: 12px; }
-  .tl-title{ font-size: 1rem; margin-bottom: 2px; }
-  .tl-desc{ font-size: .96rem; }
-  .tl-item + .tl-item{ margin-top: 12px; }
+  /* TIMELINE: lighter density */
+  .tl { padding-left: 22px; margin-top: 6px; }
+  .tl-content { padding: 10px 12px; border-radius: 12px; }
+  .tl-title { font-size: 1rem; margin-bottom: 2px; }
+  .tl-desc { font-size: .96rem; }
+  .tl-item + .tl-item { margin-top: 12px; }
 
-  /* experience — cleaner tabs + tighter content */
-  #jobs .experience-section{ flex-direction: column; gap: 12px; }
-  .experience-nav{ gap: 8px; padding: 2px 0 8px; }
-  .xp-tab{ padding: .4rem .6rem; font-size: .96rem; border-bottom-width: 2px; }
-  .xp-tab.active{ border-bottom-color: rgba(234,107,244,.95); }
-  #jobs .experience-content{ padding-left: 0; max-width: 46ch; }
-  #jobs h3{ font-size: 1.08rem; margin: 4px 0 6px; }
-  #jobs .job-pane p{ font-size: .95rem; margin-bottom: 6px; }
-  #jobs .job-pane ul{ margin-top: 2px; }
-  #jobs .job-pane ul li{ margin-bottom: 8px; }
+  /* EXPERIENCE: tabs above content; show it can scroll */
+  #jobs .experience-section { flex-direction: column; gap: 12px; }
+  .experience-nav { gap: 8px; padding: 2px 0 8px; overflow-x: auto; }
+  .experience-nav::-webkit-scrollbar { display: none; }  /* iOS/Android clean */
+  .xp-tab {
+    white-space: nowrap;
+    padding: .4rem .6rem;
+    font-size: .96rem;
+    border-left: 0;
+    border-bottom: 2px solid rgba(218,218,218,.7);
+  }
+  .xp-tab.active { border-bottom-color: rgba(234,107,244,.95); }
+  #jobs .experience-content { padding-left: 0; max-width: 46ch; }
+  #jobs h3 { font-size: 1.08rem; margin: 4px 0 6px; }
+  #jobs .job-pane p { font-size: .95rem; margin-bottom: 6px; }
+  #jobs .job-pane ul { margin-top: 2px; }
+  #jobs .job-pane ul li { margin-bottom: 8px; }
 
-  /* contact */
-  #contact .section-title{ margin-top: 8px; }
-  #contact .contact-text{ margin: .35rem 0; }
-  .contact-box{ width: min(420px, 80%); margin: .9rem auto 0; }
+  /* CONTACT CTA */
+  .contact-box {
+    width: min(420px, 78vw);
+    margin: 1.1rem auto 0;
+    border-radius: 10px;
+    box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    text-align: center;
+  }
+  .contact-box a { display: inline-block; width: 100%; padding: .9rem 0; font-size: 1.05rem; }
+  .contact-icons { margin: 1.1rem 0 1.6rem; gap: 24px; }
 }
 
 
+/* fade edge on the right to suggest scroll */
+.experience-nav {
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.experience-nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 32px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .28));
+}
+
+/* tiny swipe hint chip (mobile only) */
+@media (max-width:720px) {
+  .xp-hint {
+    position: absolute;
+    right: 36px;
+    top: -28px;
+    font-size: .78rem;
+    opacity: .72;
+  }
+}
+
+/* contact CTA — cleaner width and spacing on mobile */
+@media (max-width:720px) {
+  .contact-box {
+    margin: 1.1rem auto 0;
+    width: min(420px, 78vw);
+    border-radius: 10px;
+    /* less bubbly than huge pills */
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .25);
+    text-align: center;
+  }
+
+  .contact-box a {
+    display: inline-block;
+    width: 100%;
+    padding: .9rem 0;
+    /* consistent button height */
+    font-size: 1.05rem;
+  }
+
+  .contact-icons {
+    margin: 1.1rem 0 1.6rem;
+    gap: 24px;
+  }
+}
 
 
 /* TIMELINE containment (prevents stray dots on mobile & load) */
@@ -676,9 +754,15 @@ footer {
   position: relative;
   overflow: hidden;
 }
-
-/* extra space between hero and header */
-
-#landing {
-  padding-top: calc(6rem + env(safe-area-inset-top));
+ /* header nav items scroll (if needed) on mobile */
+ 
+ @media (max-width:720px){
+  .main-nav .nav-links{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:.85rem;
+    white-space:nowrap;
+  }
+  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
 }
