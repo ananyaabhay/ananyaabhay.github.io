@@ -669,65 +669,153 @@ footer {
 }
 
 /* ---- Mobile View V8 (≤720px) — final tidy block ---- */
-@media (max-width:720px){
+@media (max-width:720px) {
 
   /* sections size to content; no forced viewport centering */
-  section{
-    height:auto !important;
-    min-height:auto !important;
-    scroll-snap-align:none;
-    padding:0 1.25rem 20px;
-    scroll-margin-top:84px;
+  section {
+    height: auto !important;
+    min-height: auto !important;
+    scroll-snap-align: none;
+    padding: 0 1.25rem 20px;
+    scroll-margin-top: 84px;
   }
 
   /* header */
-  nav.main-nav{ padding:.5rem .8rem; }
-  .main-nav .nav-links{ overflow-x:auto; white-space:nowrap; scrollbar-width:none; gap:.85rem; }
-  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
+  nav.main-nav {
+    padding: .5rem .8rem;
+  }
+
+  .main-nav .nav-links {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    gap: .85rem;
+  }
+
+  .main-nav .nav-links::-webkit-scrollbar {
+    display: none;
+  }
 
   /* HERO: text first, image centered below, no offset */
-  #landing{
-    flex-direction:column;
-    align-items:flex-start;
-    justify-content:flex-start;                /* <<< stops huge blank gap */
-    padding-top:calc(5.2rem + env(safe-area-inset-top));
-    gap:.6rem;
+  #landing {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /* <<< stops huge blank gap */
+    padding-top: calc(5.2rem + env(safe-area-inset-top));
+    gap: .6rem;
   }
-  .landing-image{ order:2; width:100%; margin:10px auto 8px; text-align:center; }
-  .landing-image img{
-    width:44vw; max-width:200px;
-    border-radius:50%;
-    border:3px solid rgba(234,107,244,.86);
-    box-shadow:0 10px 26px rgba(0,0,0,.35);
+
+  .landing-image {
+    order: 2;
+    width: 100%;
+    margin: 10px auto 8px;
+    text-align: center;
   }
-  .landing-content{ order:1; max-width:46ch; }
+
+  .landing-image img {
+    width: 44vw;
+    max-width: 200px;
+    border-radius: 50%;
+    border: 3px solid rgba(234, 107, 244, .86);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
+  }
+
+  .landing-content {
+    order: 1;
+    max-width: 46ch;
+  }
 
   /* headings + copy rhythm */
-  .section-title{ margin-bottom:12px; }
-  .section-title .num{ font-size:.95rem; margin-right:.4rem; }
-  .section-title h2{ font-size:1.35rem; }
-  #about p, #about li, #jobs .job-pane p, #jobs .job-pane li, #contact p{ font-size:1rem; line-height:1.55; }
+  .section-title {
+    margin-bottom: 12px;
+  }
+
+  .section-title .num {
+    font-size: .95rem;
+    margin-right: .4rem;
+  }
+
+  .section-title h2 {
+    font-size: 1.35rem;
+  }
+
+  #about p,
+  #about li,
+  #jobs .job-pane p,
+  #jobs .job-pane li,
+  #contact p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
 
   /* Timeline spacing */
-  .tl{ padding-left:22px; margin-top:6px; }
-  .tl-content{ padding:10px 12px; border-radius:12px; }
-  .tl-item + .tl-item{ margin-top:12px; }
+  .tl {
+    padding-left: 22px;
+    margin-top: 6px;
+  }
+
+  .tl-content {
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+
+  .tl-item+.tl-item {
+    margin-top: 12px;
+  }
 
   /* Experience tabs — no weird shading; show it can scroll */
-  .experience-nav{ overflow-x:auto; gap:8px; padding:2px 0 8px; }
-  .experience-nav::after{ display:none; }      /* <<< removes the right fade */
-  .xp-tab{
-    white-space:nowrap; padding:.4rem .6rem; font-size:.96rem;
-    border-left:0; border-bottom:2px solid rgba(218,218,218,.7);
+  .experience-nav {
+    overflow-x: auto;
+    gap: 8px;
+    padding: 2px 0 8px;
   }
-  .xp-tab.active{ border-bottom-color:rgba(234,107,244,.95); }
-  #jobs .experience-content{ padding-left:0; max-width:46ch; }
+
+  .experience-nav::after {
+    display: none;
+  }
+
+  /* <<< removes the right fade */
+  .xp-tab {
+    white-space: nowrap;
+    padding: .4rem .6rem;
+    font-size: .96rem;
+    border-left: 0;
+    border-bottom: 2px solid rgba(218, 218, 218, .7);
+  }
+
+  .xp-tab.active {
+    border-bottom-color: rgba(234, 107, 244, .95);
+  }
+
+  #jobs .experience-content {
+    padding-left: 0;
+    max-width: 46ch;
+  }
 
   /* CTA smaller */
-  .contact-box{ width:min(300px,64vw); margin:1rem auto 0; border-radius:10px; }
-  .contact-box a{ padding:.8rem 0; font-size:1rem; text-align:center; }
+  .contact-box {
+    width: min(300px, 64vw);
+    margin: 1rem auto 0;
+    border-radius: 10px;
+  }
+
+  .contact-box a {
+    padding: .8rem 0;
+    font-size: 1rem;
+    text-align: center;
+  }
 }
 
 /* desktop image offset */
-.landing-image{ margin-left: var(--img-offset); }
+.landing-image {
+  margin-left: var(--img-offset);
+}
+
 /* cancel it on mobile is already handled above by re-centering */
+
+/* closes the tiny notch at sharp corners */
+.hex-outline {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
