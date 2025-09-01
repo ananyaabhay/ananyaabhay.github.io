@@ -44,8 +44,7 @@ nav.main-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .6rem 2rem;
-  /* compact but tappable */
+  padding: 1rem 2rem;
   background: rgba(0, 0, 0, .3);
   backdrop-filter: blur(8px);
   z-index: 10;
@@ -242,7 +241,7 @@ section {
 
 .tl-title {
   font-size: 1.05rem;
-  margin: 0 0 4px;
+  margin: 0 0 4px 0;
   letter-spacing: -.1px;
 }
 
@@ -269,7 +268,7 @@ section {
   }
 }
 
-/* ─── EXPERIENCE (old behavior preserved) ───────────────── */
+/* ─── EXPERIENCE (old behavior) ─────────────────────────── */
 #jobs .experience-section {
   display: flex;
   width: 100%;
@@ -366,11 +365,11 @@ section {
 
   .experience-nav {
     flex-direction: row;
-    gap: 10px;
+    gap: 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
   }
 
   .experience-nav::-webkit-scrollbar {
@@ -381,13 +380,11 @@ section {
     white-space: nowrap;
     border-left: 0;
     border-bottom: 2px solid rgba(218, 218, 218, .7);
-    padding: .45rem .7rem;
-    font-size: .98rem;
+    padding: .5rem .75rem;
   }
 
   .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, .95);
-    color: rgba(234, 107, 244, .95);
+    border-bottom-color: rgba(234, 107, 244, .86);
   }
 
   #jobs .experience-content {
@@ -396,7 +393,7 @@ section {
   }
 }
 
-/* ─── CONTACT (old feel; centered button + icons; no outer box) ───── */
+/* ─── CONTACT (old feel; no outer pink box) ─────────────── */
 #contact {
   align-items: flex-start;
   text-align: left;
@@ -405,25 +402,23 @@ section {
 .contact-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* center stack */
+  align-items:center;
   gap: 16px;
   max-width: 48ch;
   margin-top: 10px;
-  text-align: center;
+  text-align:center; 
 }
 
+/* blurb under title centered across the width (like before) */
 .contact-text {
   text-align: center;
   width: 100%;
   margin: .5rem 0;
 }
 
-/* single pink button */
+/* compact pink button only */
 .contact-box {
   margin: 0;
-  display: flex;
-  justify-content: center;
 }
 
 .contact-box a {
@@ -452,11 +447,10 @@ section {
   box-shadow: 0 8px 18px rgba(0, 0, 0, .2);
 }
 
-/* icons */
+/* icons (single rule) */
 .contact-icons {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 16px;
   margin-top: 6px;
 }
@@ -480,7 +474,7 @@ footer {
   color: rgba(255, 255, 255, .7);
 }
 
-/* ─── LOADER ─────────────────────────────────────────────── */
+/* ─── LOADER (unchanged) ─────────────────────────────────── */
 #loader {
   position: fixed;
   inset: 0;
@@ -542,7 +536,7 @@ footer {
   }
 }
 
-/* ─── LOGO GLOW ─────────────────────────────────────────── */
+/* ─── LOGO GLOW (kept, subtle) ──────────────────────────── */
 .nav-logo {
   position: relative;
   width: 3rem;
@@ -586,22 +580,18 @@ footer {
   transition: transform .25s;
 }
 
-/* ─── MOBILE TWEAKS (≤720px) ───────────────────────────── */
+/* ─── MOBILE GLOBAL TWEAKS ──────────────────────────────── */
 @media (max-width:720px) {
   section {
     height: auto !important;
     min-height: auto !important;
     scroll-snap-align: none;
-    padding: 0 1.25rem 28px;
-    scroll-margin-top: 88px;
-  }
-
-  section+section {
-    padding-top: 20px;
+    padding: 0 1.25rem 20px;
+    scroll-margin-top: 84px;
   }
 
   nav.main-nav {
-    padding: .45rem .75rem !important;
+    padding: .5rem .8rem;
   }
 
   .main-nav .nav-links {
@@ -619,8 +609,8 @@ footer {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding-top: calc(5.8rem + env(safe-area-inset-top));
-    gap: .75rem;
+    padding-top: calc(5.5rem + env(safe-area-inset-top));
+    gap: 1rem;
   }
 
   .landing-image {
@@ -656,10 +646,246 @@ footer {
     font-size: 1.2rem;
   }
 
+  #about p,
+  #about li,
+  #jobs .job-pane p,
+  #jobs .job-pane li,
+  #contact p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .tl {
+    padding-left: 22px;
+    margin-top: 6px;
+  }
+
+  .tl-content {
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+
+  .tl-item+.tl-item {
+    margin-top: 12px;
+  }
+
+  /* Contact stack width + spacing on mobile */
+  .contact-section {
+    max-width: 46ch;
+    gap: 14px;
+  }
+
+  .contact-box a {
+    padding: .6rem 1rem;
+    font-size: .96rem;
+  }
+
+  .contact-icons {
+    gap: 14px;
+  }
+
+  body {
+    scroll-snap-type: none;
+  }
+}
+
+/* =========================
+   QUICK FIX - Test
+   ========================= */
+
+/* 1) Desktop: remove the extra box around "Hit me up" */
+@media (min-width:721px) {
+  .contact-box {
+    /* container only, no styling */
+    background: none !important;
+    padding: 0 !important;
+    margin-top: 1rem;
+  }
+
+  .contact-box a {
+    /* the actual button */
+    display: inline-block;
+    background: #ea6bf4;
+    color: #140019;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0.65rem 1.1rem;
+    text-decoration: none;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
+  }
+}
+
+/* 2) Mobile comfort: header, hero type, spacing */
+@media (max-width:720px) {
+
+  /* Header: slightly shorter so it doesn't clip and keeps all items visible */
+  nav.main-nav {
+    padding: .45rem .75rem !important;
+  }
+
+  .main-nav .nav-links a {
+    font-size: .9rem;
+  }
+
+  /* Landing: scale type with clamp + reduce vertical crowding */
+  #landing {
+    padding-top: calc(4.6rem + env(safe-area-inset-top)) !important;
+    gap: .75rem !important;
+  }
+
   #landing h2.intro {
     font-size: clamp(1rem, 3.4vw, 1.1rem);
   }
 
+  #landing h1.name {
+    font-size: clamp(2.1rem, 9vw, 2.75rem);
+  }
+
+  #landing h2.tagline {
+    font-size: clamp(1.15rem, 4.2vw, 1.35rem);
+  }
+
+  #landing p.summary {
+    font-size: 1rem;
+    line-height: 1.55;
+    max-width: 46ch;
+  }
+
+  /* 3) Experience: tabs + role/title sizing harmony */
+  .experience-nav {
+    gap: 10px;
+  }
+
+  .xp-tab {
+    font-size: .96rem;
+    padding: .45rem .7rem;
+  }
+
+  #jobs h3 {
+    /* Role @ Company */
+    font-size: clamp(1.1rem, 5.2vw, 1.45rem) !important;
+    line-height: 1.25;
+    margin-bottom: .35rem;
+  }
+
+  #jobs .job-pane p {
+    font-size: .98rem;
+  }
+
+  #jobs .job-pane ul li {
+    font-size: .98rem;
+    line-height: 1.5;
+  }
+
+  /* 4) Contact: keep title left, center the copy and icons */
+  #contact {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .contact-text {
+    text-align: center;
+    width: 100%;
+  }
+
+  .contact-box {
+    background: none !important;
+    /* ensure no outer pink block on mobile either */
+    padding: 0 !important;
+    margin: .75rem 0 0;
+  }
+
+  .contact-box a {
+    display: inline-block;
+    width: auto;
+    padding: .7rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    background: #ea6bf4;
+    color: #140019;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
+  }
+
+  .contact-icons {
+    width: 100%;
+    justify-content: center !important;
+    /* center the icons */
+    align-items: center;
+    gap: 1rem;
+    margin: .9rem 0 0;
+  }
+}
+
+/* 5) One definitive icons style (avoid duplicates) */
+.contact-icons a i {
+  font-size: 1.2rem;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(218, 218, 218, .7);
+  transition: -webkit-text-stroke-color .2s;
+}
+
+.contact-icons a:hover i {
+  -webkit-text-stroke-color: #ea6bf4;
+}
+
+/* ========== CONTACT (center + single button, no outer box) ========== */
+#contact .contact-section {
+  align-items: center;
+  text-align: center;
+}
+
+#contact .contact-box {
+  background: none !important;
+  /* kill the outer box on desktop */
+  padding: 0 !important;
+  margin: 1rem auto 0;
+  border-radius: 0;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#contact .contact-box a {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  font-weight: 700;
+  border-radius: 10px;
+  background: #ea6bf4;
+  color: #140019;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+#contact .contact-box a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
+  background: #f08df6;
+}
+
+#contact .contact-icons {
+  justify-content: center;
+  /* icons centered to match copy */
+  margin: 14px 0 0;
+  gap: 16px;
+}
+
+/* ========== GLOBAL MOBILE TUNING (≤720px) ========== */
+@media (max-width:720px) {
+
+  /* more space between sections under the sticky header */
+  section {
+    padding: 0 1.25rem 28px;
+    scroll-margin-top: 88px;
+  }
+
+  section+section {
+    padding-top: 20px;
+  }
+
+  /* hero sizing feels calmer */
   #landing h1.name {
     font-size: clamp(1.9rem, 6.5vw, 2.4rem);
   }
@@ -669,12 +895,16 @@ footer {
   }
 
   #landing p.summary {
-    font-size: .98rem;
+    font-size: 0.98rem;
     line-height: 1.55;
-    max-width: 46ch;
   }
 
-  /* Experience text rhythm */
+  /* keep navbar from overlapping: a touch more top padding on hero */
+  #landing {
+    padding-top: calc(5.8rem + env(safe-area-inset-top));
+  }
+
+  /* Experience: headings vs body rhythm */
   #jobs h3 {
     font-size: 1.22rem;
     line-height: 1.25;
@@ -686,27 +916,59 @@ footer {
   }
 
   #jobs .job-pane ul li {
-    font-size: .98rem;
+    font-size: 0.98rem;
     line-height: 1.5;
   }
 
-  /* Contact: compact button */
-  .contact-section {
-    max-width: 46ch;
-    gap: 14px;
+  /* tabs look lighter and readable */
+  .experience-nav {
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    padding-bottom: 6px;
   }
 
-  .contact-box a {
+  .xp-tab {
+    padding: .45rem .7rem;
+    font-size: .98rem;
+    border-left: 0;
+    border-bottom: 2px solid rgba(218, 218, 218, .7);
+  }
+
+  .xp-tab.active {
+    border-bottom-color: rgba(234, 107, 244, .95);
+    color: rgba(234, 107, 244, .95);
+  }
+
+  /* contact: keep centered and compact on phone */
+  #contact .contact-box a {
     padding: .7rem 1.2rem;
     font-size: 1rem;
   }
 
-  .contact-icons {
+  #contact .contact-icons {
     gap: 14px;
   }
 
-  /* hide hex glow on mobile */
+  /* hide the hex glow on mobile */
   .nav-logo::before {
     display: none !important;
+  }
+}
+
+/* ========== DESKTOP SMALL TWEAKS ========== */
+/* ensure header height has enough click room but doesn’t crowd content */
+nav.main-nav {
+  padding: .6rem 2rem;
+}
+
+/* remove any accidental background on .contact-box on desktop too */
+@media (min-width:721px) {
+  #contact .contact-section {
+    align-items: center;
+    text-align: center;
+  }
+
+  #contact .contact-icons {
+    justify-content: center;
   }
 }
