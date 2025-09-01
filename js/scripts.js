@@ -6,15 +6,17 @@ document.addEventListener('pointermove', e => {
   document.body.style.setProperty('--mouse-y', y);
 });
 
-// tagline animation: fun → cool → interesting
-const words = ['impactful', 'ship-ready', 'scalable', 'frictionless', 'measurable'
-];
+// tagline animation: rotates words if target exists
+const words = ['impactful', 'ship-ready', 'scalable', 'frictionless', 'measurable'];
 let idx = 0;
-setInterval(() => {
-  idx = (idx + 1) % words.length;
-  document.querySelector('#landing .tagline #anim-word')
-    .textContent = words[idx];
-}, 2000);
+const animEl = document.querySelector('#landing .tagline #anim-word');
+if (animEl) {
+  setInterval(() => {
+    idx = (idx + 1) % words.length;
+    animEl.textContent = words[idx];
+  }, 2000);
+}
+
 
 
 
@@ -145,6 +147,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   nav.addEventListener('scroll', stopAuto, { once: true, passive: true });
 
-  // Start after load so first paint never moves:
+// Start autoplay only when the Experience section is in view (stop when it leaves)
+const jobs = document.querySelector('#jobs');
+if (jobs && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) startAuto(); else stopAuto();
+  }, { threshold: 0.5 });
+  io.observe(jobs);
+} else {
+  // fallback
   window.addEventListener('load', startAuto);
-})();
+}
+
+// Also pause if the tab is hidden (e.g., user switches apps)
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopAuto();
+});
