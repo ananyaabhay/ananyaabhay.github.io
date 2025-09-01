@@ -152,15 +152,19 @@ section {
   text-align: left;
 }
 
-.landing-image {
-  margin-left: var(--img-offset);
+@media (min-width: 721px) {
+  .landing-image {
+    margin-left: var(--img-offset);
+  }
+
+  /* optional: if you want a square photo on desktop */
+  .landing-image img {
+    border-radius: 8px;
+    border: 0;
+    max-width: 250px;
+  }
 }
 
-.landing-image img {
-  max-width: 250px;
-  height: auto;
-  border-radius: 8px;
-}
 
 #landing h2.intro {
   font-family: 'Poppins', sans-serif;
@@ -193,12 +197,16 @@ section {
 }
 
 /* ABOUT */
-#about ul {
-  margin-top: 1rem;
+#about ul,
+#jobs .job-pane ul {
+  padding-left: 1.4rem;
+  /* push bullets in */
 }
 
-#about ul li {
-  margin-bottom: .5rem;
+#about li,
+#jobs .job-pane li {
+  margin-left: .2rem;
+  /* align with text block */
 }
 
 /* TIMELINE */
@@ -339,43 +347,6 @@ section {
   border-radius: 4px;
 }
 
-/* Mobile: make tabs horizontal */
-@media (max-width: 720px) {
-  #jobs .experience-section {
-    flex-direction: column;
-    /* stack tabs above content */
-  }
-
-  .experience-nav {
-    flex-direction: row;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
-  }
-
-  .experience-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .xp-tab {
-    white-space: nowrap;
-    border-left: 0;
-    border-bottom: 2px solid rgba(218, 218, 218, .7);
-    padding: .5rem .75rem;
-  }
-
-  .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, 0.86);
-  }
-
-  #jobs .experience-content {
-    padding-left: 0;
-    /* full width on mobile */
-  }
-}
-
-
 
 #jobs .experience-content {
   flex: 1;
@@ -397,12 +368,12 @@ section {
 
 #jobs .job-pane ul {
   list-style: none;
-  padding-left: 0;
+  padding-left: 1.4rem;
 }
 
 #jobs .job-pane ul li {
   position: relative;
-  padding-left: 1em;
+  padding-left: 1.1em;
   margin-bottom: .5rem;
   line-height: 1.4;
 }
@@ -415,41 +386,19 @@ section {
 }
 
 /* CONTACT */
-section#contact {
-  align-items: flex-start;
-  text-align: left;
-  margin-bottom: 2rem;
-}
-
-section#contact .section-title {
-  margin-bottom: 1rem;
-}
-
-.contact-text {
-  text-align: center;
-  width: 100%;
-  margin: 0.5rem 0;
-}
-
-.pink-text {
-  color: rgba(234, 107, 244, 0.86);
-}
-
-.off-white-text {
-  color: rgba(241, 236, 238, 0.74);
-}
-
 .contact-box {
-  background: rgba(234, 107, 244, 0.86);
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  margin: 1rem auto 0;
+  width: auto;
+  margin: 1rem auto;
+  text-align: center;
 }
 
 .contact-box a {
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
+  display: inline-block;
+  padding: .75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  width: auto;
+  /* no full width */
 }
 
 /* ICONS */
@@ -550,6 +499,12 @@ footer {
     opacity: 0;
     visibility: hidden;
   }
+}
+
+/* closes the tiny notch at sharp corners */
+.hex-outline {
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* favicon as logo - sizing & ✨glow✨ */
@@ -702,8 +657,8 @@ footer {
     align-items: flex-start;
     justify-content: flex-start;
     /* <<< stops huge blank gap */
-    padding-top: calc(5.2rem + env(safe-area-inset-top));
-    gap: .6rem;
+    padding-top: calc(5.5rem + env(safe-area-inset-top));
+    gap: 1rem;
   }
 
   .landing-image {
@@ -726,6 +681,11 @@ footer {
     max-width: 46ch;
   }
 
+  #landing .landing-content {
+    margin-bottom: 1.2rem;
+    /* add breathing space before photo */
+  }
+
   /* headings + copy rhythm */
   .section-title {
     margin-bottom: 12px;
@@ -737,7 +697,7 @@ footer {
   }
 
   .section-title h2 {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
   }
 
   #about p,
@@ -805,17 +765,20 @@ footer {
     font-size: 1rem;
     text-align: center;
   }
-}
 
-/* desktop image offset */
-.landing-image {
-  margin-left: var(--img-offset);
-}
+  /* 5. Logo Hex - remove heavy outline on mobile */
+  .nav-logo::before {
+    display: none;
+    /* hide hex shape */
+  }
 
-/* cancel it on mobile is already handled above by re-centering */
+  .nav-logo img {
+    filter: drop-shadow(0 0 6px rgba(234, 107, 244, 0.5));
+    /* subtle glow instead */
+    border-radius: 0;
+  }
 
-/* closes the tiny notch at sharp corners */
-.hex-outline {
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  body {
+    scroll-snap-type: none;
+  }
 }
