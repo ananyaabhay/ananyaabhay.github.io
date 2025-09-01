@@ -1,945 +1,228 @@
-/* RESET & BASE */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ─── RESET & BASE ───────────────────────────────────────── */
+* { margin:0; padding:0; box-sizing:border-box; }
 
-html,
-body {
-  height: 100%;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
+html, body { height:100%; overflow-x:hidden; scroll-behavior:smooth; }
 
 body {
-  /* mouse spotlight vars */
   --mouse-x: 50%;
   --mouse-y: 50%;
   --spotlight-size: calc(150px + 0.5cm);
-  /* change this to adjust glow diameter */
-  /* image shift */
   --img-offset: -1cm;
   background: linear-gradient(135deg, #001f3f, #2e0165);
   font-family: 'Inter', sans-serif;
-  color: #fff;
-  position: relative;
-  scroll-snap-type: y mandatory;
-}
-
-/* SPOTLIGHT */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(circle var(--spotlight-size) at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.25),
-      transparent 60%);
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-
-/* TOP NAV */
-nav.main-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  z-index: 10;
-  font-family: 'Poppins', sans-serif;
-}
-
-.main-nav .nav-links {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.main-nav .nav-links a:not(.resume-btn) {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #fff;
-  text-decoration: none;
-  transition: color .2s;
-}
-
-.main-nav .nav-links a:not(.resume-btn):hover {
-  color: #ea6bf4;
-}
-
-.resume-btn {
-  margin-left: calc(3rem - 0.5cm);
-  /* moved 0.5cm left */
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  text-decoration: none;
-  border: 1px solid #ea6bf4;
-  padding: .25rem .75rem;
-  border-radius: 4px;
-  transition: color .2s;
-}
-
-.resume-btn:hover {
-  color: #ea6bf4;
-}
-
-/* SECTION & HEADING */
-section {
-  height: 100vh;
-  scroll-snap-align: start;
-  padding: 0 10%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  text-align: left;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-  margin-bottom: .5rem;
-}
-
-.section-title .num {
-  font-family: 'Poppins', sans-serif;
-  color: rgba(234, 107, 244, 0.86);
-  font-weight: 600;
-  margin-right: .5rem;
-}
-
-.section-title h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
-  font-weight: 400;
-  margin: 0;
-  position: relative;
-}
-
-.section-title h2::after {
-  content: '';
-  display: inline-block;
-  width: 40px;
-  height: 1px;
-  background: rgba(234, 107, 244, 0.86);
-  /* pink line */
-  margin-left: 8px;
-  vertical-align: middle;
-}
-
-/* LANDING */
-#landing {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 5rem;
-}
-
-.landing-content {
-  flex: 1;
-  text-align: left;
-}
-
-@media (min-width: 721px) {
-  .landing-image {
-    margin-left: var(--img-offset);
-  }
-
-  /* optional: if you want a square photo on desktop */
-  .landing-image img {
-    border-radius: 8px;
-    border: 0;
-    max-width: 250px;
-  }
-}
-
-
-#landing h2.intro {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: rgba(250, 250, 250, 0.8);
-  margin-bottom: .5rem;
-}
-
-#landing h1.name {
-  font-family: 'Poppins', sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: rgba(234, 107, 244, 0.86);
-  margin-bottom: .5rem;
-}
-
-#landing h2.tagline {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: rgba(241, 236, 238, 0.74);
-  margin-bottom: 1rem;
-}
-
-#landing p.summary {
-  max-width: 600px;
-  line-height: 1.6;
-  color: rgba(218, 218, 218, 0.7);
-}
-
-/* ABOUT */
-#about ul,
-#jobs .job-pane ul {
-  padding-left: 1.4rem;
-  /* push bullets in */
-}
-
-#about li,
-#jobs .job-pane li {
-  margin-left: .2rem;
-  /* align with text block */
-}
-
-/* TIMELINE */
-/* ---------- Timeline (clean vertical) ---------- */
-.tl {
-  position: relative;
-  margin: 18px 0 0;
-  padding-left: 24px;
-  /* space for the vertical rule */
-  list-style: none;
-}
-
-.tl::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 8px;
-  width: 2px;
-  background: linear-gradient(180deg, rgba(234, 107, 244, .45), rgba(59, 130, 246, .45));
-  border-radius: 2px;
-}
-
-.tl-item {
-  position: relative;
-  margin: 0 0 18px;
-}
-
-.tl-content {
-  background: #0f1115;
-  /* card bg (use #fff if light theme) */
-  color: #e7e8ee;
-  /* body text on dark */
-  border: 1px solid rgba(255, 255, 255, .06);
-  /* hairline */
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
-  transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
-  outline: none;
-}
-
-.tl-content:focus-visible {
-  border-color: rgba(234, 107, 244, .8);
-  box-shadow: 0 12px 32px rgba(234, 107, 244, .18);
-  transform: translateY(-1px);
-}
-
-.tl-item:hover .tl-content {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, .22);
-}
-
-.tl-title {
-  font-size: 1.05rem;
-  margin: 0 0 4px 0;
-  letter-spacing: -.1px;
-}
-
-.tl-desc {
-  margin: 0;
-  color: #cfd3e1;
-  /* slightly lighter than body */
-  font-size: .98rem;
-  line-height: 1.55;
-}
-
-/* Spacing between items */
-.tl-item+.tl-item {
-  margin-top: 18px;
-}
-
-/* Larger screens: breathe a bit */
-@media (min-width: 860px) {
-  .tl {
-    padding-left: 30px;
-  }
-}
-
-
-/* keep, matches your dark card bg */
-
-
-/* Respect reduced motion (in case you add reveal later) */
-@media (prefers-reduced-motion: reduce) {
-  .tl-content {
-    transition: none;
-  }
-}
-
-
-/* EXPERIENCE */
-#jobs .experience-section {
-  display: flex;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-#jobs .job-pane {
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity .25s ease, transform .25s ease;
-}
-
-#jobs .job-pane.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.experience-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.xp-tab {
-  text-align: left;
-  padding: .5rem 1rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, .85);
-  background: transparent;
-  border: 0;
-  border-left: 2px solid rgba(218, 218, 218, .7);
-  cursor: pointer;
-  transition: color .2s, border-color .2s;
-}
-
-.xp-tab:hover {
-  color: #fff;
-}
-
-.xp-tab.active {
-  color: rgba(234, 107, 244, 0.86);
-  border-left: 4px solid rgba(234, 107, 244, 0.86);
-}
-
-.xp-tab:focus-visible {
-  outline: 2px solid rgba(234, 107, 244, .6);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-
-#jobs .experience-content {
-  flex: 1;
-  padding-left: 2rem;
-}
-
-#jobs h3 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: .25rem;
-}
-
-#jobs .job-pane p {
-  font-size: .9rem;
-  color: rgba(218, 218, 218, 0.7);
-  margin-bottom: .75rem;
-}
-
-#jobs .job-pane ul {
-  list-style: none;
-  padding-left: 1.4rem;
-}
-
-#jobs .job-pane ul li {
-  position: relative;
-  padding-left: 1.1em;
-  margin-bottom: .5rem;
-  line-height: 1.4;
-}
-
-#jobs .job-pane ul li::before {
-  content: '▹';
-  position: absolute;
-  left: 0;
-  color: rgba(234, 107, 244, 0.86);
-}
-
-/* CONTACT — clean, left-aligned, breathable */
-#contact {
-  /* use the same flex from <section>, but align to the left */
-  align-items: flex-start;
-  text-align: left;
-}
-
-.contact-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* left stack */
-  gap: 16px;
-  /* space between title/para/button/icons */
-  max-width: 48ch;
-  /* comfortable line length */
-  margin-top: 10px;
-}
-
-.contact-box {
-  margin: 0;
-  /* hug the copy */
-}
-
-.contact-box a {
-  display: inline-block;
-  /* shrink to content */
-  width: auto;
-  /* no forced full-width */
-  padding: 0.65rem 1.1rem;
-  /* modest button */
-  font-size: 0.98rem;
-  font-weight: 700;
-  letter-spacing: .2px;
-  border-radius: 10px;
-  background: #ea6bf4;
-  /* pink fill */
-  color: #140019;
-  text-decoration: none;
-  border: 0;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-}
-
-.contact-box a:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, .26);
-  background: #f08df6;
-}
-
-.contact-box a:active {
-  transform: translateY(0);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, .2);
-}
-
-/* one definitive icons rule (remove duplicates) */
-.contact-icons {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 6px;
-  /* tight to button */
-}
-
-.contact-icons a i {
-  font-size: 1.2rem;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(218, 218, 218, 0.7);
-  transition: -webkit-text-stroke-color .2s;
-}
-
-.contact-icons a:hover i {
-  -webkit-text-stroke-color: #ea6bf4;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: .9rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* ─── Loader overlay ─── */
-#loader {
-  position: fixed;
-  inset: 0;
-  background: #001f3f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-/* ─── Hexagon draw & reveal ─── */
-
-.loader-wrap {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-
-.loader-hex {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-}
-
-.hex-outline {
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  animation: hex-draw 1.15s ease-out forwards;
-}
-
-.loader-logo {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.90);
-  /* scaled down a bit more */
-  width: 74px;
-  /* slightly smaller */
-  height: 74px;
-  object-fit: contain;
-  opacity: 0;
-  animation: logo-in 420ms ease-out 420ms forwards;
-}
-
-@keyframes hex-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes logo-in {
-  to {
-    opacity: 1;
-  }
-}
-
-
-@keyframes fade-loader {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-/* closes the tiny notch at sharp corners */
-.hex-outline {
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* favicon as logo - sizing & ✨glow✨ */
-
-/* container for positioning the hex glow */
-.nav-logo {
-  position: relative;
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* remove the square box-shadow on the image */
-.nav-logo img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-  box-shadow: none;
-  /* important: no square glow */
-  border-radius: 0;
-  /* keep corners sharp so hex reads clean */
-  position: relative;
-  z-index: 1;
-  /* sits above the glow */
-}
-
-/* subtle hex-shaped glow behind the logo */
-.nav-logo::before {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  /* slightly larger than the logo */
-  background: rgba(234, 107, 244, 0.85);
-  /* pink accent */
-  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
-  filter: blur(10px);
-  /* soft edges */
-  opacity: 0.35;
-  /* subtle by default */
-  z-index: 0;
-  pointer-events: none;
-  transition: opacity .35s ease, transform .25s ease;
-}
-
-/* tiny, elegant hover effect */
-.nav-logo:hover::before {
-  opacity: 0.55;
-  transform: scale(1.05);
-}
-
-.nav-logo:hover img {
-  transform: translateZ(0) scale(1.02);
-  transition: transform .25s ease;
-}
-
-
-/* fade edge on the right to suggest scroll */
-.experience-nav {
-  position: relative;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.experience-nav::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 32px;
-  pointer-events: none;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .28));
-}
-
-/* tiny swipe hint chip (mobile only) */
-@media (max-width:720px) {
-  .xp-hint {
-    position: absolute;
-    right: 36px;
-    top: -28px;
-    font-size: .78rem;
-    opacity: .72;
-  }
-}
-
-
-
-/* TIMELINE containment (prevents stray dots on mobile & load) */
-#timeline {
-  position: relative;
-  overflow: hidden;
-}
-
-.tl li {
-  list-style: none;
-  padding-left: 0;
-}
-
-
-/* header nav items scroll (if needed) on mobile */
-
-@media (max-width:720px) {
-  .main-nav .nav-links {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: .85rem;
-    white-space: nowrap;
-  }
-
-  .main-nav .nav-links::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-/* ---- Mobile View V8 (≤720px) — final tidy block ---- */
-@media (max-width:720px) {
-
-  /* sections size to content; no forced viewport centering */
-  section {
-    height: auto !important;
-    min-height: auto !important;
-    scroll-snap-align: none;
-    padding: 0 1.25rem 20px;
-    scroll-margin-top: 84px;
-  }
-
-  /* header */
-  nav.main-nav {
-    padding: .5rem .8rem;
-  }
-
-  .main-nav .nav-links {
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none;
-    gap: .85rem;
-  }
-
-  .main-nav .nav-links::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* HERO: text first, image centered below, no offset */
-  #landing {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    /* <<< stops huge blank gap */
-    padding-top: calc(5.5rem + env(safe-area-inset-top));
-    gap: 1rem;
-  }
-
-  .landing-image {
-    order: 2;
-    width: 100%;
-    margin: 10px auto 8px;
-    text-align: center;
-  }
-
-  .landing-image img {
-    width: 44vw;
-    max-width: 200px;
-    border-radius: 50%;
-    border: 3px solid rgba(234, 107, 244, .86);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
-  }
-
-  .landing-content {
-    order: 1;
-    max-width: 46ch;
-  }
-
-  #landing .landing-content {
-    margin-bottom: 1.2rem;
-    /* add breathing space before photo */
-  }
-
-  /* headings + copy rhythm */
-  .section-title {
-    margin-bottom: 12px;
-  }
-
-  .section-title .num {
-    font-size: .95rem;
-    margin-right: .4rem;
-  }
-
-  .section-title h2 {
-    font-size: 1.2rem;
-  }
-
-  #about p,
-  #about li,
-  #jobs .job-pane p,
-  #jobs .job-pane li,
-  #contact p {
-    font-size: 1rem;
-    line-height: 1.55;
-  }
-
-  /* Timeline spacing */
-  .tl {
-    padding-left: 22px;
-    margin-top: 6px;
-  }
-
-  .tl-content {
-    padding: 10px 12px;
-    border-radius: 12px;
-  }
-
-  .tl-item+.tl-item {
-    margin-top: 12px;
-  }
-
-  /* Experience tabs — no weird shading; show it can scroll */
-  #jobs .experience-section {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .experience-nav {
-    justify-content: flex-start;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    padding-bottom: 6px;
-  }
-
-  #jobs .experience-content {
-    padding-left: 0;
-    margin-top: 0.8rem;
-    max-width: 100%;
-    /* Let content breathe */
-  }
-
-  #jobs .job-pane ul li {
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  /* <<< removes the right fade */
-  .xp-tab {
-    white-space: nowrap;
-    padding: .4rem .6rem;
-    font-size: .96rem;
-    border-left: 0;
-    border-bottom: 2px solid rgba(218, 218, 218, .7);
-  }
-
-  .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, .95);
-  }
-
-  #jobs .experience-content {
-    padding-left: 0;
-    max-width: 46ch;
-  }
-
-  /* CTA smaller */
-  .contact-box {
-    width: min(300px, 64vw);
-    margin: 1rem auto 0;
-    border-radius: 10px;
-  }
-
-  .contact-section {
-    max-width: 46ch;
-    gap: 14px;
-  }
-
-
-  .contact-box a {
-    padding: 0.6rem 1rem;
-    font-size: 0.96rem;
-  }
-
-  .contact-icons {
-    gap: 14px;
-  }
-
-  /* 5. Logo Hex - remove heavy outline on mobile */
-  .nav-logo::before {
-    display: none;
-    /* hide hex shape */
-  }
-
-  .nav-logo img {
-    filter: drop-shadow(0 0 6px rgba(234, 107, 244, 0.5));
-    /* subtle glow instead */
-    border-radius: 0;
-  }
-
-  body {
-    scroll-snap-type: none;
-  }
-}
-
-/* === REVERT: Experience + Contact to your old look & feel === */
-
-/* --------- CONTACT (same as your old) --------- */
-section#contact{
-  align-items:flex-start;
-  text-align:left;
-  margin-bottom:2rem;
-}
-section#contact .section-title{ margin-bottom:1rem; }
-
-/* keep your centered blurb line under the title */
-.contact-text{
-  text-align:center;
-  width:100%;
-  margin:0.5rem 0;
-}
-
-/* the pink box */
-.contact-box{
-  background:rgba(234,107,244,0.86);
-  padding:1rem 2rem;
-  border-radius:8px;
-  margin:1rem auto 0;
-  /* optional: limit width a bit on big screens like before */
-  width:max-content;
-  max-width:100%;
-}
-.contact-box a{
   color:#fff;
-  font-weight:600;
-  text-decoration:none;
-  display:inline-block;
+  position:relative;
+  scroll-snap-type:y mandatory;
 }
 
-/* icons – same spacing/outline as old */
-.contact-icons{
-  display:flex;
-  justify-content:center;
-  gap:0.7cm;
-  margin:1.5cm 0;
-  align-self:center;
+/* subtle mouse spotlight */
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background: radial-gradient(circle var(--spotlight-size) at var(--mouse-x) var(--mouse-y),
+              rgba(255,255,255,.25), transparent 60%);
+  pointer-events:none; mix-blend-mode:overlay;
 }
-.contact-icons a i{
-  font-size:1.2rem;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(218,218,218,0.7);
-  transition:-webkit-text-stroke-color .2s;
-}
-.contact-icons a:hover i{ -webkit-text-stroke-color:#ea6bf4; }
 
-/* --------- EXPERIENCE (desktop stays vertical; mobile row tabs) --------- */
-/* desktop already matches your old: nav column + left border.
-   ensure no stray overrides conflict: */
-.experience-nav{ flex-direction:column; gap:4px; }
+/* ─── TOP NAV ────────────────────────────────────────────── */
+nav.main-nav{
+  position:fixed; top:0; left:0; right:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 2rem; background:rgba(0,0,0,.3); backdrop-filter:blur(8px);
+  z-index:10; font-family:'Poppins', sans-serif;
+}
+.main-nav .nav-links{ display:flex; gap:1rem; align-items:center; }
+.main-nav .nav-links a:not(.resume-btn){
+  font-size:.9rem; font-weight:600; color:#fff; text-decoration:none; transition:color .2s;
+}
+.main-nav .nav-links a:not(.resume-btn):hover{ color:#ea6bf4; }
+.resume-btn{
+  margin-left:calc(3rem - 0.5cm); font-size:1rem; font-weight:600; color:#fff; text-decoration:none;
+  border:1px solid #ea6bf4; padding:.25rem .75rem; border-radius:4px; transition:color .2s;
+}
+.resume-btn:hover{ color:#ea6bf4; }
+
+/* ─── SECTIONS & TITLES ─────────────────────────────────── */
+section{
+  height:100vh; scroll-snap-align:start;
+  padding:0 10%; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; text-align:left;
+}
+.section-title{ display:flex; align-items:center; margin-bottom:.5rem; }
+.section-title .num{ font-family:'Poppins', sans-serif; color:rgba(234,107,244,.86); font-weight:600; margin-right:.5rem; }
+.section-title h2{
+  font-family:'Poppins', sans-serif; font-size:2rem; font-weight:400; margin:0; position:relative;
+}
+.section-title h2::after{
+  content:''; display:inline-block; width:40px; height:1px; background:rgba(234,107,244,.86);
+  margin-left:8px; vertical-align:middle;
+}
+
+/* ─── LANDING ───────────────────────────────────────────── */
+#landing{
+  display:flex; flex-direction:row; justify-content:space-between; align-items:center; padding-top:5rem;
+}
+.landing-content{ flex:1; text-align:left; }
+@media (min-width:721px){
+  .landing-image{ margin-left:var(--img-offset); }
+  .landing-image img{ border-radius:8px; border:0; max-width:250px; }
+}
+#landing h2.intro{ font-family:'Poppins', sans-serif; font-size:1.25rem; font-weight:400; color:rgba(250,250,250,.8); margin-bottom:.5rem; }
+#landing h1.name{ font-family:'Poppins', sans-serif; font-size:3rem; font-weight:700; color:rgba(234,107,244,.86); margin-bottom:.5rem; }
+#landing h2.tagline{ font-family:'Poppins', sans-serif; font-size:1.5rem; font-weight:400; color:rgba(241,236,238,.74); margin-bottom:1rem; }
+#landing p.summary{ max-width:600px; line-height:1.6; color:rgba(218,218,218,.7); }
+
+/* ─── ABOUT (shared bullets) ────────────────────────────── */
+#about ul, #jobs .job-pane ul{ padding-left:1.4rem; }
+#about li, #jobs .job-pane li{ margin-left:.2rem; }
+
+/* ─── TIMELINE ──────────────────────────────────────────── */
+.tl{ position:relative; margin:18px 0 0; padding-left:24px; list-style:none; }
+.tl::before{
+  content:""; position:absolute; inset:0 auto 0 8px; width:2px;
+  background:linear-gradient(180deg, rgba(234,107,244,.45), rgba(59,130,246,.45)); border-radius:2px;
+}
+.tl-item{ position:relative; margin:0 0 18px; }
+.tl-content{
+  background:#0f1115; color:#e7e8ee; border:1px solid rgba(255,255,255,.06); border-radius:14px;
+  padding:12px 14px; box-shadow:0 10px 28px rgba(0,0,0,.18);
+  transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease; outline:none;
+}
+.tl-content:focus-visible{ border-color:rgba(234,107,244,.8); box-shadow:0 12px 32px rgba(234,107,244,.18); transform:translateY(-1px); }
+.tl-item:hover .tl-content{ transform:translateY(-1px); box-shadow:0 12px 32px rgba(0,0,0,.22); }
+.tl-title{ font-size:1.05rem; margin:0 0 4px 0; letter-spacing:-.1px; }
+.tl-desc{ margin:0; color:#cfd3e1; font-size:.98rem; line-height:1.55; }
+.tl-item + .tl-item{ margin-top:18px; }
+@media (min-width:860px){ .tl{ padding-left:30px; } }
+@media (prefers-reduced-motion:reduce){ .tl-content{ transition:none; } }
+
+/* ─── EXPERIENCE (old behavior) ─────────────────────────── */
+#jobs .experience-section{ display:flex; width:100%; margin-top:1rem; }
+#jobs .job-pane{ opacity:0; transform:translateY(4px); transition:opacity .25s, transform .25s; }
+#jobs .job-pane.active{ opacity:1; transform:translateY(0); }
+
+.experience-nav{ display:flex; flex-direction:column; gap:4px; }
 .xp-tab{
-  border-left:2px solid rgba(218,218,218,.7);
-  padding:.5rem 1rem;
+  text-align:left; padding:.5rem 1rem; font-weight:600; color:rgba(255,255,255,.85);
+  background:transparent; border:0; border-left:2px solid rgba(218,218,218,.7);
+  cursor:pointer; transition:color .2s, border-color .2s;
 }
-.xp-tab.active{
-  border-left:4px solid rgba(234,107,244,.86);
-  color:rgba(234,107,244,.86);
-}
+.xp-tab:hover{ color:#fff; }
+.xp-tab.active{ color:rgba(234,107,244,.86); border-left:4px solid rgba(234,107,244,.86); }
+.xp-tab:focus-visible{ outline:2px solid rgba(234,107,244,.6); outline-offset:2px; border-radius:4px; }
 
-/* Mobile like your old: horizontal scrollable tabs + underline */
+#jobs .experience-content{ flex:1; padding-left:2rem; }
+#jobs h3{ font-family:'Poppins', sans-serif; font-size:1.25rem; font-weight:600; margin-bottom:.25rem; }
+#jobs .job-pane p{ font-size:.9rem; color:rgba(218,218,218,.7); margin-bottom:.75rem; }
+#jobs .job-pane ul{ list-style:none; padding-left:1.4rem; }
+#jobs .job-pane ul li{ position:relative; padding-left:1.1em; margin-bottom:.5rem; line-height:1.4; }
+#jobs .job-pane ul li::before{ content:'▹'; position:absolute; left:0; color:rgba(234,107,244,.86); }
+
+/* Mobile tabs like before */
 @media (max-width:720px){
-  #jobs .experience-section{ flex-direction:column; }
-
+  #jobs .experience-section{ flex-direction:column; gap:1rem; }
   .experience-nav{
-    flex-direction:row;
-    gap:8px;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    padding-bottom:6px;
-    border-bottom:1px solid rgba(255,255,255,.08);
+    flex-direction:row; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding-bottom:6px; border-bottom:1px solid rgba(255,255,255,.08);
   }
   .experience-nav::-webkit-scrollbar{ display:none; }
-
   .xp-tab{
-    white-space:nowrap;
-    border-left:0;
-    border-bottom:2px solid rgba(218,218,218,.7);
-    padding:.5rem .75rem;
+    white-space:nowrap; border-left:0;
+    border-bottom:2px solid rgba(218,218,218,.7); padding:.5rem .75rem;
   }
-  .xp-tab.active{
-    border-bottom-color:rgba(234,107,244,.86);
-    color:rgba(234,107,244,.86);
+  .xp-tab.active{ border-bottom-color:rgba(234,107,244,.86); }
+  #jobs .experience-content{ padding-left:0; max-width:46ch; }
+}
+
+/* ─── CONTACT (old feel; no outer pink box) ─────────────── */
+#contact{ align-items:flex-start; text-align:left; }
+
+.contact-section{
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:16px; max-width:48ch; margin-top:10px;
+}
+
+/* blurb under title centered across the width (like before) */
+.contact-text{ text-align:center; width:100%; margin:.5rem 0; }
+
+/* compact pink button only */
+.contact-box{ margin:0; }
+.contact-box a{
+  display:inline-block; padding:.65rem 1.1rem; font-size:.98rem; font-weight:700; letter-spacing:.2px;
+  border-radius:10px; background:#ea6bf4; color:#140019; text-decoration:none; border:0;
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+  transition:transform .15s, box-shadow .2s, background .2s;
+}
+.contact-box a:hover{ transform:translateY(-1px); box-shadow:0 14px 32px rgba(0,0,0,.26); background:#f08df6; }
+.contact-box a:active{ transform:translateY(0); box-shadow:0 8px 18px rgba(0,0,0,.2); }
+
+/* icons (single rule) */
+.contact-icons{ display:flex; align-items:center; gap:16px; margin-top:6px; }
+.contact-icons a i{ font-size:1.2rem; color:transparent; -webkit-text-stroke:1px rgba(218,218,218,.7); transition:-webkit-text-stroke-color .2s; }
+.contact-icons a:hover i{ -webkit-text-stroke-color:#ea6bf4; }
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer{ text-align:center; padding:2rem; font-size:.9rem; color:rgba(255,255,255,.7); }
+
+/* ─── LOADER (unchanged) ─────────────────────────────────── */
+#loader{ position:fixed; inset:0; background:#001f3f; display:flex; align-items:center; justify-content:center; z-index:9999; }
+.loader-wrap{ position:relative; width:120px; height:120px; }
+.loader-hex{ position:absolute; inset:0; overflow:visible; }
+.hex-outline{ stroke-dasharray:300; stroke-dashoffset:300; animation:hex-draw 1.15s ease-out forwards; stroke-linecap:round; stroke-linejoin:round; }
+.loader-logo{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.90);
+  width:74px; height:74px; object-fit:contain; opacity:0; animation:logo-in 420ms ease-out 420ms forwards;
+}
+@keyframes hex-draw{ to{ stroke-dashoffset:0; } }
+@keyframes logo-in{ to{ opacity:1; } }
+@keyframes fade-loader{ to{ opacity:0; visibility:hidden; } }
+
+/* ─── LOGO GLOW (kept, subtle) ──────────────────────────── */
+.nav-logo{ position:relative; width:3rem; height:3rem; display:flex; align-items:center; justify-content:center; }
+.nav-logo img{ width:100%; height:100%; display:block; object-fit:contain; box-shadow:none; border-radius:0; position:relative; z-index:1; }
+.nav-logo::before{
+  content:""; position:absolute; inset:-4px; background:rgba(234,107,244,.85);
+  clip-path:polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+  filter:blur(10px); opacity:.35; z-index:0; pointer-events:none; transition:opacity .35s, transform .25s;
+}
+.nav-logo:hover::before{ opacity:.55; transform:scale(1.05); }
+.nav-logo:hover img{ transform:translateZ(0) scale(1.02); transition:transform .25s; }
+
+/* ─── MOBILE GLOBAL TWEAKS ──────────────────────────────── */
+@media (max-width:720px){
+  section{
+    height:auto !important; min-height:auto !important; scroll-snap-align:none;
+    padding:0 1.25rem 20px; scroll-margin-top:84px;
+  }
+  nav.main-nav{ padding:.5rem .8rem; }
+  .main-nav .nav-links{ overflow-x:auto; white-space:nowrap; scrollbar-width:none; gap:.85rem; }
+  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
+
+  #landing{
+    flex-direction:column; align-items:flex-start; justify-content:flex-start;
+    padding-top:calc(5.5rem + env(safe-area-inset-top)); gap:1rem;
+  }
+  .landing-image{ order:2; width:100%; margin:10px auto 8px; text-align:center; }
+  .landing-image img{
+    width:44vw; max-width:200px; border-radius:50%; border:3px solid rgba(234,107,244,.86);
+    box-shadow:0 10px 26px rgba(0,0,0,.35);
+  }
+  .landing-content{ order:1; max-width:46ch; }
+  .section-title{ margin-bottom:12px; }
+  .section-title .num{ font-size:.95rem; margin-right:.4rem; }
+  .section-title h2{ font-size:1.2rem; }
+
+  #about p, #about li, #jobs .job-pane p, #jobs .job-pane li, #contact p{
+    font-size:1rem; line-height:1.55;
   }
 
-  #jobs .experience-content{
-    padding-left:0; /* full width on mobile */
-  }
+  .tl{ padding-left:22px; margin-top:6px; }
+  .tl-content{ padding:10px 12px; border-radius:12px; }
+  .tl-item + .tl-item{ margin-top:12px; }
 
-  /* keep your old contact mobile sizing */
-  .contact-box{
-    width:min(300px,64vw);
-    margin:1rem auto 0;
-    border-radius:10px;
-    padding:1rem 2rem; /* same feel */
-  }
-  .contact-box a{
-    padding:.8rem 0;
-    font-size:1rem;
-    text-align:center;
-    width:100%;
-  }
+  /* Contact stack width + spacing on mobile */
+  .contact-section{ max-width:46ch; gap:14px; }
+  .contact-box a{ padding:.6rem 1rem; font-size:.96rem; }
+  .contact-icons{ gap:14px; }
+
+  body{ scroll-snap-type:none; }
 }
