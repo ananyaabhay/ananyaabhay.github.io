@@ -828,3 +828,146 @@ footer {
 .contact-icons a:hover i {
   -webkit-text-stroke-color: #ea6bf4;
 }
+
+/* ========== CONTACT (center + single button, no outer box) ========== */
+#contact .contact-section {
+  align-items: center;
+  text-align: center;
+}
+
+#contact .contact-box {
+  background: none !important;
+  /* kill the outer box on desktop */
+  padding: 0 !important;
+  margin: 1rem auto 0;
+  border-radius: 0;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#contact .contact-box a {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  font-weight: 700;
+  border-radius: 10px;
+  background: #ea6bf4;
+  color: #140019;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+#contact .contact-box a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
+  background: #f08df6;
+}
+
+#contact .contact-icons {
+  justify-content: center;
+  /* icons centered to match copy */
+  margin: 14px 0 0;
+  gap: 16px;
+}
+
+/* ========== GLOBAL MOBILE TUNING (≤720px) ========== */
+@media (max-width:720px) {
+
+  /* more space between sections under the sticky header */
+  section {
+    padding: 0 1.25rem 28px;
+    scroll-margin-top: 88px;
+  }
+
+  section+section {
+    padding-top: 20px;
+  }
+
+  /* hero sizing feels calmer */
+  #landing h1.name {
+    font-size: clamp(1.9rem, 6.5vw, 2.4rem);
+  }
+
+  #landing h2.tagline {
+    font-size: clamp(1.05rem, 3.6vw, 1.2rem);
+  }
+
+  #landing p.summary {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  /* keep navbar from overlapping: a touch more top padding on hero */
+  #landing {
+    padding-top: calc(5.8rem + env(safe-area-inset-top));
+  }
+
+  /* Experience: headings vs body rhythm */
+  #jobs h3 {
+    font-size: 1.22rem;
+    line-height: 1.25;
+    margin: 0 0 .35rem;
+  }
+
+  #jobs .job-pane p {
+    font-size: 1rem;
+  }
+
+  #jobs .job-pane ul li {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  /* tabs look lighter and readable */
+  .experience-nav {
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    padding-bottom: 6px;
+  }
+
+  .xp-tab {
+    padding: .45rem .7rem;
+    font-size: .98rem;
+    border-left: 0;
+    border-bottom: 2px solid rgba(218, 218, 218, .7);
+  }
+
+  .xp-tab.active {
+    border-bottom-color: rgba(234, 107, 244, .95);
+    color: rgba(234, 107, 244, .95);
+  }
+
+  /* contact: keep centered and compact on phone */
+  #contact .contact-box a {
+    padding: .7rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  #contact .contact-icons {
+    gap: 14px;
+  }
+
+  /* hide the hex glow on mobile */
+  .nav-logo::before {
+    display: none !important;
+  }
+}
+
+/* ========== DESKTOP SMALL TWEAKS ========== */
+/* ensure header height has enough click room but doesn’t crowd content */
+nav.main-nav {
+  padding: .6rem 2rem;
+}
+
+/* remove any accidental background on .contact-box on desktop too */
+@media (min-width:721px) {
+  #contact .contact-section {
+    align-items: center;
+    text-align: center;
+  }
+
+  #contact .contact-icons {
+    justify-content: center;
+  }
+}
