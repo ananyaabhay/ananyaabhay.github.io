@@ -386,30 +386,74 @@ section {
 }
 
 /* CONTACT */
-.contact-box {
-  width: auto;
-  margin: 1rem auto;
+#contact {
+  align-items: center;
+  /* center within the section */
   text-align: center;
 }
 
-.contact-box a {
-  display: inline-block;
-  padding: .75rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  width: auto;
-  /* no full width */
+/* Wrap for the CTA + icons */
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  /* space between text, button, icons */
+  margin-top: 1rem;
 }
 
-/* ICONS */
+/* The pink box itself */
+.contact-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-box a {
+  display: block;
+  /* so width, padding work like a box */
+  width: min(420px, 78vw);
+  /* cap width on desktop, shrink on mobile */
+  padding: 0.9rem 0;
+  /* tall, comfy */
+  border-radius: 12px;
+  background: #ea6bf4;
+  /* PINK FILL */
+  color: #140019;
+  /* accessible dark text */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: .2px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .25);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  border: 0;
+  /* ensure no outline border */
+}
+
+.contact-box a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, .28);
+  background: #f08df6;
+  /* slightly brighter on hover */
+}
+
+.contact-box a:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
+}
+
+/* Icons under the button */
 .contact-icons {
   display: flex;
   justify-content: center;
-  gap: 0.7cm;
-  /* 0.7cm gap */
-  margin: 1.5cm 0;
-  align-self: center;
+  gap: 1.2rem;
+  margin: .6rem 0 0;
+  /* tighter with new button */
 }
+
+
+/* ICONS */
 
 .contact-icons a i {
   font-size: 1.2rem;
@@ -725,14 +769,27 @@ footer {
   }
 
   /* Experience tabs — no weird shading; show it can scroll */
-  .experience-nav {
-    overflow-x: auto;
-    gap: 8px;
-    padding: 2px 0 8px;
+  #jobs .experience-section {
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .experience-nav::after {
-    display: none;
+  .experience-nav {
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 6px;
+  }
+
+  #jobs .experience-content {
+    padding-left: 0;
+    margin-top: 0.8rem;
+    max-width: 100%;
+    /* Let content breathe */
+  }
+
+  #jobs .job-pane ul li {
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   /* <<< removes the right fade */
@@ -760,10 +817,22 @@ footer {
     border-radius: 10px;
   }
 
+  .contact-section {
+    padding: 1.5rem 1rem;
+  }
+
+
   .contact-box a {
+    width: min(300px, 64vw);
     padding: .8rem 0;
     font-size: 1rem;
-    text-align: center;
+    background: #ea6bf4;
+    /* 🔑 keep pink on mobile */
+    color: #140019;
+  }
+
+  .contact-icons {
+    gap: 1.2rem;
   }
 
   /* 5. Logo Hex - remove heavy outline on mobile */
