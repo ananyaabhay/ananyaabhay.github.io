@@ -385,75 +385,69 @@ section {
   color: rgba(234, 107, 244, 0.86);
 }
 
-/* CONTACT */
+/* CONTACT — clean, left-aligned, breathable */
 #contact {
-  align-items: center;
-  /* center within the section */
-  text-align: center;
+  /* use the same flex from <section>, but align to the left */
+  align-items: flex-start;
+  text-align: left;
 }
 
-/* Wrap for the CTA + icons */
 .contact-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  /* space between text, button, icons */
-  margin-top: 1rem;
+  align-items: flex-start;
+  /* left stack */
+  gap: 16px;
+  /* space between title/para/button/icons */
+  max-width: 48ch;
+  /* comfortable line length */
+  margin-top: 10px;
 }
 
-/* The pink box itself */
 .contact-box {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  margin: 0;
+  /* hug the copy */
 }
 
 .contact-box a {
-  display: block;
-  /* so width, padding work like a box */
-  width: min(420px, 78vw);
-  /* cap width on desktop, shrink on mobile */
-  padding: 0.9rem 0;
-  /* tall, comfy */
-  border-radius: 12px;
-  background: #ea6bf4;
-  /* PINK FILL */
-  color: #140019;
-  /* accessible dark text */
-  text-decoration: none;
+  display: inline-block;
+  /* shrink to content */
+  width: auto;
+  /* no forced full-width */
+  padding: 0.65rem 1.1rem;
+  /* modest button */
+  font-size: 0.98rem;
   font-weight: 700;
-  font-size: 1.05rem;
   letter-spacing: .2px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, .25);
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  border-radius: 10px;
+  background: #ea6bf4;
+  /* pink fill */
+  color: #140019;
+  text-decoration: none;
   border: 0;
-  /* ensure no outline border */
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
 }
 
 .contact-box a:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, .28);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, .26);
   background: #f08df6;
-  /* slightly brighter on hover */
 }
 
 .contact-box a:active {
   transform: translateY(0);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .2);
 }
 
-/* Icons under the button */
+/* one definitive icons rule (remove duplicates) */
 .contact-icons {
   display: flex;
-  justify-content: center;
-  gap: 1.2rem;
-  margin: .6rem 0 0;
-  /* tighter with new button */
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+  /* tight to button */
 }
-
-
-/* ICONS */
 
 .contact-icons a i {
   font-size: 1.2rem;
@@ -465,12 +459,6 @@ section {
 .contact-icons a:hover i {
   -webkit-text-stroke-color: #ea6bf4;
 }
-
-/* <!-- .contact-icons a {
-      color:rgba(218,218,218,0.7); font-size:1.2rem;
-      transition:color .2s;
-    }
-    .contact-icons a:hover { color:#ea6bf4; } -- old icon format */
 
 /* FOOTER */
 footer {
@@ -818,21 +806,18 @@ footer {
   }
 
   .contact-section {
-    padding: 1.5rem 1rem;
+    max-width: 46ch;
+    gap: 14px;
   }
 
 
   .contact-box a {
-    width: min(300px, 64vw);
-    padding: .8rem 0;
-    font-size: 1rem;
-    background: #ea6bf4;
-    /* 🔑 keep pink on mobile */
-    color: #140019;
+    padding: 0.6rem 1rem;
+    font-size: 0.96rem;
   }
 
   .contact-icons {
-    gap: 1.2rem;
+    gap: 14px;
   }
 
   /* 5. Logo Hex - remove heavy outline on mobile */
@@ -849,5 +834,112 @@ footer {
 
   body {
     scroll-snap-type: none;
+  }
+}
+
+/* === REVERT: Experience + Contact to your old look & feel === */
+
+/* --------- CONTACT (same as your old) --------- */
+section#contact{
+  align-items:flex-start;
+  text-align:left;
+  margin-bottom:2rem;
+}
+section#contact .section-title{ margin-bottom:1rem; }
+
+/* keep your centered blurb line under the title */
+.contact-text{
+  text-align:center;
+  width:100%;
+  margin:0.5rem 0;
+}
+
+/* the pink box */
+.contact-box{
+  background:rgba(234,107,244,0.86);
+  padding:1rem 2rem;
+  border-radius:8px;
+  margin:1rem auto 0;
+  /* optional: limit width a bit on big screens like before */
+  width:max-content;
+  max-width:100%;
+}
+.contact-box a{
+  color:#fff;
+  font-weight:600;
+  text-decoration:none;
+  display:inline-block;
+}
+
+/* icons – same spacing/outline as old */
+.contact-icons{
+  display:flex;
+  justify-content:center;
+  gap:0.7cm;
+  margin:1.5cm 0;
+  align-self:center;
+}
+.contact-icons a i{
+  font-size:1.2rem;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(218,218,218,0.7);
+  transition:-webkit-text-stroke-color .2s;
+}
+.contact-icons a:hover i{ -webkit-text-stroke-color:#ea6bf4; }
+
+/* --------- EXPERIENCE (desktop stays vertical; mobile row tabs) --------- */
+/* desktop already matches your old: nav column + left border.
+   ensure no stray overrides conflict: */
+.experience-nav{ flex-direction:column; gap:4px; }
+.xp-tab{
+  border-left:2px solid rgba(218,218,218,.7);
+  padding:.5rem 1rem;
+}
+.xp-tab.active{
+  border-left:4px solid rgba(234,107,244,.86);
+  color:rgba(234,107,244,.86);
+}
+
+/* Mobile like your old: horizontal scrollable tabs + underline */
+@media (max-width:720px){
+  #jobs .experience-section{ flex-direction:column; }
+
+  .experience-nav{
+    flex-direction:row;
+    gap:8px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:6px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .experience-nav::-webkit-scrollbar{ display:none; }
+
+  .xp-tab{
+    white-space:nowrap;
+    border-left:0;
+    border-bottom:2px solid rgba(218,218,218,.7);
+    padding:.5rem .75rem;
+  }
+  .xp-tab.active{
+    border-bottom-color:rgba(234,107,244,.86);
+    color:rgba(234,107,244,.86);
+  }
+
+  #jobs .experience-content{
+    padding-left:0; /* full width on mobile */
+  }
+
+  /* keep your old contact mobile sizing */
+  .contact-box{
+    width:min(300px,64vw);
+    margin:1rem auto 0;
+    border-radius:10px;
+    padding:1rem 2rem; /* same feel */
+  }
+  .contact-box a{
+    padding:.8rem 0;
+    font-size:1rem;
+    text-align:center;
+    width:100%;
   }
 }
