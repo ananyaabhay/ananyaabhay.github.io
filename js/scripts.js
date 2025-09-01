@@ -75,9 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Accessible Experience tabs + gentle auto-advance (no page jump)
 (() => {
-  const tabs  = [...document.querySelectorAll('.xp-tab')];
+  const tabs = [...document.querySelectorAll('.xp-tab')];
   const panes = [...document.querySelectorAll('#jobs .job-pane')];
-  const nav   = document.querySelector('.experience-nav');
+  const nav = document.querySelector('.experience-nav');
   if (!tabs.length || !panes.length || !nav) return;
 
   // init visibility
@@ -115,9 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
     tab.addEventListener('keydown', (e) => {
       const k = e.key;
       if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); activate((i + 1) % tabs.length); }
-      if (k === 'ArrowLeft'  || k === 'ArrowUp')   { e.preventDefault(); activate((i - 1 + tabs.length) % tabs.length); }
+      if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); activate((i - 1 + tabs.length) % tabs.length); }
       if (k === 'Home') { e.preventDefault(); activate(0); }
-      if (k === 'End')  { e.preventDefault(); activate(tabs.length - 1); }
+      if (k === 'End') { e.preventDefault(); activate(tabs.length - 1); }
     });
   });
 
@@ -142,24 +142,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Stop on any real interaction; don’t restart (feels respectful)
-  ['pointerdown','keydown','wheel','touchstart'].forEach(ev => {
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => {
     window.addEventListener(ev, stopAuto, { once: true, passive: true });
   });
   nav.addEventListener('scroll', stopAuto, { once: true, passive: true });
 
-// Start autoplay only when the Experience section is in view (stop when it leaves)
-const jobs = document.querySelector('#jobs');
-if (jobs && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) startAuto(); else stopAuto();
-  }, { threshold: 0.5 });
-  io.observe(jobs);
-} else {
-  // fallback
-  window.addEventListener('load', startAuto);
-}
+  // Start autoplay only when the Experience section is in view (stop when it leaves)
+  const jobs = document.querySelector('#jobs');
+  if (jobs && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) startAuto(); else stopAuto();
+    }, { threshold: 0.5 });
+    io.observe(jobs);
+  } else {
+    // fallback
+    window.addEventListener('load', startAuto);
+  }
 
-// Also pause if the tab is hidden (e.g., user switches apps)
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) stopAuto();
-});
+  // Also pause if the tab is hidden (e.g., user switches apps)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAuto();
+  });
+})(); 
