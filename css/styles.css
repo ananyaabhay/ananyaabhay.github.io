@@ -594,19 +594,46 @@ footer {
     scroll-margin-top: 84px;
   }
 
+  /* Header */
   nav.main-nav {
-    padding: .5rem .8rem;
+    padding: .52rem .72rem;
+    /* slightly shorter, roomier horizontal */
+  }
+
+  .nav-logo {
+    width: 1.9rem;
+    /* smaller logo */
+    height: 1.9rem;
+    margin-right: .6rem;
+    /* space between logo + links */
+    flex: 0 0 auto;
   }
 
   .main-nav .nav-links {
-    overflow-x: auto;
+    display: flex;
+    gap: .55rem;
+    /* tighter gaps so Resume fits */
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: flex-start;
+    overflow: visible;
+    /* stop scroll bar */
     white-space: nowrap;
-    scrollbar-width: none;
-    gap: .85rem;
   }
 
-  .main-nav .nav-links::-webkit-scrollbar {
-    display: none;
+  .main-nav .nav-links a:not(.resume-btn) {
+    font-size: .82rem;
+    /* smaller link font */
+    font-weight: 600;
+  }
+
+  .resume-btn {
+    margin-left: 0 !important;
+    /* remove desktop offset */
+    padding: .18rem .5rem;
+    font-size: .82rem;
+    border-width: 1px;
+    white-space: nowrap;
   }
 
   #landing {
