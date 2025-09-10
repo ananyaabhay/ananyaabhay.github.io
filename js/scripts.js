@@ -163,4 +163,31 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stopAuto();
   });
-})(); 
+})();
+
+// Mobile hamburger toggle
+(() => {
+  const nav = document.querySelector('.main-nav');
+  const btn = document.querySelector('.menu-toggle');
+  const list = document.getElementById('nav-links');
+  if (!nav || !btn || !list) return;
+
+  function toggleMenu(force) {
+    const open = force ?? !nav.classList.contains('open');
+    nav.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  }
+
+  btn.addEventListener('click', () => toggleMenu());
+
+  // close after clicking any link
+  list.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') toggleMenu(false);
+  });
+
+  // close on ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleMenu(false);
+  });
+})();
