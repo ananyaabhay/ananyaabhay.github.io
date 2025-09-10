@@ -594,33 +594,81 @@ footer {
     scroll-margin-top: 84px;
   }
 
-/* tighter, but readable */
-  nav.main-nav{ padding:.48rem .60rem; }
+  /* tighter, but readable */
+  nav.main-nav {
+    padding: .48rem .60rem;
+  }
 
   /* logo smaller + breathing room */
-  .nav-logo{ width:1.6rem; height:1.6rem; margin-right:.45rem; }
-  .nav-logo::before{ display:none !important; } /* kill hex glow on phone */
-
-  /* links: allow swipe if still tight, and hide scrollbar */
-  .main-nav .nav-links{
-    gap:.45rem;
-    flex:1 1 auto;
-    min-width:0;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    white-space:nowrap;
-    scrollbar-width:none;
+  .nav-logo {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: .45rem;
   }
-  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
 
-  .main-nav .nav-links a{ font-size:.80rem; }   /* includes non-resume links */
+  .nav-logo::before {
+    display: none !important;
+  }
+
+  /* kill hex glow on phone */
+  /* show hamburger button */
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* dropdown menu (hidden by default) */
+  .main-nav .nav-links {
+    position: fixed;
+    top: 56px;
+    /* just below the header bar */
+    left: 0;
+    right: 0;
+    background: rgba(7, 9, 20, 0.94);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.9rem 0.9rem 1rem;
+    transform-origin: top;
+    transform: scaleY(0);
+    /* collapsed */
+    transition: transform 0.18s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 9;
+  }
+
+  /* dropdown link sizing */
+  .main-nav .nav-links a {
+    font-size: 0.96rem;
+  }
+
+  .resume-btn {
+    margin-left: 0;
+    padding: 0.32rem 0.6rem;
+    font-size: 0.92rem;
+  }
+
+  /* when nav has class "open" (JS adds it) */
+  .main-nav.open .nav-links {
+    transform: scaleY(1);
+    /* visible */
+  }
+
+
+  .main-nav .nav-links a {
+    font-size: .80rem;
+  }
+
+  /* includes non-resume links */
 
   /* resume: no left offset on mobile, compact padding */
-  .resume-btn{
-    margin-left:0 !important;
-    padding:.14rem .42rem;
-    font-size:.80rem;
-    border-width:1px;
+  .resume-btn {
+    margin-left: 0 !important;
+    padding: .14rem .42rem;
+    font-size: .80rem;
+    border-width: 1px;
   }
 
   #landing {
@@ -981,4 +1029,19 @@ nav.main-nav {
   #contact .contact-icons {
     justify-content: center;
   }
+}
+
+/* hamburger button hidden on desktop */
+.menu-toggle {
+  display: none;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
 }
