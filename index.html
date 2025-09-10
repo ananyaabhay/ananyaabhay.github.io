@@ -98,10 +98,17 @@
 
     <!-- top nav -->
     <nav class="main-nav">
-        <div class="nav-logo">
-            <img src="assets/favicon.png" alt="Ananya Logo">
+        <div class="nav-left">
+            <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-logo">
+                <img src="assets/favicon.png" alt="Ananya Logo">
+            </div>
         </div>
-        <div class="nav-links">
+
+        <div id="nav-links" class="nav-links">
             <a href="#about">01. About</a>
             <a href="#timeline">02. Timeline</a>
             <a href="#jobs">03. Experience</a>
@@ -109,6 +116,7 @@
             <a href="assets/Resume_AA_p.pdf" target="_blank" class="resume-btn">Resume</a>
         </div>
     </nav>
+
 
     <!-- landing -->
     <section id="landing">
