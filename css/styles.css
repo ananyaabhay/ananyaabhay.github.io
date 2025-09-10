@@ -594,46 +594,33 @@ footer {
     scroll-margin-top: 84px;
   }
 
-  /* Header */
-  nav.main-nav {
-    padding: .52rem .72rem;
-    /* slightly shorter, roomier horizontal */
-  }
+/* tighter, but readable */
+  nav.main-nav{ padding:.48rem .60rem; }
 
-  .nav-logo {
-    width: 1.9rem;
-    /* smaller logo */
-    height: 1.9rem;
-    margin-right: .6rem;
-    /* space between logo + links */
-    flex: 0 0 auto;
-  }
+  /* logo smaller + breathing room */
+  .nav-logo{ width:1.6rem; height:1.6rem; margin-right:.45rem; }
+  .nav-logo::before{ display:none !important; } /* kill hex glow on phone */
 
-  .main-nav .nav-links {
-    display: flex;
-    gap: .55rem;
-    /* tighter gaps so Resume fits */
-    flex: 1 1 auto;
-    min-width: 0;
-    justify-content: flex-start;
-    overflow: visible;
-    /* stop scroll bar */
-    white-space: nowrap;
+  /* links: allow swipe if still tight, and hide scrollbar */
+  .main-nav .nav-links{
+    gap:.45rem;
+    flex:1 1 auto;
+    min-width:0;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    white-space:nowrap;
+    scrollbar-width:none;
   }
+  .main-nav .nav-links::-webkit-scrollbar{ display:none; }
 
-  .main-nav .nav-links a:not(.resume-btn) {
-    font-size: .82rem;
-    /* smaller link font */
-    font-weight: 600;
-  }
+  .main-nav .nav-links a{ font-size:.80rem; }   /* includes non-resume links */
 
-  .resume-btn {
-    margin-left: 0 !important;
-    /* remove desktop offset */
-    padding: .18rem .5rem;
-    font-size: .82rem;
-    border-width: 1px;
-    white-space: nowrap;
+  /* resume: no left offset on mobile, compact padding */
+  .resume-btn{
+    margin-left:0 !important;
+    padding:.14rem .42rem;
+    font-size:.80rem;
+    border-width:1px;
   }
 
   #landing {
@@ -749,14 +736,6 @@ footer {
 /* 2) Mobile comfort: header, hero type, spacing */
 @media (max-width:720px) {
 
-  /* Header: slightly shorter so it doesn't clip and keeps all items visible */
-  nav.main-nav {
-    padding: .45rem .75rem !important;
-  }
-
-  .main-nav .nav-links a {
-    font-size: .9rem;
-  }
 
   /* Landing: scale type with clamp + reduce vertical crowding */
   #landing {
