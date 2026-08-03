@@ -229,8 +229,8 @@ section {
 }
 
 .tl-content:focus-visible {
-  border-color: rgba(234, 107, 244, .8);
-  box-shadow: 0 12px 32px rgba(234, 107, 244, .18);
+  border-color: rgba(45, 212, 191, .86);
+  box-shadow: 0 12px 32px rgba(45, 212, 191, .86);
   transform: translateY(-1px);
 }
 
@@ -314,7 +314,7 @@ section {
 }
 
 .xp-tab:focus-visible {
-  outline: 2px solid rgba(234, 107, 244, .6);
+  outline: 2px solid rgba(45, 212, 191, .86);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -565,7 +565,7 @@ footer {
   content: "";
   position: absolute;
   inset: -4px;
-  background: rgba(234, 107, 244, .85);
+  background: rgba(45, 212, 191, .86);
   clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
   filter: blur(10px);
   opacity: .35;
@@ -993,8 +993,8 @@ footer {
   }
 
   .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, .95);
-    color: rgba(234, 107, 244, .95);
+    border-bottom-color: rgba(45, 212, 191, .86);
+    color: rgba(45, 212, 191, .86);
   }
 
   /* contact: keep centered and compact on phone */
