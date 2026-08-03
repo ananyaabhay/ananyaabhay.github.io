@@ -17,7 +17,7 @@ body {
   --mouse-y: 50%;
   --spotlight-size: calc(150px + 0.5cm);
   --img-offset: -1cm;
-  background: linear-gradient(135deg, #001f3f, #2e0165);
+  background: linear-gradient(135deg, #061A2B, #0B3558);
   font-family: 'Inter', sans-serif;
   color: #fff;
   position: relative;
@@ -66,7 +66,7 @@ nav.main-nav {
 }
 
 .main-nav .nav-links a:not(.resume-btn):hover {
-  color: #ea6bf4;
+  color: #2DD4BF;
 }
 
 .resume-btn {
@@ -75,14 +75,14 @@ nav.main-nav {
   font-weight: 600;
   color: #fff;
   text-decoration: none;
-  border: 1px solid #ea6bf4;
+  border: 1px solid #2DD4BF;
   padding: .25rem .75rem;
   border-radius: 4px;
   transition: color .2s;
 }
 
 .resume-btn:hover {
-  color: #ea6bf4;
+  color: #2DD4BF;
 }
 
 /* ─── SECTIONS & TITLES ─────────────────────────────────── */
@@ -105,7 +105,7 @@ section {
 
 .section-title .num {
   font-family: 'Poppins', sans-serif;
-  color: rgba(234, 107, 244, .86);
+  color: rgba(45, 212, 191, .86);
   font-weight: 600;
   margin-right: .5rem;
 }
@@ -123,7 +123,7 @@ section {
   display: inline-block;
   width: 40px;
   height: 1px;
-  background: rgba(234, 107, 244, .86);
+  background: rgba(45, 212, 191, .86);
   margin-left: 8px;
   vertical-align: middle;
 }
@@ -166,7 +166,7 @@ section {
   font-family: 'Poppins', sans-serif;
   font-size: 3rem;
   font-weight: 700;
-  color: rgba(234, 107, 244, .86);
+  color: rgba(45, 212, 191, .86);
   margin-bottom: .5rem;
 }
 
@@ -208,7 +208,7 @@ section {
   position: absolute;
   inset: 0 auto 0 8px;
   width: 2px;
-  background: linear-gradient(180deg, rgba(234, 107, 244, .45), rgba(59, 130, 246, .45));
+  background: linear-gradient(180deg,rgba(45, 212, 191, .45),rgba(96, 165, 250, .45));
   border-radius: 2px;
 }
 
@@ -309,8 +309,8 @@ section {
 }
 
 .xp-tab.active {
-  color: rgba(234, 107, 244, .86);
-  border-left: 4px solid rgba(234, 107, 244, .86);
+  color: rgba(45, 212, 191, .86);
+  border-left: 4px solid rgba(45, 212, 191, .86);
 }
 
 .xp-tab:focus-visible {
@@ -353,7 +353,7 @@ section {
   content: '▹';
   position: absolute;
   left: 0;
-  color: rgba(234, 107, 244, .86);
+  color: rgba(45, 212, 191, .86);
 }
 
 /* Mobile tabs like before */
@@ -384,7 +384,7 @@ section {
   }
 
   .xp-tab.active {
-    border-bottom-color: rgba(234, 107, 244, .86);
+    border-bottom-color: rgba(45, 212, 191, .86);
   }
 
   #jobs .experience-content {
@@ -428,8 +428,8 @@ section {
   font-weight: 700;
   letter-spacing: .2px;
   border-radius: 10px;
-  background: #ea6bf4;
-  color: #140019;
+  background: #2DD4BF;
+  color: #061A2B;
   text-decoration: none;
   border: 0;
   box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
@@ -439,7 +439,7 @@ section {
 .contact-box a:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 32px rgba(0, 0, 0, .26);
-  background: #f08df6;
+  background: #5EEAD4;
 }
 
 .contact-box a:active {
@@ -467,7 +467,7 @@ section {
 }
 
 .contact-icons a:hover i {
-  -webkit-text-stroke-color: #ea6bf4;
+  -webkit-text-stroke-color: #2DD4BF;
 }
 
 /* ─── FOOTER ─────────────────────────────────────────────── */
@@ -482,7 +482,7 @@ footer {
 #loader {
   position: fixed;
   inset: 0;
-  background: #001f3f;
+  background: #061A2B;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -690,7 +690,7 @@ footer {
     width: 44vw;
     max-width: 200px;
     border-radius: 50%;
-    border: 3px solid rgba(234, 107, 244, .86);
+    border: 3px solid rgba(45, 212, 191, .86);
     box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
   }
 
@@ -771,7 +771,7 @@ footer {
   .contact-box a {
     /* the actual button */
     display: inline-block;
-    background: #ea6bf4;
+    background: #2DD4BF;
     color: #140019;
     font-weight: 700;
     border-radius: 10px;
@@ -859,8 +859,8 @@ footer {
     padding: .7rem 1.2rem;
     font-size: 1rem;
     border-radius: 10px;
-    background: #ea6bf4;
-    color: #140019;
+    background: #2DD4BF;
+    color: #061A2B;
     font-weight: 700;
     text-decoration: none;
     box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
@@ -885,7 +885,7 @@ footer {
 }
 
 .contact-icons a:hover i {
-  -webkit-text-stroke-color: #ea6bf4;
+  -webkit-text-stroke-color: #2DD4BF;
 }
 
 /* ========== CONTACT (center + single button, no outer box) ========== */
@@ -910,8 +910,8 @@ footer {
   padding: 0.8rem 1.6rem;
   font-weight: 700;
   border-radius: 10px;
-  background: #ea6bf4;
-  color: #140019;
+  background: #2DD4BF;
+  color: #061A2B;
   text-decoration: none;
   box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
   transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
@@ -920,7 +920,7 @@ footer {
 #contact .contact-box a:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
-  background: #f08df6;
+  background: #5EEAD4;
 }
 
 #contact .contact-icons {
