@@ -16,7 +16,6 @@ body {
   --mouse-x: 50%;
   --mouse-y: 50%;
   --spotlight-size: calc(150px + 0.5cm);
-  --img-offset: -1cm;
   background: linear-gradient(135deg, #061A2B, #0B3558);
   font-family: 'Inter', sans-serif;
   color: #fff;
@@ -134,23 +133,35 @@ section {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  /* real spacing between columns — replaces the old negative
+     margin on .landing-image, which overlapped the text */
+  gap: clamp(1.5rem, 4vw, 3.5rem);
   padding-top: 5rem;
 }
 
 .landing-content {
   flex: 1;
+  /* flex items default to min-width:auto, which stops text
+     wrapping and forces overflow. 0 lets it wrap properly. */
+  min-width: 0;
   text-align: left;
 }
 
 @media (min-width:721px) {
+  /* 🖼️ portrait column — fixed size, never shrinks or shifts.
+     margin-left: -1cm removed: it pulled the image 37.8px into
+     the text column and covered the tagline/summary. */
   .landing-image {
-    margin-left: var(--img-offset);
+    flex: 0 0 auto;
   }
 
   .landing-image img {
+    display: block;
+    /* scales down on small laptops so the text keeps room,
+       caps at the original 250px on large screens */
+    width: clamp(150px, 22vw, 250px);
     border-radius: 8px;
     border: 0;
-    max-width: 250px;
   }
 }
 
