@@ -410,16 +410,6 @@ section {
   text-align: left;
 }
 
-.contact-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  max-width: 48ch;
-  margin-top: 10px;
-  text-align: center;
-}
-
 /* blurb under title centered across the width (like before) */
 .contact-text {
   text-align: center;
@@ -711,10 +701,6 @@ footer {
   }
 
   /* Contact stack width + spacing on mobile */
-  .contact-section {
-    max-width: 46ch;
-    gap: 14px;
-  }
 
   .contact-box a {
     padding: .6rem 1rem;
@@ -864,10 +850,6 @@ footer {
 }
 
 /* ========== CONTACT (center + single button, no outer box) ========== */
-#contact .contact-section {
-  align-items: center;
-  text-align: center;
-}
 
 #contact .contact-box {
   background: none !important;
@@ -991,11 +973,6 @@ nav.main-nav {
 
 /* remove any accidental background on .contact-box on desktop too */
 @media (min-width:721px) {
-  #contact .contact-section {
-    align-items: center;
-    text-align: center;
-  }
-
   #contact .contact-icons {
     justify-content: center;
   }
@@ -1101,6 +1078,30 @@ nav.main-nav {
 @media (prefers-reduced-motion: reduce) {
   .skill-card { transition: none; }
   .skill-card:hover { transform: none; }
+}
+
+/* ─── 💬 CONTACT COPY ────────────────────────────────────────
+   Two-tone treatment. Replaces .pink-text / .off-white-text,
+   which were never defined (leftovers from an earlier pink
+   palette) — both lines were rendering identically.
+   ─────────────────────────────────────────────────────────── */
+.contact-lead {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: rgba(45, 212, 191, .9);
+}
+
+.contact-sub {
+  color: rgba(218, 218, 218, .7);
+  line-height: 1.6;
+}
+
+/* caps line length — the copy currently runs the full 80% width
+   of the section, which is far too wide for two short lines */
+.contact-text {
+  max-width: 52ch;
+  margin: .5rem auto;
 }
 
 /* ═══ MOBILE NAV / HAMBURGER — latest ═══ */
