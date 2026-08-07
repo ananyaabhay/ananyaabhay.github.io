@@ -584,91 +584,34 @@ footer {
   transition: transform .25s;
 }
 
-/* ─── MOBILE GLOBAL TWEAKS ──────────────────────────────── */
+
+
+/* ─── 📱 MOBILE GLOBAL TWEAKS (≤720px) ────────────────────
+   Layout-only overrides for phones.
+   ⚠️ Nav + hamburger styling lives in the MOBILE NAV block at
+   the very BOTTOM of this file.
+   ──────────────────────────────────────────────────────── */
 @media (max-width:720px) {
+
+  /* sections flow naturally on phones; scroll-snap off so the
+     hamburger's anchor jumps aren't fighting the snap points */
   section {
     height: auto !important;
     min-height: auto !important;
     scroll-snap-align: none;
     padding: 0 1.25rem 20px;
-    scroll-margin-top: 84px;
   }
 
-  /* tighter, but readable */
-  nav.main-nav {
-    padding: .48rem .60rem;
-  }
-
-  /* logo smaller + breathing room */
+  /* logo mark: smaller, with clearance from the hamburger */
   .nav-logo {
     width: 1.6rem;
     height: 1.6rem;
     margin-right: .45rem;
   }
 
+  /* hex glow ring — too heavy/noisy at phone size */
   .nav-logo::before {
     display: none !important;
-  }
-
-  /* kill hex glow on phone */
-  /* show hamburger button */
-  .menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* dropdown menu (hidden by default) */
-  .main-nav .nav-links {
-    position: fixed;
-    top: 56px;
-    /* just below the header bar */
-    left: 0;
-    right: 0;
-    background: rgba(7, 9, 20, 0.94);
-    backdrop-filter: blur(8px);
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    padding: 0.9rem 0.9rem 1rem;
-    transform-origin: top;
-    transform: scaleY(0);
-    /* collapsed */
-    transition: transform 0.18s ease;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 9;
-  }
-
-  /* dropdown link sizing */
-  .main-nav .nav-links a {
-    font-size: 0.96rem;
-  }
-
-  .resume-btn {
-    margin-left: 0;
-    padding: 0.32rem 0.6rem;
-    font-size: 0.92rem;
-  }
-
-  /* when nav has class "open" (JS adds it) */
-  .main-nav.open .nav-links {
-    transform: scaleY(1);
-    /* visible */
-  }
-
-
-  .main-nav .nav-links a {
-    font-size: .80rem;
-  }
-
-  /* includes non-resume links */
-
-  /* resume: no left offset on mobile, compact padding */
-  .resume-btn {
-    margin-left: 0 !important;
-    padding: .14rem .42rem;
-    font-size: .80rem;
-    border-width: 1px;
   }
 
   #landing {
@@ -1114,7 +1057,7 @@ nav.main-nav {
   }
 
   .main-nav .nav-links a.resume-btn {
-    margin-top: .45rem;
+    margin: .45rem 0 0;
     padding: .65rem .6rem;
     font-size: .95rem;
     text-align: center;
