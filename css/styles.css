@@ -949,11 +949,6 @@ footer {
   #contact .contact-icons {
     gap: 14px;
   }
-
-  /* hide the hex glow on mobile */
-  .nav-logo::before {
-    display: none !important;
-  }
 }
 
 /* ========== DESKTOP SMALL TWEAKS ========== */
