@@ -20,24 +20,45 @@ if (animEl) {
 
 
 
-// ensure loader is visible at least 1.2s, then fade out and remove safely
-const start = performance.now();
+/* ─── ⏳ LOADER DISMISS ──────────────────────────────────────
+   Triggers on DOMContentLoaded (HTML parsed) instead of
+   window.load (which waits on every image, font + CDN request).
+   Holds MIN_MS so the hex-draw animation finishes, then fades.
+   CSS carries an independent 2.4s failsafe — see #loader.
+   ────────────────────────────────────────────────────────── */
+(() => {
+  const MIN_MS  = 1200;   // ≥ hex-draw duration (1.15s) so it never cuts off
+  const FADE_MS = 500;
+  const start   = performance.now();
 
-window.addEventListener('load', () => {
-  const loader = document.getElementById('loader');
-  if (!loader) return;
+  function dismiss() {
+    const loader = document.getElementById('loader');
+    if (!loader || loader.dataset.going) return;
+    loader.dataset.going = '1';            // guard against double-firing
 
-  const elapsed = performance.now() - start;
-  const wait = Math.max(0, 1200 - elapsed);
-
-  setTimeout(() => {
-    loader.style.transition = 'opacity 0.5s';
-    loader.style.opacity = '0';
+    const wait = Math.max(0, MIN_MS - (performance.now() - start));
     setTimeout(() => {
-      if (loader && loader.parentNode) loader.remove();
-    }, 500);
-  }, wait);
-});
+      loader.style.transition   = `opacity ${FADE_MS}ms ease`;
+      loader.style.opacity      = '0';
+      loader.style.pointerEvents = 'none'; // stop it eating clicks mid-fade
+      setTimeout(() => loader.remove(), FADE_MS);
+    }, wait);
+  }
+
+  // honour reduced-motion: no splash at all
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loader')?.remove();
+    });
+    return;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', dismiss);
+  } else {
+    dismiss();                             // DOM already parsed
+  }
+})();
 
 
 // timeline fade-in on scroll
