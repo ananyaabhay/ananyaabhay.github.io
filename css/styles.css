@@ -1016,6 +1016,84 @@ nav.main-nav {
   gap: .6rem;
 }
 
+/* ─── 🧰 SKILLS ──────────────────────────────────────────────
+   Three grouped cards of text chips. No proficiency bars —
+   keeps the keywords plain-text for SEO + ATS parsers.
+   ─────────────────────────────────────────────────────────── */
+
+/* content can exceed one viewport, so allow growth but keep the
+   scroll-snap behaviour of the other sections via min-height */
+#skills {
+  height: auto;
+  min-height: 100vh;
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+}
+
+#skills .skills-intro {
+  color: rgba(218, 218, 218, .7);
+  margin-bottom: 1.75rem;
+}
+
+/* auto-fit: 3 cols on desktop, 2 on tablet, 1 on phone — no
+   breakpoints needed, the grid decides based on the 260px floor */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.skill-card {
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  padding: 1.25rem 1.25rem 1.4rem;
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+
+.skill-card:hover {
+  border-color: rgba(45, 212, 191, .45);
+  background: rgba(45, 212, 191, .05);
+  transform: translateY(-3px);
+}
+
+.skill-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  color: #2DD4BF;
+  margin-bottom: .3rem;
+}
+
+.skill-card-note {
+  font-size: .85rem;
+  font-style: italic;
+  color: rgba(218, 218, 218, .55);
+  margin-bottom: 1rem;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  list-style: none;
+  padding: 0;
+}
+
+.skill-chips li {
+  font-size: .8rem;
+  padding: .3rem .6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .09);
+  color: rgba(241, 236, 238, .85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-card { transition: none; }
+  .skill-card:hover { transform: none; }
+}
+
 /* ═══ MOBILE NAV / HAMBURGER — latest ═══ */
 @media (max-width: 720px) {
 
