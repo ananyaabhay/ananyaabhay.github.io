@@ -20,7 +20,10 @@ body {
   font-family: 'Inter', sans-serif;
   color: #fff;
   position: relative;
-  scroll-snap-type: y mandatory;
+  /* proximity, not mandatory: Timeline and Skills now exceed one
+     viewport, and mandatory snapping forces the browser back to a
+     snap point — making the overflow content hard to reach. */
+  scroll-snap-type: y proximity;
 }
 
 /* subtle mouse spotlight */
@@ -1102,6 +1105,134 @@ nav.main-nav {
 .contact-text {
   max-width: 52ch;
   margin: .5rem auto;
+}
+/* ─── 🏷️ STATUS BADGE ────────────────────────────────────────
+   "Currently deployed" pill at the top of About. The pulsing dot
+   reads as a live service indicator and pairs with the version
+   tags in the Timeline.
+   ─────────────────────────────────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1.1rem;
+  padding: .4rem .85rem;
+  border: 1px solid rgba(45, 212, 191, .35);
+  border-radius: 999px;
+  background: rgba(45, 212, 191, .07);
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #2DD4BF;
+  animation: status-pulse 2.4s ease-out infinite;
+}
+
+.status-ver {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: #2DD4BF;
+}
+
+.status-now { color: rgba(241, 236, 238, .82); }
+
+@keyframes status-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(45, 212, 191, .55); }
+  70%  { box-shadow: 0 0 0 7px rgba(45, 212, 191, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+}
+
+/* ─── 🗓️ TIMELINE VERSION TAGS ──────────────────────────────
+   Adds a version + date row to each entry. The .is-current item
+   gets a brighter card and a marker on the rail.
+   ─────────────────────────────────────────────────────────── */
+.tl-intro {
+  color: rgba(218, 218, 218, .7);
+  margin-bottom: .25rem;
+}
+
+.tl-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: .35rem;
+}
+
+.tl-ver {
+  font-family: 'Poppins', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #2DD4BF;
+  padding: .12rem .45rem;
+  border: 1px solid rgba(45, 212, 191, .3);
+  border-radius: 5px;
+  background: rgba(45, 212, 191, .08);
+}
+
+.tl-year {
+  font-size: .78rem;
+  letter-spacing: .2px;
+  color: rgba(207, 211, 225, .62);
+}
+
+.tl-tag {
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: #061A2B;
+  background: #2DD4BF;
+  padding: .12rem .45rem;
+  border-radius: 5px;
+}
+
+.tl-item.is-current .tl-content {
+  border-color: rgba(45, 212, 191, .45);
+  background: linear-gradient(180deg, rgba(45, 212, 191, .07), #0f1115 60%);
+}
+
+/* marker on the vertical rail — offset differs because .tl
+   switches from 24px to 30px padding at the 860px breakpoint */
+.tl-item.is-current::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2DD4BF;
+  box-shadow: 0 0 0 3px #061A2B, 0 0 12px rgba(45, 212, 191, .8);
+}
+
+@media (min-width: 860px) {
+  .tl-item.is-current::before { left: -26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot { animation: none; }
+}
+
+/* timeline now runs 7 entries — same treatment as #skills so it
+   can grow past one viewport without clipping */
+#timeline {
+  height: auto;
+  min-height: 100vh;
+}
+
+@media (min-width: 721px) {
+  #timeline {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
 }
 
 /* ═══ MOBILE NAV / HAMBURGER — latest ═══ */
