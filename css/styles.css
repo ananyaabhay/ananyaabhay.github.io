@@ -1026,8 +1026,17 @@ nav.main-nav {
 #skills {
   height: auto;
   min-height: 100vh;
-  padding-top: 6rem;
-  padding-bottom: 3rem;
+}
+
+/* ⚠️ Desktop only. Skills runs taller than other sections so it
+   needs its own breathing room — but #skills (ID, 1-0-0) beats
+   the `section` rule (0-0-1) even inside the mobile media
+   queries, so unscoped it leaves a 96px gap on phones. */
+@media (min-width: 721px) {
+  #skills {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
 }
 
 #skills .skills-intro {
