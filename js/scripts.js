@@ -165,29 +165,49 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 })();
 
-// Mobile hamburger toggle
+// ─── Mobile hamburger ────────────────────────────────────────────
 (() => {
-  const nav = document.querySelector('.main-nav');
-  const btn = document.querySelector('.menu-toggle');
+  const nav  = document.querySelector('.main-nav');
+  const btn  = document.querySelector('.menu-toggle');
   const list = document.getElementById('nav-links');
   if (!nav || !btn || !list) return;
 
-  function toggleMenu(force) {
-    const open = force ?? !nav.classList.contains('open');
+  const icon = btn.querySelector('i');
+  const isOpen = () => nav.classList.contains('open');
+
+  function setMenu(open) {
     nav.classList.toggle('open', open);
     document.body.classList.toggle('menu-open', open);
     btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (icon) {
+      icon.classList.toggle('fa-bars', !open);
+      icon.classList.toggle('fa-xmark', open);
+    }
   }
 
-  btn.addEventListener('click', () => toggleMenu());
-
-  // close after clicking any link
-  list.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') toggleMenu(false);
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setMenu(!isOpen());
   });
 
-  // close on ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') toggleMenu(false);
+  // close after tapping any link
+  list.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setMenu(false);
+  });
+
+  // close when tapping outside the nav
+  document.addEventListener('click', (e) => {
+    if (isOpen() && !nav.contains(e.target)) setMenu(false);
+  });
+
+  // close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) setMenu(false);
+  });
+
+  // reset if the window grows back to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 720 && isOpen()) setMenu(false);
   });
 })();
