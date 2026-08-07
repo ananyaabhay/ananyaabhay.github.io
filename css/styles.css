@@ -487,6 +487,13 @@ footer {
   align-items: center;
   justify-content: center;
   z-index: 9999;
+
+  /* 🛟 FAILSAFE — pure-CSS auto-dismiss at 2.4s.
+     Runs independently of JavaScript, so if scripts.js fails to
+     load or throws, the overlay still clears itself instead of
+     trapping the visitor on a blank screen. In normal operation
+     JS removes the loader at ~1.7s, well before this fires. */
+  animation: fade-loader .5s ease 2.4s forwards;
 }
 
 .loader-wrap {
@@ -537,6 +544,20 @@ footer {
   to {
     opacity: 0;
     visibility: hidden;
+  }
+}
+
+/* ♿ REDUCED MOTION — skip the splash entirely. */
+
+@media (prefers-reduced-motion: reduce) {
+  #loader {
+    animation: fade-loader .01s linear forwards;
+  }
+
+  .hex-outline,
+  .loader-logo {
+    animation-duration: .01s;
+    animation-delay: 0s;
   }
 }
 
