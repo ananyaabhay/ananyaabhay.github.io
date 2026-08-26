@@ -1682,7 +1682,17 @@
       if (running) { sel.value = current; return; }
       current = sel.value; showWho(); drafts = {}; out.innerHTML = ""; runBtn.textContent = "Run agent";
     });
-    runBtn.addEventListener("click", () => { if (!running) mode === "role" ? runRole() : runEmp(); });
+    runBtn.addEventListener("click", () => {
+      if (running) return;
+
+      if (sel.options.length === 0 || !who.textContent.trim()) {
+        fillSelect();
+      }
+
+      mode === "role"
+        ? runRole()
+        : runEmp();
+    });
 
     function el(h) { const d = document.createElement("div"); d.innerHTML = h.trim(); return d.firstElementChild; }
     function step(n, t, b) { return `<section class="step in"><div class="shead"><span class="snum">STEP ${n}</span><h2>${t}</h2></div><div class="sbody">${b}</div></section>`; }
@@ -2231,43 +2241,43 @@ ${D.screen.map((s, i) => {
       b.setAttribute("aria-expanded", String(!o));
       document.getElementById("jd" + b.dataset.i).hidden = o;
     });
- function wireTabs(letters, first) {
-  const host = document.getElementById("letter");
+    function wireTabs(letters, first) {
+      const host = document.getElementById("letter");
 
-  const render = k => {
-    const L = letters[k];
+      const render = k => {
+        const L = letters[k];
 
-    if (drafts[k] === undefined) {
-      drafts[k] =
-        L.body
-          .map(p =>
-            p.trim().startsWith("<u")
-              ? p
-              : `<p>${p}</p>`
-          )
-          .join("") +
-        `<p>Regards,<br>[Your name]<br>People Partner</p>`;
-    }
+        if (drafts[k] === undefined) {
+          drafts[k] =
+            L.body
+              .map(p =>
+                p.trim().startsWith("<u")
+                  ? p
+                  : `<p>${p}</p>`
+              )
+              .join("") +
+            `<p>Regards,<br>[Your name]<br>People Partner</p>`;
+        }
 
-    const checkHTML = L.check
-      ? `<p class="note">${L.check}</p>`
-      : "";
+        const checkHTML = L.check
+          ? `<p class="note">${L.check}</p>`
+          : "";
 
-    const withheldHTML = L.withheld
-      ? [
-          '<details class="withheld">',
-          '<summary>',
-          'Restricted People Ops data kept private',
-          '<span>Policy 3.2</span>',
-          '</summary>',
-          '<ul>',
-          L.withheld.map(w => `<li>${w}</li>`).join(""),
-          '</ul>',
-          '</details>'
-        ].join("")
-      : "";
+        const withheldHTML = L.withheld
+          ? [
+            '<details class="withheld">',
+            '<summary>',
+            'Restricted People Ops data kept private',
+            '<span>Policy 3.2</span>',
+            '</summary>',
+            '<ul>',
+            L.withheld.map(w => `<li>${w}</li>`).join(""),
+            '</ul>',
+            '</details>'
+          ].join("")
+          : "";
 
-    host.innerHTML = `
+        host.innerHTML = `
       <div class="edithint">
         <span>
           Template draft — click anywhere in the note to edit before sending
@@ -2304,65 +2314,90 @@ ${D.screen.map((s, i) => {
       ${withheldHTML}
     `;
 
-    const body = document.getElementById("body");
+        const body = document.getElementById("body");
 
-    body.addEventListener("input", () => {
-      drafts[k] = body.innerHTML;
-    });
+        body.addEventListener("input", () => {
+          drafts[k] = body.innerHTML;
+        });
 
-    const copyBtn = document.getElementById("copybtn");
+        const copyBtn = document.getElementById("copybtn");
 
-    copyBtn.addEventListener("click", e => {
-      const btn = e.currentTarget;
-      const text = body.innerText;
+        copyBtn.addEventListener("click", e => {
+          const btn = e.currentTarget;
+          const text = body.innerText;
 
-      const done = () => {
-        btn.textContent = "Copied";
+          const done = () => {
+            btn.textContent = "Copied";
 
-        setTimeout(() => {
-          btn.textContent = "Copy note";
-        }, 1600);
+            setTimeout(() => {
+              btn.textContent = "Copy note";
+            }, 1600);
+          };
+
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard
+              .writeText(text)
+              .then(done, done);
+          } else {
+            const ta = document.createElement("textarea");
+
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+
+            try {
+              document.execCommand("copy");
+            } catch (err) {
+              // Clipboard fallback failed silently.
+            }
+
+            ta.remove();
+            done();
+          }
+        });
       };
 
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard
-          .writeText(text)
-          .then(done, done);
-      } else {
-        const ta = document.createElement("textarea");
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach(item => {
+            item.setAttribute(
+              "aria-selected",
+              String(item === tab)
+            );
+          });
 
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-
-        try {
-          document.execCommand("copy");
-        } catch (err) {
-          // Clipboard fallback failed silently.
-        }
-
-        ta.remove();
-        done();
-      }
-    });
-  };
-
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach(item => {
-        item.setAttribute(
-          "aria-selected",
-          String(item === tab)
-        );
+          render(tab.dataset.t);
+        });
       });
 
-      render(tab.dataset.t);
-    });
-  });
+      render(first);
+    }
+    // ─── Initial UI state ───────────────────────────────────────────
+    function initAgentUI() {
+      const needsInit =
+        sel.options.length === 0 ||
+        !who.textContent.trim();
 
-  render(first);
-}
-    fillSelect();
+      if (needsInit) {
+        fillSelect();
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initAgentUI,
+        { once: true }
+      );
+    } else {
+      initAgentUI();
+    }
+
+    /*
+      Handles browser back/forward cache restores as well.
+      Does not reset the UI if it is already populated.
+    */
+    window.addEventListener("pageshow", initAgentUI);
   </script>
 </body>
 
