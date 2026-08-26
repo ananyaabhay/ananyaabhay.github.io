@@ -1,9 +1,33 @@
-// Glow-cursor
-document.addEventListener('pointermove', e => {
-  const x = (e.clientX / innerWidth) * 100 + '%';
-  const y = (e.clientY / innerHeight) * 100 + '%';
-  document.body.style.setProperty('--mouse-x', x);
-  document.body.style.setProperty('--mouse-y', y);
+/* ─── ✨ CURSOR SPOTLIGHT ────────────────────────────────────
+   rAF-throttled: coalesces bursts of pointer events into one
+   write per frame. body::before is a full-viewport gradient with
+   mix-blend-mode, so each write costs a whole-screen composite.
+   Skipped entirely on touch — no cursor to follow.
+   ────────────────────────────────────────────────────────── */
+(() => {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  let x = '50%', y = '50%', queued = false;
+
+  function paint() {
+    queued = false;
+    document.body.style.setProperty('--mouse-x', x);
+    document.body.style.setProperty('--mouse-y', y);
+  }
+
+  document.addEventListener('pointermove', (e) => {
+    x = (e.clientX / innerWidth) * 100 + '%';
+    y = (e.clientY / innerHeight) * 100 + '%';
+    if (!queued) { queued = true; requestAnimationFrame(paint); }
+  }, { passive: true });
+})();
+
+// Glow-cursor -- backup
+/* document.addEventListener('pointermove', e => {
+const x = (e.clientX / innerWidth) * 100 + '%';
+const y = (e.clientY / innerHeight) * 100 + '%';
+document.body.style.setProperty('--mouse-x', x);
+document.body.style.setProperty('--mouse-y', y);
 });
 
 // tagline animation: rotates words if target exists
@@ -15,7 +39,7 @@ if (animEl) {
     idx = (idx + 1) % words.length;
     animEl.textContent = words[idx];
   }, 2000);
-}
+} */
 
 
 
