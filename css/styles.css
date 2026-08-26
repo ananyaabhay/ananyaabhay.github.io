@@ -53,6 +53,14 @@ body::before {
   mix-blend-mode: overlay;
 }
 
+/* Required whenever <img> carries width/height attributes.
+   Those attributes are presentational hints that apply to any
+   property CSS doesn't set — so a CSS-set width with no height
+   lets height="500" through and stretches the image. */
+img {
+  height: auto;
+}
+
 /* ─── ♿ GLOBAL FOCUS RING ────────────────────────────────────
    One rule covers every interactive element. :focus-visible only
    fires for keyboard/AT, so mouse clicks stay clean. */
