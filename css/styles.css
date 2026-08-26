@@ -301,6 +301,71 @@ section {
   color: rgba(241, 236, 238, .82);
 }
 
+.about-story {
+  width: 100%;
+  max-width: 1050px;
+}
+
+.about-lead {
+  max-width: 72ch;
+
+  margin: .15rem 0 1.35rem;
+  padding: .8rem 1rem;
+
+  border-left: 2px solid rgba(45, 212, 191, .75);
+
+  background: linear-gradient(90deg,
+      rgba(45, 212, 191, .06),
+      rgba(45, 212, 191, 0));
+
+  color: rgba(236, 238, 242, .88);
+
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.about-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  width: 100%;
+  gap: .8rem;
+}
+
+.about-proof {
+  min-width: 0;
+
+  padding: .9rem 1rem;
+
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, .025);
+}
+
+.about-proof strong {
+  display: block;
+
+  margin-bottom: .15rem;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+
+  color: #2DD4BF;
+}
+
+.about-proof span {
+  display: block;
+
+  font-size: .78rem;
+  line-height: 1.45;
+
+  color: rgba(218, 218, 218, .65);
+
+  overflow-wrap: anywhere;
+}
+
 
 /* ─── EXPERIENCE ──────────────────────────────────────────────── */
 
@@ -1410,7 +1475,7 @@ footer {
   }
 
 
-  /* ─── ABOUT & STATUS BADGE ──────────────────────────────────── */
+    /* ─── ABOUT & STATUS BADGE ──────────────────────────────────── */
 
   #about .section-title {
     margin-bottom: 16px;
@@ -1418,6 +1483,7 @@ footer {
 
   .status-badge {
     display: flex;
+
     width: 100%;
     max-width: 100%;
 
@@ -1432,10 +1498,10 @@ footer {
   .status-now {
     flex-basis: 100%;
 
+    padding-top: .1rem;
+
     font-size: .92rem;
     line-height: 1.45;
-
-    padding-top: .1rem;
   }
 
   .about-lead {
@@ -1452,6 +1518,7 @@ footer {
   }
 
   .about-proof {
+    min-width: 0;
     padding: .7rem .75rem;
   }
 
@@ -1461,64 +1528,7 @@ footer {
 
   .about-proof span {
     font-size: .72rem;
-  }
-
-  .about-story {
-    max-width: 1050px;
-  }
-
-  .about-lead {
-    max-width: 72ch;
-
-    margin: .15rem 0 1.35rem;
-    padding: .8rem 1rem;
-
-    border-left: 2px solid rgba(45, 212, 191, .75);
-
-    background: linear-gradient(90deg,
-        rgba(45, 212, 191, .06),
-        rgba(45, 212, 191, 0));
-
-    color: rgba(236, 238, 242, .88);
-
-    font-size: 1rem;
-    line-height: 1.65;
-  }
-
-  .about-proof-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: .8rem;
-  }
-
-  .about-proof {
-    padding: .9rem 1rem;
-
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 10px;
-
-    background: rgba(255, 255, 255, .025);
-  }
-
-  .about-proof strong {
-    display: block;
-
-    margin-bottom: .15rem;
-
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.45rem;
-    font-weight: 600;
-
-    color: #2DD4BF;
-  }
-
-  .about-proof span {
-    display: block;
-
-    font-size: .78rem;
-    line-height: 1.45;
-
-    color: rgba(218, 218, 218, .65);
+    overflow-wrap: anywhere;
   }
 
   /* ─── PROJECTS ───────────────────────────────────────────────── */
