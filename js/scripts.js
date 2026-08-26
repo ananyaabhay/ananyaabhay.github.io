@@ -21,21 +21,13 @@ if (animEl) {
 
 
 /* ─── ⏳ LOADER DISMISS ──────────────────────────────────────
-   Triggers on DOMContentLoaded (HTML parsed) instead of
-   window.load (which waits on every image, font + CDN request).
-   Holds MIN_MS so the hex-draw animation finishes, then fades.
-   CSS carries an independent 2.4s failsafe — see #loader.
    ────────────────────────────────────────────────────────── */
 (() => {
-  const reduceMotion =
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const MIN_MS = reduceMotion ? 700 : 1400;
-  const FADE_MS = reduceMotion ? 150 : 450;
-
+  const MIN_MS = 1400;
+  const FADE_MS = 450;
   const start = performance.now();
 
-  function dismiss() {
+  function dismissLoader() {
     const loader = document.getElementById('loader');
 
     if (!loader || loader.dataset.going) return;
@@ -48,23 +40,20 @@ if (animEl) {
     );
 
     setTimeout(() => {
-      loader.style.transition =
-        `opacity ${FADE_MS}ms ${reduceMotion ? 'linear' : 'ease'}`;
-
+      loader.style.transition = `opacity ${FADE_MS}ms ease`;
       loader.style.opacity = '0';
       loader.style.pointerEvents = 'none';
 
       setTimeout(() => {
         loader.remove();
       }, FADE_MS);
-
     }, wait);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', dismiss);
+    document.addEventListener('DOMContentLoaded', dismissLoader);
   } else {
-    dismiss();
+    dismissLoader();
   }
 })();
 
@@ -156,111 +145,145 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const AUTOPLAY_MS = 5000;
   let timer = null;
+  let autoplayKilled = false;
 
   function nextAuto() {
     const next = (activeIndex + 1) % tabs.length;
-    activate(next, { fromAuto: true }); // no focus, no jump
+    activate(next, { fromAuto: true });
   }
 
   function startAuto() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // respect user setting
-    if (!timer) timer = setInterval(nextAuto, AUTOPLAY_MS);
+    if (autoplayKilled || timer) return;
+
+    timer = setInterval(nextAuto, AUTOPLAY_MS);
   }
+
   function stopAuto() {
-    if (timer) { clearInterval(timer); timer = null; }
+    if (!timer) return;
+
+    clearInterval(timer);
+    timer = null;
   }
 
-  // Stop on any real interaction; don’t restart (feels respectful)
-  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => {
-    window.addEventListener(ev, stopAuto, { once: true, passive: true });
-  });
-  nav.addEventListener('scroll', stopAuto, { once: true, passive: true });
+  function killAuto() {
+    autoplayKilled = true;
+    stopAuto();
+  }
 
-  // Start autoplay only when the Experience section is in view (stop when it leaves)
+  /*
+    Manual interaction with the Experience control kills autoplay.
+    Normal page scrolling does not.
+  */
+  tabs.forEach(tab => {
+    tab.addEventListener('pointerdown', killAuto, { once: true });
+    tab.addEventListener('keydown', killAuto, { once: true });
+  });
+
+  /*
+    Start only while Experience is actually in view.
+    Once killed by the user, startAuto() will refuse to restart.
+  */
   const jobs = document.querySelector('#jobs');
+
   if (jobs && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) startAuto(); else stopAuto();
+      if (entry.isIntersecting) {
+        startAuto();
+      } else {
+        stopAuto();
+      }
     }, { threshold: 0.5 });
+
     io.observe(jobs);
   } else {
-    // fallback
     window.addEventListener('load', startAuto);
   }
 
-  // Also pause if the tab is hidden (e.g., user switches apps)
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopAuto();
-  });
-})();
+    if (document.hidden) {
+      stopAuto();
+    } else if (!autoplayKilled) {
+      const rect = jobs?.getBoundingClientRect();
 
-// ─── Mobile project expand / collapse ───────────────────────────
-(() => {
-  const projects = document.querySelector('#projects');
-
-  if (!projects) return;
-
-  projects.addEventListener('click', e => {
-    const btn = e.target.closest('.project-toggle');
-
-    if (!btn) return;
-
-    const card = btn.closest('.project-card');
-    const open = card.classList.toggle('is-open');
-
-    btn.setAttribute('aria-expanded', String(open));
-
-    const label = btn.querySelector('span');
-
-    if (label) {
-      label.textContent = open ? 'Show less' : 'See more';
+      if (
+        rect &&
+        rect.top < window.innerHeight &&
+        rect.bottom > 0
+      ) {
+        startAuto();
+      }
     }
   });
-})();
 
-// ─── Mobile hamburger ────────────────────────────────────────────
-(() => {
-  const nav = document.querySelector('.main-nav');
-  const btn = document.querySelector('.menu-toggle');
-  const list = document.getElementById('nav-links');
-  if (!nav || !btn || !list) return;
+  // ─── Mobile project expand / collapse ───────────────────────────
+  (() => {
+    const projects = document.querySelector('#projects');
 
-  const icon = btn.querySelector('i');
-  const isOpen = () => nav.classList.contains('open');
+    if (!projects) return;
 
-  function setMenu(open) {
-    nav.classList.toggle('open', open);
-    document.body.classList.toggle('menu-open', open);
-    btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    if (icon) {
-      icon.classList.toggle('fa-bars', !open);
-      icon.classList.toggle('fa-xmark', open);
+    projects.addEventListener('click', e => {
+      const btn = e.target.closest('.project-toggle');
+
+      if (!btn) return;
+
+      const card = btn.closest('.project-card');
+      const open = card.classList.toggle('is-open');
+
+      btn.setAttribute('aria-expanded', String(open));
+
+      const label = btn.querySelector('span');
+
+      if (label) {
+        label.textContent = open ? 'Show less' : 'See more';
+      }
+    });
+  })();
+
+  // ─── Mobile hamburger ────────────────────────────────────────────
+  (() => {
+    const nav = document.querySelector('.main-nav');
+    const btn = document.querySelector('.menu-toggle');
+    const list = document.getElementById('nav-links');
+    if (!nav || !btn || !list) return;
+
+    const icon = btn.querySelector('i');
+    const isOpen = () => nav.classList.contains('open');
+
+    function setMenu(open) {
+      nav.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (icon) {
+        icon.classList.toggle('fa-bars', !open);
+        icon.classList.toggle('fa-xmark', open);
+      }
     }
-  }
 
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    setMenu(!isOpen());
-  });
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMenu(!isOpen());
+    });
 
-  // close after tapping any link
-  list.addEventListener('click', (e) => {
-    if (e.target.closest('a')) setMenu(false);
-  });
+    // close after tapping any link
+    list.addEventListener('click', (e) => {
+      if (e.target.closest('a')) setMenu(false);
+    });
 
-  // close when tapping outside the nav
-  document.addEventListener('click', (e) => {
-    if (isOpen() && !nav.contains(e.target)) setMenu(false);
-  });
+    // close when tapping outside the nav
+    document.addEventListener('click', (e) => {
+      if (isOpen() && !nav.contains(e.target)) setMenu(false);
+    });
 
-  // close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen()) setMenu(false);
-  });
+    // close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) setMenu(false);
+    });
 
-  // reset if the window grows back to desktop
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 720 && isOpen()) setMenu(false);
-  });
+    // reset if the window grows back to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 720 && isOpen()) setMenu(false);
+    });
+  })();
+
 })();
