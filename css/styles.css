@@ -552,6 +552,19 @@ section {
   padding: 1.25rem 1.25rem 1.4rem;
 }
 
+.project-meta {
+  margin-bottom: .45rem;
+}
+
+.project-type {
+  font-family: 'Poppins', sans-serif;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(218, 218, 218, .55);
+}
+
 .project-title {
   font-family: 'Poppins', sans-serif;
   font-size: 1.05rem;
