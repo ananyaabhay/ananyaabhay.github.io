@@ -287,3 +287,39 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
 })();
+
+/* ─── 📈 STAT COUNT-UP ───────────────────────────────────────
+   Animates each .about-proof number from 0 on first scroll into
+   view. Parses the suffix (+ / %) off the existing text so the
+   HTML stays the real value — if JS never runs, the correct
+   numbers are already on the page.
+   ────────────────────────────────────────────────────────── */
+(() => {
+  const nums = document.querySelectorAll('.about-proof strong');
+  if (!nums.length || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function run(el) {
+    const m = el.textContent.trim().match(/^(\d+)(.*)$/);
+    if (!m) return;
+    const target = +m[1], suffix = m[2], DUR = 1100;
+    const t0 = performance.now();
+
+    (function tick(now) {
+      const p = Math.min(1, (now - t0) / DUR);
+      const eased = 1 - Math.pow(1 - p, 3);       // ease-out cubic
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      run(e.target);
+      io.unobserve(e.target);                     // fire once only
+    });
+  }, { threshold: .6 });
+
+  nums.forEach((n) => io.observe(n));
+})();
