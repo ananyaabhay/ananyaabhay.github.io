@@ -13,6 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Spectral:ital,wght@0,500;0,600;1,500&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     :root {
       --ink: #131A33;
@@ -87,8 +88,9 @@
       margin: 0;
       font-size: 16.5px;
       color: var(--ink2);
-      max-width: 62ch;
-      line-height: 1.6
+      width: 100%;
+      max-width: none;
+      line-height: 1.65
     }
 
     .intro {
@@ -837,6 +839,76 @@
       font-size: 11px
     }
 
+    .empopen {
+      background: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      border-bottom: 1px solid transparent;
+    }
+
+    .empopen:hover {
+      color: var(--adjacent);
+      border-bottom-color: var(--adjacent);
+    }
+
+    .empopen:focus-visible {
+      outline: 2px solid var(--adjacent);
+      outline-offset: 3px;
+    }
+
+
+    .empprofile {
+      background: #F7F9FD;
+      border: 1px solid var(--rule);
+      border-radius: 5px;
+      padding: 14px 16px;
+      margin: 10px 0 4px;
+    }
+
+    .empprofile[hidden] {
+      display: none;
+    }
+
+    .empmeta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .empmeta span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 2px;
+    }
+
+    .empmeta b {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink2);
+      font-weight: 500;
+    }
+
+    .empactions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-top: 11px;
+      border-top: 1px solid var(--rule2);
+    }
+
     .demo {
       margin: 9px 0 0;
       font-family: var(--mono);
@@ -1257,6 +1329,8 @@
     <p class="foot">
       Personal product exploration by Ananya Abhay · Built with synthetic data.<br>
       No real employee, employer, requisition or HR system is represented in this prototype.
+
+      © 2026 Ananya Abhay
     </p>
   </div>
 
@@ -1604,11 +1678,103 @@
 
       push(step(3, "Eligibility screen", `
     <table><thead><tr><th style="width:26%">Employee</th><th style="width:80px">Result</th><th>Basis</th></tr></thead>
-    <tbody>${D.screen.map(s => {
+    <tbody>
+${D.screen.map((s, i) => {
         const P = PEOPLE[s[0]];
-        return `<tr><td><b>${P.name}</b><br><span style="font-family:var(--mono);font-size:11px;color:var(--mute)">${P.id} · ${P.level}</span></td><td>${tag(s[1])}</td><td>${s[2]}</td></tr>`;
-      }).join("")}</tbody></table>
+
+        return `
+    <tr>
+      <td>
+        <button
+          class="empopen"
+          data-emp="${s[0]}"
+          data-profile="empProfile${i}"
+          aria-expanded="false"
+          aria-controls="empProfile${i}"
+        >
+          ${P.name}
+        </button>
+
+        <br>
+
+        <span style="font-family:var(--mono);font-size:11px;color:var(--mute)">
+          ${P.id} · ${P.level}
+        </span>
+      </td>
+
+      <td>${tag(s[1])}</td>
+
+      <td>${s[2]}</td>
+    </tr>
+
+    <tr>
+      <td colspan="3" style="padding:0;border-bottom:0">
+        <div class="empprofile" id="empProfile${i}" hidden>
+
+          <div class="empmeta">
+
+            <div>
+              <span>Employee ID</span>
+              <b>${P.id}</b>
+            </div>
+
+            <div>
+              <span>Level</span>
+              <b>${P.level}</b>
+            </div>
+
+            <div>
+              <span>Current role</span>
+              <b>${P.role}</b>
+            </div>
+
+            <div>
+              <span>Location</span>
+              <b>${P.loc}</b>
+            </div>
+
+            <div>
+              <span>In current role</span>
+              <b>${P.tenure}</b>
+            </div>
+
+          </div>
+
+          <div class="empactions">
+
+            <a
+              href="#"
+              class="atslink resume-link"
+              data-emp="${P.id}"
+            >
+              <i class="fa-regular fa-eye"></i>
+              View résumé
+            </a>
+
+            <a
+              href="#"
+              class="atslink hrms-link"
+              data-emp="${P.id}"
+            >
+              Open ${P.id} in HR system
+              <span class="ext">↗</span>
+            </a>
+
+          </div>
+
+          <p class="demo">
+            Prototype — employee details are synthetic. In production these
+            actions would respect HRMS permissions and role-based access.
+          </p>
+
+        </div>
+      </td>
+    </tr>
+  `;
+      }).join("")}
+</tbody></table>
     <p class="note">Six screened, four proceed. The gate runs before matching because it is cheap and absolute — no retrieval work is spent on employees who cannot move, and no ineligible person can be recommended regardless of fit.</p>`));
+      wireEmployeeProfiles();
       await pause(900);
 
       push(step(4, "Evidence match", `
@@ -1744,7 +1910,65 @@
       wireTabs(ROLE_RUN.tpm.letters, "candidate");
       running = false; runBtn.disabled = false; sel.disabled = false; runBtn.textContent = "Run again";
     }
+    function wireEmployeeProfiles() {
 
+      document.querySelectorAll(".empopen").forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+          const panel = document.getElementById(btn.dataset.profile);
+
+          const open = btn.getAttribute("aria-expanded") === "true";
+
+          btn.setAttribute("aria-expanded", String(!open));
+
+          panel.hidden = open;
+
+        });
+
+      });
+
+
+      document.querySelectorAll(".hrms-link").forEach(link => {
+
+        link.addEventListener("click", e => {
+
+          e.preventDefault();
+
+          const id = link.dataset.emp;
+
+          const original = link.innerHTML;
+
+          link.innerHTML = `Prototype — ${id} would open in HRMS <span class="ext">↗</span>`;
+
+          setTimeout(() => {
+            link.innerHTML = original;
+          }, 2200);
+
+        });
+
+      });
+
+
+      document.querySelectorAll(".resume-link").forEach(link => {
+
+        link.addEventListener("click", e => {
+
+          e.preventDefault();
+
+          const original = link.innerHTML;
+
+          link.innerHTML = `<i class="fa-regular fa-eye"></i> Résumé preview would open here`;
+
+          setTimeout(() => {
+            link.innerHTML = original;
+          }, 2200);
+
+        });
+
+      });
+
+    }
     function wireCands(D) {
       const host = document.getElementById("cands");
       host.addEventListener("click", e => {
