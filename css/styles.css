@@ -515,6 +515,117 @@ section {
 }
 
 
+/* ─── PROJECTS ─────────────────────────────────────────────────── */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+
+.project-card:hover {
+  border-color: rgba(45, 212, 191, .45);
+  background: rgba(45, 212, 191, .05);
+  transform: translateY(-3px);
+}
+
+.project-thumb {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(45, 212, 191, .07);
+  color: rgba(45, 212, 191, .5);
+  font-size: 2rem;
+}
+
+.project-body {
+  padding: 1.25rem 1.25rem 1.4rem;
+}
+
+.project-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  color: #2DD4BF;
+  margin: 0 0 .5rem;
+}
+
+.project-desc {
+  font-size: .85rem;
+  color: rgba(218, 218, 218, .7);
+  line-height: 1.6;
+  margin: 0 0 .85rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.project-tags li {
+  font-size: .72rem;
+  color: rgba(45, 212, 191, .86);
+  border: 1px solid rgba(45, 212, 191, .3);
+  border-radius: 999px;
+  padding: .2rem .6rem;
+}
+
+.project-actions {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.proj-btn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  font-size: .82rem;
+  font-weight: 600;
+  padding: .5rem .7rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .2s, background .2s, color .2s;
+}
+
+.proj-btn-outline {
+  border: 1px solid #2DD4BF;
+  color: #2DD4BF;
+  background: transparent;
+}
+
+.proj-btn-outline:hover {
+  color: #061A2B;
+  background: rgba(45, 212, 191, .86);
+}
+
+.proj-btn-filled {
+  border: 0;
+  background: #2DD4BF;
+  color: #061A2B;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
+}
+
+.proj-btn-filled:hover {
+  transform: translateY(-1px);
+  background: #5EEAD4;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, .26);
+}
+
+
 /* ─── CONTACT ─────────────────────────────────────────────────── */
 
 #contact {
