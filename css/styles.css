@@ -303,23 +303,22 @@ section {
 
 .about-story {
   width: 100%;
-  max-width: 980px;
+  max-width: 760px;   /* one measure for lead AND stat strip */
 }
 
 .about-lead {
-  max-width: 66ch;
-  margin: .35rem 0 2.25rem;
-  padding: .1rem 0 .1rem 1.15rem;
+  max-width: none;    /* container owns the measure now — no second opinion */
+  margin: .55rem 0 2.5rem;
+  padding: .2rem 0 .2rem 1.25rem;
 
-  /* the fading gradient gave the block no right edge — it just
-     dissolved. A clean accent rule reads as intentional. */
   background: none;
-  border-left: 2px solid rgba(45, 212, 191, .8);
+  border-left: 2px solid rgba(45, 212, 191, .85);
   border-radius: 0;
 
-  color: rgba(236, 238, 242, .88);
-  font-size: 1.05rem;
-  line-height: 1.75;
+  color: rgba(240, 243, 247, .92);
+  font-size: 1.2rem;      /* lead size, not body size */
+  line-height: 1.7;
+  letter-spacing: -.01em;
 }
 
 .about-proof-grid {
@@ -328,21 +327,18 @@ section {
   gap: 0;
   width: 100%;
 
-  /* full-width hairline anchors the strip and gives the section a
-     real bottom edge — this is what the ghost card borders were
-     failing to do */
-  padding-top: 1.4rem;
-  border-top: 1px solid rgba(255, 255, 255, .12);
+  padding-top: 1.6rem;
+  /* teal-tinted at .28 — reads as a designed rule rather than a
+     default border, and clears the visibility threshold */
+  border-top: 1px solid rgba(45, 212, 191, .28);
 }
 
 .about-proof {
   min-width: 0;
-  padding: 0 1.4rem;
-
-  /* dividers instead of boxes */
+  padding: 0 1.2rem;
   background: none;
   border: 0;
-  border-left: 1px solid rgba(255, 255, 255, .1);
+  border-left: 1px solid rgba(255, 255, 255, .14);
   border-radius: 0;
 }
 .about-proof:first-child {
@@ -352,20 +348,21 @@ section {
 
 .about-proof strong {
   display: block;
-  margin-bottom: .35rem;
+  margin-bottom: .4rem;
   font-family: 'Poppins', sans-serif;
-  font-size: 1.9rem;
+  font-size: 2.25rem;
   font-weight: 700;
   line-height: 1;
+  letter-spacing: -.02em;
   color: #2DD4BF;
 }
 
 .about-proof span {
-  font-size: .82rem;
+  display: block;
+  font-size: .8rem;
   line-height: 1.5;
-  color: rgba(218, 218, 218, .6);
+  color: rgba(222, 226, 232, .68);
 }
-
 
 /* ─── EXPERIENCE ──────────────────────────────────────────────── */
 
