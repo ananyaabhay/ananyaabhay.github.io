@@ -52,7 +52,16 @@ body::before {
   pointer-events: none;
   mix-blend-mode: overlay;
 }
-
+/* ─── ♿ GLOBAL FOCUS RING ────────────────────────────────────
+   One rule covers every interactive element. :focus-visible only
+   fires for keyboard/AT, so mouse clicks stay clean. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #2DD4BF;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 /* ─── TOP NAV ─────────────────────────────────────────────────── */
 
