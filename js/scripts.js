@@ -27,36 +27,44 @@ if (animEl) {
    CSS carries an independent 2.4s failsafe — see #loader.
    ────────────────────────────────────────────────────────── */
 (() => {
-  const MIN_MS  = 1200;   // ≥ hex-draw duration (1.15s) so it never cuts off
-  const FADE_MS = 500;
-  const start   = performance.now();
+  const reduceMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const MIN_MS = reduceMotion ? 700 : 1400;
+  const FADE_MS = reduceMotion ? 150 : 450;
+
+  const start = performance.now();
 
   function dismiss() {
     const loader = document.getElementById('loader');
+
     if (!loader || loader.dataset.going) return;
-    loader.dataset.going = '1';            // guard against double-firing
 
-    const wait = Math.max(0, MIN_MS - (performance.now() - start));
+    loader.dataset.going = '1';
+
+    const wait = Math.max(
+      0,
+      MIN_MS - (performance.now() - start)
+    );
+
     setTimeout(() => {
-      loader.style.transition   = `opacity ${FADE_MS}ms ease`;
-      loader.style.opacity      = '0';
-      loader.style.pointerEvents = 'none'; // stop it eating clicks mid-fade
-      setTimeout(() => loader.remove(), FADE_MS);
-    }, wait);
-  }
+      loader.style.transition =
+        `opacity ${FADE_MS}ms ${reduceMotion ? 'linear' : 'ease'}`;
 
-  // honour reduced-motion: no splash at all
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('loader')?.remove();
-    });
-    return;
+      loader.style.opacity = '0';
+      loader.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        loader.remove();
+      }, FADE_MS);
+
+    }, wait);
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', dismiss);
   } else {
-    dismiss();                             // DOM already parsed
+    dismiss();
   }
 })();
 
@@ -186,10 +194,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 })();
 
+// ─── Mobile project expand / collapse ───────────────────────────
+(() => {
+  const projects = document.querySelector('#projects');
+
+  if (!projects) return;
+
+  projects.addEventListener('click', e => {
+    const btn = e.target.closest('.project-toggle');
+
+    if (!btn) return;
+
+    const card = btn.closest('.project-card');
+    const open = card.classList.toggle('is-open');
+
+    btn.setAttribute('aria-expanded', String(open));
+
+    const label = btn.querySelector('span');
+
+    if (label) {
+      label.textContent = open ? 'Show less' : 'See more';
+    }
+  });
+})();
+
 // ─── Mobile hamburger ────────────────────────────────────────────
 (() => {
-  const nav  = document.querySelector('.main-nav');
-  const btn  = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.main-nav');
+  const btn = document.querySelector('.menu-toggle');
   const list = document.getElementById('nav-links');
   if (!nav || !btn || !list) return;
 
