@@ -52,6 +52,7 @@ body::before {
   pointer-events: none;
   mix-blend-mode: overlay;
 }
+
 /* ─── ♿ GLOBAL FOCUS RING ────────────────────────────────────
    One rule covers every interactive element. :focus-visible only
    fires for keyboard/AT, so mouse clicks stay clean. */
@@ -235,7 +236,7 @@ section {
   text-align: left;
 }
 
-#landing h2.intro {
+#landing p.intro {
   font-family: 'Poppins', sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
@@ -389,7 +390,9 @@ section {
   color: rgba(232, 236, 242, .8);
 }
 
-.rn-list li:last-child { margin-bottom: 0; }
+.rn-list li:last-child {
+  margin-bottom: 0;
+}
 
 .rn-plus {
   flex: 0 0 auto;
@@ -417,9 +420,14 @@ section {
   transition: transform .25s ease;
 }
 
-.about-proof:first-child { padding-left: 0; border-left: 0; }
+.about-proof:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
 
-.about-proof:hover { transform: translateY(-3px); }
+.about-proof:hover {
+  transform: translateY(-3px);
+}
 
 .about-proof strong {
   display: block;
@@ -433,7 +441,8 @@ section {
   /* stops the layout jittering while the count-up runs */
   font-variant-numeric: tabular-nums;
 
-  color: #2DD4BF;                                   /* fallback */
+  color: #2DD4BF;
+  /* fallback */
   background: linear-gradient(135deg, #7FF3E2, #2DD4BF 55%, #1FA8C4);
   -webkit-background-clip: text;
   background-clip: text;
@@ -1536,7 +1545,7 @@ footer {
     max-width: 46ch;
   }
 
-  #landing h2.intro {
+  #landing p.intro {
     font-size: clamp(1rem, 3.4vw, 1.1rem);
   }
 
@@ -1555,7 +1564,7 @@ footer {
   }
 
 
-    /* ─── ABOUT & STATUS BADGE ──────────────────────────────────── */
+  /* ─── ABOUT & STATUS BADGE ──────────────────────────────────── */
 
   .about-top {
     grid-template-columns: 1fr;
@@ -1569,8 +1578,13 @@ footer {
     line-height: 1.65;
   }
 
-  .release-notes { padding: .9rem 1rem 1rem; }
-  .rn-list li { font-size: .84rem; }
+  .release-notes {
+    padding: .9rem 1rem 1rem;
+  }
+
+  .rn-list li {
+    font-size: .84rem;
+  }
 
   .about-proof-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1578,17 +1592,26 @@ footer {
     padding-top: 1.2rem;
   }
 
-  .about-proof { padding: 0 0 0 1.1rem; }
+  .about-proof {
+    padding: 0 0 0 1.1rem;
+  }
 
   .about-proof:nth-child(odd) {
     padding-left: 0;
     border-left: 0;
   }
 
-  .about-proof:hover { transform: none; }
+  .about-proof:hover {
+    transform: none;
+  }
 
-  .about-proof strong { font-size: 1.75rem; }
-  .about-proof span { font-size: .76rem; }
+  .about-proof strong {
+    font-size: 1.75rem;
+  }
+
+  .about-proof span {
+    font-size: .76rem;
+  }
 
   /* ─── PROJECTS ───────────────────────────────────────────────── */
 
