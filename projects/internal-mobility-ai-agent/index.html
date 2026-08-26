@@ -1031,24 +1031,51 @@
       margin-top: 13px;
       background: var(--absentbg);
       border-radius: 4px;
-      padding: 11px 13px
+      padding: 11px 13px;
     }
 
-    .withheld .wh {
+    .withheld summary {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      cursor: pointer;
+      list-style: none;
+
       font-family: var(--mono);
       font-size: 10.5px;
-      letter-spacing: .09em;
+      letter-spacing: .07em;
       text-transform: uppercase;
+
       color: var(--absent);
-      margin-bottom: 6px
+    }
+
+    .withheld summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .withheld summary::after {
+      content: "+";
+      margin-left: auto;
+      font-size: 15px;
+    }
+
+    .withheld[open] summary::after {
+      content: "−";
+    }
+
+    .withheld summary span {
+      opacity: .7;
+      font-size: 9.5px;
     }
 
     .withheld ul {
-      margin: 0;
+      margin: 9px 0 0;
       padding-left: 17px;
+
       font-size: 12.5px;
       color: var(--absent);
-      line-height: 1.7
+      line-height: 1.7;
     }
 
     .score {
@@ -1169,6 +1196,16 @@
       font-size: 11px;
       color: var(--mute);
       line-height: 1.7
+    }
+
+    .project-copyright {
+      margin: 20px 0 0;
+      text-align: center;
+
+      font-family: var(--mono);
+      font-size: 11px;
+
+      color: var(--mute);
     }
 
     @media (max-width:640px) {
@@ -1329,7 +1366,9 @@
     <p class="foot">
       Personal product exploration by Ananya Abhay · Built with synthetic data.<br>
       No real employee, employer, requisition or HR system is represented in this prototype.
+    </p>
 
+    <p class="project-copyright">
       © 2026 Ananya Abhay
     </p>
   </div>
@@ -1748,7 +1787,7 @@ ${D.screen.map((s, i) => {
               data-emp="${P.id}"
             >
               <i class="fa-regular fa-eye"></i>
-              View résumé
+              View resume
             </a>
 
             <a
@@ -1814,12 +1853,65 @@ ${D.screen.map((s, i) => {
         const P = PEOPLE[r[0]];
         return `<li><button class="rankrow" data-i="${i}" aria-expanded="false" aria-controls="jd${i}">
         <div><h3>${P.name}</h3><p>${r[1]}</p></div><span class="car">▸</span></button>
-        <div class="jd" id="jd${i}" hidden>
-          <div class="jdtop"><span class="rid">${P.id}</span><span>LEVEL <b>${P.level}</b></span><span>${P.loc.toUpperCase()}</span><span>IN ROLE <b>${P.tenure}</b></span></div>
-          <p class="blurb">${P.role}. In current role since ${P.since}.</p>
-          <a class="atslink" href="#" data-req="${P.id}">Open ${P.id} in the HR system <span class="ext">↗</span></a>
-          <p class="demo">Prototype — link is not live. In production this resolves to the employee record.</p>
-        </div></li>`;
+       <div class="jd" id="jd${i}" hidden>
+
+  <div class="empmeta">
+
+    <div>
+      <span>Employee ID</span>
+      <b>${P.id}</b>
+    </div>
+
+    <div>
+      <span>Level</span>
+      <b>${P.level}</b>
+    </div>
+
+    <div>
+      <span>Current role</span>
+      <b>${P.role}</b>
+    </div>
+
+    <div>
+      <span>Location</span>
+      <b>${P.loc}</b>
+    </div>
+
+    <div>
+      <span>In current role</span>
+      <b>${P.tenure}</b>
+    </div>
+
+  </div>
+
+  <div class="empactions">
+
+    <a
+      href="#"
+      class="atslink resume-link"
+      data-emp="${P.id}"
+    >
+      <i class="fa-regular fa-eye"></i>
+      View resume
+    </a>
+
+    <a
+      href="#"
+      class="atslink hrms-link"
+      data-emp="${P.id}"
+    >
+      Open ${P.id} in HR system
+      <span class="ext">↗</span>
+    </a>
+
+  </div>
+
+  <p class="demo">
+    Only job-relevant profile fields are surfaced here.
+    Restricted People Operations data is not exposed to the hiring team.
+  </p>
+
+</div></li>`;
       }).join("")}</ol>
     <p class="note">Ranked on evidence against the fixed requirement list, not on how easy each move would be to execute. A system that quietly optimised for filling requisitions would be gamed by employees within a quarter.</p>`));
       wireRank();
@@ -1910,65 +2002,131 @@ ${D.screen.map((s, i) => {
       wireTabs(ROLE_RUN.tpm.letters, "candidate");
       running = false; runBtn.disabled = false; sel.disabled = false; runBtn.textContent = "Run again";
     }
+
+    function showResumePreview(link) {
+      link.innerHTML =
+        `<i class="fa-regular fa-eye"></i> Resume preview · demo`;
+    }
+
+    function resetResumeLinks(scope) {
+      scope.querySelectorAll(".resume-link").forEach(link => {
+        link.innerHTML =
+          `<i class="fa-regular fa-eye"></i> View resume`;
+      });
+    }
+
+    function flashSystemLink(link) {
+      const employeeLink = link.classList.contains("hrms-link");
+
+      const id = employeeLink
+        ? link.dataset.emp
+        : link.dataset.req;
+
+      const system = employeeLink ? "HRMS" : "ATS";
+      const original = link.innerHTML;
+
+      link.innerHTML =
+        `Prototype — ${id} would open in ${system} <span class="ext">↗</span>`;
+
+      setTimeout(() => {
+        if (link.isConnected) {
+          link.innerHTML = original;
+        }
+      }, 2200);
+    }
     function wireEmployeeProfiles() {
-
       document.querySelectorAll(".empopen").forEach(btn => {
-
         btn.addEventListener("click", () => {
+          const panel =
+            document.getElementById(btn.dataset.profile);
 
-          const panel = document.getElementById(btn.dataset.profile);
+          const open =
+            btn.getAttribute("aria-expanded") === "true";
 
-          const open = btn.getAttribute("aria-expanded") === "true";
+          if (open) {
+            resetResumeLinks(panel);
+          }
 
-          btn.setAttribute("aria-expanded", String(!open));
+          btn.setAttribute(
+            "aria-expanded",
+            String(!open)
+          );
 
           panel.hidden = open;
-
         });
-
       });
 
-
-      document.querySelectorAll(".hrms-link").forEach(link => {
-
+      document.querySelectorAll(".empprofile .hrms-link").forEach(link => {
         link.addEventListener("click", e => {
-
           e.preventDefault();
-
-          const id = link.dataset.emp;
-
-          const original = link.innerHTML;
-
-          link.innerHTML = `Prototype — ${id} would open in HRMS <span class="ext">↗</span>`;
-
-          setTimeout(() => {
-            link.innerHTML = original;
-          }, 2200);
-
+          flashSystemLink(link);
         });
-
       });
 
-
-      document.querySelectorAll(".resume-link").forEach(link => {
-
+      document.querySelectorAll(".empprofile .resume-link").forEach(link => {
         link.addEventListener("click", e => {
-
           e.preventDefault();
-
-          const original = link.innerHTML;
-
-          link.innerHTML = `<i class="fa-regular fa-eye"></i> Résumé preview would open here`;
-
-          setTimeout(() => {
-            link.innerHTML = original;
-          }, 2200);
-
+          showResumePreview(link);
         });
-
       });
-
     }
+
+    document.querySelectorAll(".empopen").forEach(btn => {
+
+      btn.addEventListener("click", () => {
+
+        const panel = document.getElementById(btn.dataset.profile);
+
+        const open = btn.getAttribute("aria-expanded") === "true";
+
+        btn.setAttribute("aria-expanded", String(!open));
+
+        panel.hidden = open;
+
+      });
+
+    });
+
+
+    document.querySelectorAll(".hrms-link").forEach(link => {
+
+      link.addEventListener("click", e => {
+
+        e.preventDefault();
+
+        const id = link.dataset.emp;
+
+        const original = link.innerHTML;
+
+        link.innerHTML = `Prototype — ${id} would open in HRMS <span class="ext">↗</span>`;
+
+        setTimeout(() => {
+          link.innerHTML = original;
+        }, 2200);
+
+      });
+
+    });
+
+
+    document.querySelectorAll(".resume-link").forEach(link => {
+
+      link.addEventListener("click", e => {
+
+        e.preventDefault();
+
+        const original = link.innerHTML;
+
+        link.innerHTML = `<i class="fa-regular fa-eye"></i> Résumé preview would open here`;
+
+        setTimeout(() => {
+          link.innerHTML = original;
+        }, 2200);
+
+      });
+
+    });
+
     function wireCands(D) {
       const host = document.getElementById("cands");
       host.addEventListener("click", e => {
@@ -2014,52 +2172,196 @@ ${D.screen.map((s, i) => {
     }
     function wireRank() {
       const list = document.getElementById("ranklist");
+
       list.addEventListener("click", e => {
-        const a = e.target.closest(".atslink");
-        if (a) {
+
+        const resume =
+          e.target.closest(".resume-link");
+
+        if (resume) {
           e.preventDefault();
-          a.innerHTML = 'Prototype link — ' + a.dataset.req + ' would open here <span class="ext">↗</span>';
-          setTimeout(() => { a.innerHTML = 'Open ' + a.dataset.req + (a.dataset.req.startsWith("MS") ? ' in the HR system' : ' in the ATS') + ' <span class="ext">↗</span>'; }, 2200); return;
+          showResumePreview(resume);
+          return;
         }
-        const b = e.target.closest(".rankrow"); if (!b) return;
-        const o = b.getAttribute("aria-expanded") === "true";
-        b.setAttribute("aria-expanded", String(!o));
-        document.getElementById("jd" + b.dataset.i).hidden = o;
+
+
+        const systemLink =
+          e.target.closest(".hrms-link, .atslink");
+
+        if (systemLink) {
+          e.preventDefault();
+          flashSystemLink(systemLink);
+          return;
+        }
+
+
+        const row =
+          e.target.closest(".rankrow");
+
+        if (!row) return;
+
+        const open =
+          row.getAttribute("aria-expanded") === "true";
+
+        const panel =
+          document.getElementById("jd" + row.dataset.i);
+
+        if (open) {
+          resetResumeLinks(panel);
+        }
+
+        row.setAttribute(
+          "aria-expanded",
+          String(!open)
+        );
+
+        panel.hidden = open;
       });
     }
-    function wireTabs(letters, first) {
-      const host = document.getElementById("letter");
-      const render = k => {
-        const L = letters[k];
-        if (drafts[k] === undefined) drafts[k] = L.body.map(p => p.trim().startsWith("<u") ? p : `<p>${p}</p>`).join("") +
-          `<p>Regards,<br>[Your name]<br>People Partner</p>`;
-        host.innerHTML = `<div class="edithint"><span>Template draft — click anywhere in the note to edit before sending</span>
-        <button class="copy" id="copybtn">Copy note</button></div>
-      <div class="letter"><div class="sub">${L.sub}</div>
-        <div class="edit" id="body" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Note text, editable">${drafts[k]}</div></div>
-      <p class="demo" style="margin:9px 0 0">Drafts only. Sending is not enabled — the agent prepares, a person reviews and sends.</p>
-      ${L.check ? `<p class="note">${L.check}</p>` : ""}
-      ${L.withheld ? `<div class="withheld"><div class="wh">Withheld from this recipient · policy 3.2</div>
-        <ul>${L.withheld.map(w => `<li>${w}</li>`).join("")}</ul></div>` : ""}`;
-        const body = document.getElementById("body");
-        body.addEventListener("input", () => { drafts[k] = body.innerHTML; });
-        document.getElementById("copybtn").addEventListener("click", e => {
-          const btn = e.currentTarget, t = body.innerText;
-          const done = () => { btn.textContent = "Copied"; setTimeout(() => { btn.textContent = "Copy note"; }, 1600); };
-          if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(t).then(done, done); }
-          else {
-            const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select();
-            try { document.execCommand("copy"); } catch (err) { } ta.remove(); done();
-          }
-        });
-      };
-      document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", String(x === t)));
-        render(t.dataset.t);
-      }));
-      render(first);
+    const list = document.getElementById("ranklist");
+    list.addEventListener("click", e => {
+      const a = e.target.closest(".atslink");
+      if (a) {
+        e.preventDefault();
+        a.innerHTML = 'Prototype link — ' + a.dataset.req + ' would open here <span class="ext">↗</span>';
+        setTimeout(() => { a.innerHTML = 'Open ' + a.dataset.req + (a.dataset.req.startsWith("MS") ? ' in the HR system' : ' in the ATS') + ' <span class="ext">↗</span>'; }, 2200); return;
+      }
+      const b = e.target.closest(".rankrow"); if (!b) return;
+      const o = b.getAttribute("aria-expanded") === "true";
+      b.setAttribute("aria-expanded", String(!o));
+      document.getElementById("jd" + b.dataset.i).hidden = o;
+    });
+ function wireTabs(letters, first) {
+  const host = document.getElementById("letter");
+
+  const render = k => {
+    const L = letters[k];
+
+    if (drafts[k] === undefined) {
+      drafts[k] =
+        L.body
+          .map(p =>
+            p.trim().startsWith("<u")
+              ? p
+              : `<p>${p}</p>`
+          )
+          .join("") +
+        `<p>Regards,<br>[Your name]<br>People Partner</p>`;
     }
 
+    const checkHTML = L.check
+      ? `<p class="note">${L.check}</p>`
+      : "";
+
+    const withheldHTML = L.withheld
+      ? [
+          '<details class="withheld">',
+          '<summary>',
+          'Restricted People Ops data kept private',
+          '<span>Policy 3.2</span>',
+          '</summary>',
+          '<ul>',
+          L.withheld.map(w => `<li>${w}</li>`).join(""),
+          '</ul>',
+          '</details>'
+        ].join("")
+      : "";
+
+    host.innerHTML = `
+      <div class="edithint">
+        <span>
+          Template draft — click anywhere in the note to edit before sending
+        </span>
+
+        <button class="copy" id="copybtn">
+          Copy note
+        </button>
+      </div>
+
+      <div class="letter">
+        <div class="sub">
+          ${L.sub}
+        </div>
+
+        <div
+          class="edit"
+          id="body"
+          contenteditable="true"
+          role="textbox"
+          aria-multiline="true"
+          aria-label="Note text, editable"
+        >
+          ${drafts[k]}
+        </div>
+      </div>
+
+      <p class="demo" style="margin:9px 0 0">
+        Drafts only. Sending is not enabled — the agent prepares,
+        a person reviews and sends.
+      </p>
+
+      ${checkHTML}
+      ${withheldHTML}
+    `;
+
+    const body = document.getElementById("body");
+
+    body.addEventListener("input", () => {
+      drafts[k] = body.innerHTML;
+    });
+
+    const copyBtn = document.getElementById("copybtn");
+
+    copyBtn.addEventListener("click", e => {
+      const btn = e.currentTarget;
+      const text = body.innerText;
+
+      const done = () => {
+        btn.textContent = "Copied";
+
+        setTimeout(() => {
+          btn.textContent = "Copy note";
+        }, 1600);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+          .writeText(text)
+          .then(done, done);
+      } else {
+        const ta = document.createElement("textarea");
+
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+
+        try {
+          document.execCommand("copy");
+        } catch (err) {
+          // Clipboard fallback failed silently.
+        }
+
+        ta.remove();
+        done();
+      }
+    });
+  };
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(item => {
+        item.setAttribute(
+          "aria-selected",
+          String(item === tab)
+        );
+      });
+
+      render(tab.dataset.t);
+    });
+  });
+
+  render(first);
+}
     fillSelect();
   </script>
 </body>
