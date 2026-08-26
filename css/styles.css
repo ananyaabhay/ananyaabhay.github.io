@@ -304,12 +304,20 @@ section {
 .about-story {
   width: 100%;
   max-width: 1050px;
+
+  /* lead + stats sit side by side on desktop so both columns end
+     on the same right edge. auto-fit stacks them automatically
+     below ~930px viewport — no extra breakpoint needed. */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
 }
 
 .about-lead {
   max-width: 72ch;
 
-  margin: .15rem 0 1.35rem;
+  margin: .15rem 0 0;   /* was .15rem 0 1.35rem — grid gap handles spacing now */
   padding: .8rem 1rem;
 
   border-left: 2px solid rgba(45, 212, 191, .75);
@@ -326,7 +334,7 @@ section {
 
 .about-proof-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));   /* was repeat(4, ...) */
 
   width: 100%;
   gap: .8rem;
