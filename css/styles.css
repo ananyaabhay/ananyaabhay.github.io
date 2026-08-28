@@ -501,11 +501,9 @@ section {
   border-color: rgba(45, 212, 191, .48);
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(45, 212, 191, .035),
-      rgba(45, 212, 191, .012)
-    );
+      rgba(45, 212, 191, .012));
 }
 
 
@@ -1397,12 +1395,9 @@ footer {
   }
 
   .landing-image img {
-    display: block;
     width: clamp(150px, 22vw, 250px);
-    border-radius: 8px;
-    border: 0;
+    clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
   }
-
 
   /* ─── CONTACT ───────────────────────────────────────────────── */
 
@@ -1433,17 +1428,17 @@ footer {
    both edges and the top portion can't be scrolled to. Same
    treatment as #skills and #timeline. */
 
-#jobs {
-  height: auto;
-  min-height: 100vh;
-}
-
-@media (min-width: 721px) {
   #jobs {
-    padding-top: 6rem;
-    padding-bottom: 3rem;
+    height: auto;
+    min-height: 100vh;
   }
-}
+
+  @media (min-width: 721px) {
+    #jobs {
+      padding-top: 6rem;
+      padding-bottom: 3rem;
+    }
+  }
 
 
   /* ─── SKILLS ────────────────────────────────────────────────── */
@@ -1543,7 +1538,7 @@ footer {
     line-height: 1.5;
   } */
 
-    /* ─── EXPERIENCE ────────────────────────────────────────────── */
+  /* ─── EXPERIENCE ────────────────────────────────────────────── */
 
   .experience-accordion {
     margin-top: .8rem;
@@ -1731,10 +1726,7 @@ footer {
 
   .landing-image img {
     width: 44vw;
-    max-width: 200px;
-    border-radius: 50%;
-    border: 3px solid rgba(45, 212, 191, .86);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, .35);
+    clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
   }
 
   .landing-content {
