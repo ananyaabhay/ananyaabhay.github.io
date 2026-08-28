@@ -63,7 +63,7 @@ body::before {
   line-height: 0;
 }
 
-.hex-outline {
+.hex-portrait {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -72,7 +72,7 @@ body::before {
   pointer-events: none;
 }
 
-.hex-outline path {
+.hex-portrait path {
   fill: none;
   stroke: #2DD4BF;
   stroke-width: 2;
