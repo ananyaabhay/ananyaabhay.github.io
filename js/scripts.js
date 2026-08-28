@@ -155,34 +155,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /* ── Manual controls ───────────────────────────────────────── */
 
-  const AUTOPLAY_MS = 5000;
-
-  let timer = null;
-  let autoplayKilled = false;
-
-
-  function stopAuto() {
-    if (!timer) return;
-
-    clearInterval(timer);
-    timer = null;
-  }
-
-
-  function killAuto() {
-    autoplayKilled = true;
-    stopAuto();
-  }
-
 
   triggers.forEach((trigger, index) => {
-
-    trigger.addEventListener(
-      'pointerdown',
-      killAuto,
-      { once: true }
-    );
-
 
     trigger.addEventListener(
       'click',
@@ -207,8 +181,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         e.preventDefault();
-
-        killAuto();
 
         let next = index;
 
@@ -250,15 +222,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     openItem(next);
   }
-
-
-  function startAuto() {
-    if (
-      autoplayKilled ||
-      timer
-    ) {
-      return;
-    }
 
     timer =
       setInterval(
@@ -334,143 +297,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 })();
 
-/* old eperience JS + autoplay -- backup
-/* document.addEventListener("DOMContentLoaded", () => {
-  const hint = document.querySelector(".xp-hint");
-  const nav = document.querySelector(".experience-nav");
-  if (!hint || !nav) return;
-
-  const hide = () => hint.style.display = "none";
-  nav.addEventListener("scroll", hide, { once: true });
-  nav.addEventListener("pointerdown", hide, { once: true }); // covers touch+mouse
-  nav.addEventListener("click", hide, { once: true });
-});
-
-
-
-// Accessible Experience tabs + gentle auto-advance (no page jump)
-(() => {
-  const tabs = [...document.querySelectorAll('.xp-tab')];
-  const panes = [...document.querySelectorAll('#jobs .job-pane')];
-  const nav = document.querySelector('.experience-nav');
-  if (!tabs.length || !panes.length || !nav) return;
-
-  // init visibility
-  panes.forEach(p => p.hidden = !p.classList.contains('active'));
-  tabs.forEach(t => t.tabIndex = t.classList.contains('active') ? 0 : -1);
-
-  function centerTabHorizontally(idx) {
-    // Only adjust the horizontal scroll of the tab strip
-    const t = tabs[idx];
-    const targetLeft = t.offsetLeft - (nav.clientWidth - t.clientWidth) / 2;
-    nav.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
-  }
-
-  function activate(idx, { fromAuto = false } = {}) {
-    tabs.forEach((t, i) => {
-      const on = i === idx;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on);
-      t.tabIndex = on ? 0 : -1;
-      panes[i].classList.toggle('active', on);
-      panes[i].hidden = !on;
-    });
-
-    // Keep keyboard focus where it was unless user clicked/pressed
-    if (!fromAuto) {
-      tabs[idx].focus({ preventScroll: true }); // no vertical jump
-    }
-    centerTabHorizontally(idx); // safe: only horizontal scroll within nav
-    activeIndex = idx;
-  }
-
-  // Click + keyboard controls
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activate(i));
-    tab.addEventListener('keydown', (e) => {
-      const k = e.key;
-      if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); activate((i + 1) % tabs.length); }
-      if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); activate((i - 1 + tabs.length) % tabs.length); }
-      if (k === 'Home') { e.preventDefault(); activate(0); }
-      if (k === 'End') { e.preventDefault(); activate(tabs.length - 1); }
-    });
-  });
-
-  // ---------- Auto-advance ----------
-  let activeIndex = tabs.findIndex(t => t.classList.contains('active'));
-  if (activeIndex < 0) activeIndex = 0;
-
-  const AUTOPLAY_MS = 5000;
-  let timer = null;
-  let autoplayKilled = false;
-
-  function nextAuto() {
-    const next = (activeIndex + 1) % tabs.length;
-    activate(next, { fromAuto: true });
-  }
-
-  function startAuto() {
-    if (autoplayKilled || timer) return;
-
-    timer = setInterval(nextAuto, AUTOPLAY_MS);
-  }
-
-  function stopAuto() {
-    if (!timer) return;
-
-    clearInterval(timer);
-    timer = null;
-  }
-
-  function killAuto() {
-    autoplayKilled = true;
-    stopAuto();
-  }
-
-  /*
-    Manual interaction with the Experience control kills autoplay.
-    Normal page scrolling does not.
- 
-  tabs.forEach(tab => {
-    tab.addEventListener('pointerdown', killAuto, { once: true });
-    tab.addEventListener('keydown', killAuto, { once: true });
-  });
-
-  /*
-    Start only while Experience is actually in view.
-    Once killed by the user, startAuto() will refuse to restart.
-
-  const jobs = document.querySelector('#jobs');
-
-  if (jobs && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        startAuto();
-      } else {
-        stopAuto();
-      }
-    }, { threshold: 0.5 });
-
-    io.observe(jobs);
-  } else {
-    window.addEventListener('load', startAuto);
-  }
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopAuto();
-    } else if (!autoplayKilled) {
-      const rect = jobs?.getBoundingClientRect();
-
-      if (
-        rect &&
-        rect.top < window.innerHeight &&
-        rect.bottom > 0
-      ) {
-        startAuto();
-      }
-    }
-  }); */
 
 // ─── Mobile project expand / collapse ─────────────────────────── 
 (() => {
