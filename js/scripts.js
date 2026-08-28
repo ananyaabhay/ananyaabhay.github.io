@@ -28,7 +28,7 @@ const x = (e.clientX / innerWidth) * 100 + '%';
 const y = (e.clientY / innerHeight) * 100 + '%';
 document.body.style.setProperty('--mouse-x', x);
 document.body.style.setProperty('--mouse-y', y);
-});
+}); */
 
 // tagline animation: rotates words if target exists
 const words = ['impactful', 'ship-ready', 'scalable', 'frictionless', 'measurable'];
@@ -39,7 +39,7 @@ if (animEl) {
     idx = (idx + 1) % words.length;
     animEl.textContent = words[idx];
   }, 2000);
-} */
+} 
 
 
 
