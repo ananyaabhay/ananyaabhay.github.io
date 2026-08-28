@@ -1955,6 +1955,24 @@ footer {
     transition: none;
   }
 
+  /* ─── EXPERIENCE HEIGHT ───────────────────────────────────────
+   The accordion runs taller than the old single-pane tab layout.
+   section{height:100vh} is a hard height, so overflow spills past
+   both edges and the top portion can't be scrolled to. Same
+   treatment as #skills and #timeline. */
+
+#jobs {
+  height: auto;
+  min-height: 100vh;
+}
+
+@media (min-width: 721px) {
+  #jobs {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
+}
+
   /* ─── SKILLS ────────────────────────────────────────────────── */
 
   .skill-card {
