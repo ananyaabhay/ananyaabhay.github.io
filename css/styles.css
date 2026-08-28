@@ -1239,6 +1239,11 @@ footer {
   justify-content: center;
   z-index: 9999;
   opacity: 1;
+
+  /* 🛟 FAILSAFE — pure-CSS auto-dismiss at 2.4s. Runs without
+     JavaScript, so a broken script can't trap visitors behind a
+     blank screen. JS normally clears the loader at ~1.7s. */
+  animation: fade-loader .5s ease 2.4s forwards;
 }
 
 .loader-wrap {
@@ -1348,6 +1353,14 @@ footer {
 
 
 /* ─── KEYFRAMES ───────────────────────────────────────────────── */
+
+@keyframes fade-loader {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 @keyframes hex-draw {
   to {
     stroke-dashoffset: 0;
@@ -1413,6 +1426,24 @@ footer {
   #contact .contact-icons {
     justify-content: center;
   }
+
+  /* ─── EXPERIENCE HEIGHT ───────────────────────────────────────
+   The accordion runs taller than the old single-pane tab layout.
+   section{height:100vh} is a hard height, so overflow spills past
+   both edges and the top portion can't be scrolled to. Same
+   treatment as #skills and #timeline. */
+
+#jobs {
+  height: auto;
+  min-height: 100vh;
+}
+
+@media (min-width: 721px) {
+  #jobs {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
+}
 
 
   /* ─── SKILLS ────────────────────────────────────────────────── */
@@ -1954,24 +1985,6 @@ footer {
   .tl-content {
     transition: none;
   }
-
-  /* ─── EXPERIENCE HEIGHT ───────────────────────────────────────
-   The accordion runs taller than the old single-pane tab layout.
-   section{height:100vh} is a hard height, so overflow spills past
-   both edges and the top portion can't be scrolled to. Same
-   treatment as #skills and #timeline. */
-
-#jobs {
-  height: auto;
-  min-height: 100vh;
-}
-
-@media (min-width: 721px) {
-  #jobs {
-    padding-top: 6rem;
-    padding-bottom: 3rem;
-  }
-}
 
   /* ─── SKILLS ────────────────────────────────────────────────── */
 
