@@ -53,6 +53,32 @@ body::before {
   mix-blend-mode: overlay;
 }
 
+/* 🔷 Hex frame — clip-path removes CSS borders, so the outline is an
+   SVG stroke overlaid on the clipped image. non-scaling-stroke keeps
+   it an even 2px at every viewport width. */
+
+.hex-frame {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.hex-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hex-outline path {
+  fill: none;
+  stroke: #2DD4BF;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
 /* Required whenever <img> carries width/height attributes.
    Those attributes are presentational hints that apply to any
    property CSS doesn't set — so a CSS-set width with no height
