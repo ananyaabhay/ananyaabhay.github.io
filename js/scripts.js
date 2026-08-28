@@ -101,8 +101,241 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/* ─── EXPERIENCE ACCORDION ───────────────────────────────────── */
+(() => {
+  const jobs = document.querySelector('#jobs');
 
-document.addEventListener("DOMContentLoaded", () => {
+  const items = [
+    ...document.querySelectorAll('#jobs .xp-item')
+  ];
+
+  if (!jobs || !items.length) return;
+
+
+  const triggers = items.map(item =>
+    item.querySelector('.xp-trigger')
+  );
+
+  const panels = items.map(item =>
+    item.querySelector('.xp-panel')
+  );
+
+
+  let activeIndex =
+    items.findIndex(item =>
+      item.classList.contains('is-open')
+    );
+
+  if (activeIndex < 0) {
+    activeIndex = 0;
+  }
+
+
+  /* Only one role remains open at a time. */
+  function openItem(index) {
+    items.forEach((item, i) => {
+      const open = i === index;
+
+      item.classList.toggle(
+        'is-open',
+        open
+      );
+
+      triggers[i].setAttribute(
+        'aria-expanded',
+        String(open)
+      );
+
+      panels[i].hidden = !open;
+    });
+
+    activeIndex = index;
+  }
+
+
+  /* ── Manual controls ───────────────────────────────────────── */
+
+  const AUTOPLAY_MS = 5000;
+
+  let timer = null;
+  let autoplayKilled = false;
+
+
+  function stopAuto() {
+    if (!timer) return;
+
+    clearInterval(timer);
+    timer = null;
+  }
+
+
+  function killAuto() {
+    autoplayKilled = true;
+    stopAuto();
+  }
+
+
+  triggers.forEach((trigger, index) => {
+
+    trigger.addEventListener(
+      'pointerdown',
+      killAuto,
+      { once: true }
+    );
+
+
+    trigger.addEventListener(
+      'click',
+      () => {
+        openItem(index);
+      }
+    );
+
+
+    trigger.addEventListener(
+      'keydown',
+      e => {
+        const key = e.key;
+
+        if (
+          key !== 'ArrowDown' &&
+          key !== 'ArrowUp' &&
+          key !== 'Home' &&
+          key !== 'End'
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+
+        killAuto();
+
+        let next = index;
+
+        if (key === 'ArrowDown') {
+          next = (index + 1) % items.length;
+        }
+
+        if (key === 'ArrowUp') {
+          next =
+            (index - 1 + items.length) %
+            items.length;
+        }
+
+        if (key === 'Home') {
+          next = 0;
+        }
+
+        if (key === 'End') {
+          next = items.length - 1;
+        }
+
+        openItem(next);
+
+        triggers[next].focus({
+          preventScroll: true
+        });
+      }
+    );
+
+  });
+
+
+  /* ── Auto advance ──────────────────────────────────────────── */
+
+  function nextAuto() {
+    const next =
+      (activeIndex + 1) %
+      items.length;
+
+    openItem(next);
+  }
+
+
+  function startAuto() {
+    if (
+      autoplayKilled ||
+      timer
+    ) {
+      return;
+    }
+
+    timer =
+      setInterval(
+        nextAuto,
+        AUTOPLAY_MS
+      );
+  }
+
+
+  /*
+    Autoplay only while Experience is actually visible.
+
+    One manual interaction kills autoplay for the
+    rest of the page visit.
+  */
+  if ('IntersectionObserver' in window) {
+
+    const observer =
+      new IntersectionObserver(
+        ([entry]) => {
+
+          if (entry.isIntersecting) {
+            startAuto();
+          } else {
+            stopAuto();
+          }
+
+        },
+        {
+          threshold: .5
+        }
+      );
+
+    observer.observe(jobs);
+
+  } else {
+
+    window.addEventListener(
+      'load',
+      startAuto
+    );
+
+  }
+
+
+  document.addEventListener(
+    'visibilitychange',
+    () => {
+
+      if (document.hidden) {
+        stopAuto();
+        return;
+      }
+
+      if (autoplayKilled) return;
+
+      const rect =
+        jobs.getBoundingClientRect();
+
+      if (
+        rect.top < window.innerHeight &&
+        rect.bottom > 0
+      ) {
+        startAuto();
+      }
+
+    }
+  );
+
+
+  /* Ensure HTML and ARIA begin synchronized. */
+  openItem(activeIndex);
+
+})();
+
+/* old eperience JS + autoplay -- backup
+/* document.addEventListener("DOMContentLoaded", () => {
   const hint = document.querySelector(".xp-hint");
   const nav = document.querySelector(".experience-nav");
   if (!hint || !nav) return;
@@ -197,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /*
     Manual interaction with the Experience control kills autoplay.
     Normal page scrolling does not.
-  */
+ 
   tabs.forEach(tab => {
     tab.addEventListener('pointerdown', killAuto, { once: true });
     tab.addEventListener('keydown', killAuto, { once: true });
@@ -206,7 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /*
     Start only while Experience is actually in view.
     Once killed by the user, startAuto() will refuse to restart.
-  */
+
   const jobs = document.querySelector('#jobs');
 
   if (jobs && 'IntersectionObserver' in window) {
@@ -237,79 +470,77 @@ document.addEventListener("DOMContentLoaded", () => {
         startAuto();
       }
     }
+  }); */
+
+// ─── Mobile project expand / collapse ─────────────────────────── 
+(() => {
+  const projects = document.querySelector('#projects');
+
+  if (!projects) return;
+
+  projects.addEventListener('click', e => {
+    const btn = e.target.closest('.project-toggle');
+
+    if (!btn) return;
+
+    const card = btn.closest('.project-card');
+    const open = card.classList.toggle('is-open');
+
+    btn.setAttribute('aria-expanded', String(open));
+
+    const label = btn.querySelector('span');
+
+    if (label) {
+      label.textContent = open ? 'Show less' : 'See more';
+    }
+  });
+})();
+
+// ─── Mobile hamburger ────────────────────────────────────────────
+(() => {
+  const nav = document.querySelector('.main-nav');
+  const btn = document.querySelector('.menu-toggle');
+  const list = document.getElementById('nav-links');
+  if (!nav || !btn || !list) return;
+
+  const icon = btn.querySelector('i');
+  const isOpen = () => nav.classList.contains('open');
+
+  function setMenu(open) {
+    nav.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (icon) {
+      icon.classList.toggle('fa-bars', !open);
+      icon.classList.toggle('fa-xmark', open);
+    }
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setMenu(!isOpen());
   });
 
-  // ─── Mobile project expand / collapse ───────────────────────────
-  (() => {
-    const projects = document.querySelector('#projects');
+  // close after tapping any link
+  list.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setMenu(false);
+  });
 
-    if (!projects) return;
+  // close when tapping outside the nav
+  document.addEventListener('click', (e) => {
+    if (isOpen() && !nav.contains(e.target)) setMenu(false);
+  });
 
-    projects.addEventListener('click', e => {
-      const btn = e.target.closest('.project-toggle');
+  // close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) setMenu(false);
+  });
 
-      if (!btn) return;
-
-      const card = btn.closest('.project-card');
-      const open = card.classList.toggle('is-open');
-
-      btn.setAttribute('aria-expanded', String(open));
-
-      const label = btn.querySelector('span');
-
-      if (label) {
-        label.textContent = open ? 'Show less' : 'See more';
-      }
-    });
-  })();
-
-  // ─── Mobile hamburger ────────────────────────────────────────────
-  (() => {
-    const nav = document.querySelector('.main-nav');
-    const btn = document.querySelector('.menu-toggle');
-    const list = document.getElementById('nav-links');
-    if (!nav || !btn || !list) return;
-
-    const icon = btn.querySelector('i');
-    const isOpen = () => nav.classList.contains('open');
-
-    function setMenu(open) {
-      nav.classList.toggle('open', open);
-      document.body.classList.toggle('menu-open', open);
-      btn.setAttribute('aria-expanded', String(open));
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      if (icon) {
-        icon.classList.toggle('fa-bars', !open);
-        icon.classList.toggle('fa-xmark', open);
-      }
-    }
-
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      setMenu(!isOpen());
-    });
-
-    // close after tapping any link
-    list.addEventListener('click', (e) => {
-      if (e.target.closest('a')) setMenu(false);
-    });
-
-    // close when tapping outside the nav
-    document.addEventListener('click', (e) => {
-      if (isOpen() && !nav.contains(e.target)) setMenu(false);
-    });
-
-    // close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen()) setMenu(false);
-    });
-
-    // reset if the window grows back to desktop
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 720 && isOpen()) setMenu(false);
-    });
-  })();
-
+  // reset if the window grows back to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 720 && isOpen()) setMenu(false);
+  });
 })();
 
 /* ─── 📈 STAT COUNT-UP ───────────────────────────────────────
