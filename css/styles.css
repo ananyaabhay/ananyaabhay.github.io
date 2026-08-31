@@ -213,7 +213,14 @@ nav.main-nav {
 section {
   height: 100vh;
   scroll-snap-align: start;
-  padding: 0 10%;
+
+  /* 📐 Cap the readable column and centre it. Without max-width the
+     10% padding leaves a 2048px field on a 2560px monitor while the
+     inner blocks stop at ~1240px, stranding the content on the left. */
+  max-width: 1400px;
+  margin-inline: auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -350,18 +357,8 @@ section {
   max-width: 1000px;
 }
 
-/* lead + release panel share a row; stat strip spans the full
-   1000px underneath, so all three align on the same outer edges */
-.about-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 2rem;
-  align-items: stretch;
-  margin-bottom: 2.4rem;
-}
-
 .about-lead {
-  max-width: none;
+  max-width: 62ch;
   margin: .3rem 0 0;
   padding: .2rem 0 .2rem 1.25rem;
 
@@ -373,65 +370,6 @@ section {
   font-size: 1.2rem;
   line-height: 1.7;
   letter-spacing: -.01em;
-}
-
-/* ── 📦 RELEASE NOTES PANEL ──────────────────────────────────
-   Extends the v4.0 status-badge motif. Fills the right column
-   so the lead paragraph isn't floating against dead space. */
-.release-notes {
-  padding: 1.1rem 1.25rem 1.2rem;
-  border: 1px solid rgba(45, 212, 191, .22);
-  border-radius: 12px;
-  background: rgba(45, 212, 191, .045);
-}
-
-.rn-head {
-  display: flex;
-  align-items: baseline;
-  gap: .5rem;
-  padding-bottom: .7rem;
-  margin-bottom: .8rem;
-  border-bottom: 1px solid rgba(45, 212, 191, .18);
-}
-
-.rn-ver {
-  font-family: 'Poppins', sans-serif;
-  font-size: .95rem;
-  font-weight: 700;
-  color: #2DD4BF;
-}
-
-.rn-label {
-  font-size: .7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  color: rgba(218, 218, 218, .55);
-}
-
-.rn-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.rn-list li {
-  display: flex;
-  gap: .55rem;
-  margin-bottom: .55rem;
-  font-size: .88rem;
-  line-height: 1.5;
-  color: rgba(232, 236, 242, .8);
-}
-
-.rn-list li:last-child {
-  margin-bottom: 0;
-}
-
-.rn-plus {
-  flex: 0 0 auto;
-  font-weight: 700;
-  color: #2DD4BF;
 }
 
 /* ── STAT STRIP ─────────────────────────────────────────────── */
@@ -1781,24 +1719,10 @@ footer {
 
   /* ─── ABOUT & STATUS BADGE ──────────────────────────────────── */
 
-  .about-top {
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
-    margin-bottom: 1.6rem;
-  }
-
   .about-lead {
     padding: .1rem 0 .1rem .9rem;
     font-size: 1.02rem;
     line-height: 1.65;
-  }
-
-  .release-notes {
-    padding: .9rem 1rem 1rem;
-  }
-
-  .rn-list li {
-    font-size: .84rem;
   }
 
   .about-proof-grid {
