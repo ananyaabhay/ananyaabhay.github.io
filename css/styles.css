@@ -303,6 +303,13 @@ section {
   margin-bottom: 1rem;
 }
 
+/* Rotating word in the tagline — matches the name so the changing
+   word reads as deliberate rather than as inconsistent styling. */
+#anim-word {
+  color: rgba(45, 212, 191, .86);
+  font-weight: 600;
+}
+
 #landing p.summary {
   max-width: 600px;
   line-height: 1.6;
