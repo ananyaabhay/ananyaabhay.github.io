@@ -39,7 +39,7 @@ if (animEl) {
     idx = (idx + 1) % words.length;
     animEl.textContent = words[idx];
   }, 2000);
-} 
+}
 
 
 
