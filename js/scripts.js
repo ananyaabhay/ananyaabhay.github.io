@@ -316,9 +316,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      run(e.target);
-      io.unobserve(e.target);                     // fire once only
+      /* Replay on re-entry. The armed flag stops a retrigger when a
+         small scroll jiggles the element across the threshold. */
+      if (e.isIntersecting && e.target.dataset.armed !== 'no') {
+        e.target.dataset.armed = 'no';
+        run(e.target);
+      } else if (!e.isIntersecting) {
+        e.target.dataset.armed = 'yes';
+      }
     });
   }, { threshold: .6 });
 
