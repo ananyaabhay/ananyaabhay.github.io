@@ -3,9 +3,9 @@ Structure, top to bottom:
 
      1. Base rules              (apply at every width)
      2. @keyframes
-     3. @media (min-width: 721px)   desktop-only
+     3. @media (min-width: 901px)   desktop-only
      4. @media (min-width: 860px)   wide-desktop tweaks
-     5. @media (max-width: 720px)   ALL mobile rules — one block
+     5. @media (max-width: 900px)   ALL mobile rules — one block
      6. @media (prefers-reduced-motion: reduce)
 
    Remember: ONE rule per selector per block. When adding a mobile style,
@@ -24,13 +24,14 @@ Structure, top to bottom:
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  background: #061A2B;
 }
 
 body {
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
   --mouse-x: 50%;
@@ -211,7 +212,8 @@ nav.main-nav {
 /* ─── SECTIONS & TITLES ───────────────────────────────────────── */
 
 section {
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   scroll-snap-align: start;
 
   /* 📐 Cap the readable column and centre it. Without max-width the
@@ -1350,7 +1352,7 @@ footer {
 }
 
 /* ═══ DESKTOP ONLY (≥721px) ═══════════════════════════════ */
-@media (min-width: 721px) {
+@media (min-width: 901px) {
 
   /* ─── LANDING ───────────────────────────────────────────────── */
 
@@ -1397,7 +1399,7 @@ footer {
     min-height: 100vh;
   }
 
-  @media (min-width: 721px) {
+  @media (min-width: 901px) {
     #jobs {
       padding-top: 6rem;
       padding-bottom: 3rem;
@@ -1440,7 +1442,7 @@ footer {
 }
 
 /* ═══ 📱 MOBILE (≤720px) — every mobile rule lives here ═══ */
-@media (max-width: 720px) {
+@media (max-width: 900px) {
 
   /* ─── EXPERIENCE ────────────────────────────────────────────── carousel backup
 
